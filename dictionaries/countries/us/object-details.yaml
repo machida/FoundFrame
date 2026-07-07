@@ -1,0 +1,236 @@
+version: 1
+country: us
+entries:
+  - slug: crumpled-receipt-near-the-cup-holder
+    label: crumpled receipt near the cup holder
+    category: object_detail
+    rarity: common
+    weight: 52
+    visibility: foreground
+    environment: [commercial, street, outdoor]
+    time_context: [morning, afternoon, evening]
+    tags: [paper, errand, half-noticed]
+    status: active
+  - slug: plastic-grocery-bag-stretching-around-a-cereal-box
+    label: plastic grocery bag stretching around a cereal box
+    category: object_detail
+    rarity: common
+    weight: 61
+    visibility: foreground
+    environment: [commercial, street, residential]
+    time_context: [afternoon, evening]
+    tags: [shopping, carrying, ordinary]
+    status: active
+  - slug: key-fob-and-mail-keys-tangled-together
+    label: key fob and mail keys tangled together
+    category: object_detail
+    rarity: common
+    weight: 46
+    visibility: foreground
+    environment: [residential, indoor, street]
+    time_context: [afternoon, evening, night]
+    tags: [keys, residential, routine]
+    status: active
+  - slug: paper-takeout-bag-darkening-with-grease
+    label: paper takeout bag darkening with grease
+    category: object_detail
+    rarity: uncommon
+    weight: 38
+    visibility: foreground
+    environment: [commercial, street, outdoor]
+    time_context: [evening, night]
+    tags: [dinner, paper, carrying]
+    status: active
+  - slug: loose-laundry-sheet-sticking-out-of-a-basket
+    label: loose laundry sheet sticking out of a basket
+    category: object_detail
+    rarity: uncommon
+    weight: 35
+    visibility: foreground
+    environment: [indoor, residential, commercial]
+    time_context: [morning, afternoon, evening]
+    tags: [laundry, clutter, ordinary]
+    status: active
+  - slug: condensation-ring-under-a-large-paper-cup
+    label: condensation ring under a large paper cup
+    category: object_detail
+    rarity: common
+    weight: 44
+    visibility: foreground
+    environment: [commercial, indoor, street]
+    time_context: [morning, afternoon, evening]
+    tags: [drink, paper, half-noticed]
+    status: active
+  - slug: faded-store-loyalty-tag-on-a-keyring
+    label: faded store loyalty tag on a keyring
+    category: object_detail
+    rarity: uncommon
+    weight: 31
+    visibility: foreground
+    environment: [residential, commercial, street]
+    time_context: [morning, afternoon, evening, night]
+    tags: [keys, plastic, routine]
+    status: active
+  - slug: crinkled-fast-food-napkins-in-the-door-pocket
+    label: crinkled fast food napkins in the door pocket
+    category: object_detail
+    rarity: common
+    weight: 49
+    visibility: foreground
+    environment: [commercial, street, outdoor]
+    time_context: [afternoon, evening, night]
+    tags: [car, paper, takeout]
+    status: active
+  - slug: school-flyer-corner-bent-inside-a-clear-folder
+    label: school flyer corner bent inside a clear folder
+    category: object_detail
+    rarity: uncommon
+    weight: 27
+    visibility: foreground
+    seasonality: [spring, autumn, winter]
+    environment: [residential, street, indoor]
+    time_context: [afternoon, evening]
+    tags: [school, paper, ordinary]
+    status: active
+  - slug: thin-rain-jacket-half-folded-over-a-passenger-seat
+    label: thin rain jacket half folded over a passenger seat
+    category: object_detail
+    rarity: uncommon
+    weight: 29
+    visibility: foreground
+    environment: [street, outdoor, transit]
+    time_context: [morning, afternoon, evening]
+    tags: [rain, fabric, car]
+    status: active
+  - slug: melting-ice-water-running-down-a-large-takeout-cup
+    label: melting ice water running down a large takeout cup
+    category: object_detail
+    rarity: common
+    weight: 33
+    visibility: foreground
+    seasonality: [summer]
+    weather: [clear, humid]
+    environment: [commercial, street, car]
+    time_context: [noon, afternoon, evening]
+    tags: [summer, drink, half-noticed]
+    status: active
+  - slug: salt-streak-near-the-bottom-of-a-winter-parking-lot-boot
+    label: salt streak near the bottom of a winter parking lot boot
+    category: object_detail
+    rarity: uncommon
+    weight: 18
+    visibility: foreground
+    seasonality: [winter]
+    weather: [snow, cloudy]
+    environment: [street, outdoor, commercial]
+    time_context: [morning, afternoon, evening]
+    tags: [winter, clothing, ground]
+    status: active
+  - slug: damp-hoodie-sleeve-resting-against-a-cart-handle
+    label: damp hoodie sleeve resting against a cart handle
+    category: object_detail
+    rarity: uncommon
+    weight: 21
+    visibility: foreground
+    seasonality: [spring, autumn]
+    weather: [rain, cloudy]
+    environment: [commercial, outdoor, street]
+    time_context: [afternoon, evening]
+    tags: [rain, clothing, shopping]
+    status: active
+  - slug: misty-droplets-gathering-on-a-plastic-takeout-lid
+    label: misty droplets gathering on a plastic takeout lid
+    category: object_detail
+    rarity: uncommon
+    weight: 15
+    visibility: foreground
+    seasonality: [spring, autumn]
+    weather: [drizzle, cloudy]
+    environment: [commercial, car, street]
+    time_context: [afternoon, evening]
+    tags: [drizzle, takeout, plastic]
+    status: active
+  - slug: tied-kitchen-trash-bag-waiting-by-the-garage-door
+    label: tied kitchen trash bag waiting by the garage door
+    category: object_detail
+    rarity: uncommon
+    weight: 22
+    visibility: foreground
+    environment: [residential, outdoor]
+    time_context: [early_morning, morning]
+    tags: [residential, chore, plastic]
+    status: active
+  - slug: windshield-wiper-streak-drying-in-weak-morning-light
+    label: windshield wiper streak drying in weak morning light
+    category: object_detail
+    rarity: uncommon
+    weight: 18
+    visibility: foreground
+    seasonality: [spring, autumn, winter]
+    weather: [rain, cloudy, snow]
+    environment: [street, outdoor, transit]
+    time_context: [early_morning, morning]
+    tags: [car, weather-trace, routine]
+    status: active
+  - slug: takeout-sauce-tub-rolling-in-a-passenger-footwell
+    label: takeout sauce tub rolling in a passenger footwell
+    category: object_detail
+    rarity: uncommon
+    weight: 20
+    visibility: foreground
+    environment: [car, street, commercial]
+    time_context: [night]
+    tags: [late-night, takeout, clutter]
+    status: active
+  - slug: porch-light-reflection-on-a-plastic-grocery-bag
+    label: porch light reflection on a plastic grocery bag
+    category: object_detail
+    rarity: uncommon
+    weight: 16
+    visibility: foreground
+    environment: [residential, outdoor]
+    time_context: [night]
+    tags: [return-home, plastic, quiet]
+    status: active
+  - slug: warm-deli-container-fogging-a-thin-plastic-bag
+    label: warm deli container fogging a thin plastic bag
+    category: object_detail
+    rarity: uncommon
+    weight: 18
+    visibility: foreground
+    environment: [commercial, street, car]
+    time_context: [late_afternoon, evening]
+    tags: [dinner, takeout, plastic]
+    status: active
+  - slug: folded-work-badge-lanyard-resting-on-a-passenger-seat
+    label: folded work badge lanyard resting on a passenger seat
+    category: object_detail
+    rarity: uncommon
+    weight: 17
+    visibility: foreground
+    environment: [car, commercial, street]
+    time_context: [late_afternoon, evening]
+    tags: [workday, car, routine]
+    status: active
+  - slug: paper-receipt-caught-under-a-takeout-drink-tray-corner
+    label: paper receipt caught under a takeout drink tray corner
+    category: object_detail
+    rarity: uncommon
+    weight: 16
+    visibility: foreground
+    environment: [commercial, car, street]
+    time_context: [late_afternoon, evening]
+    tags: [paper, takeout, clutter]
+    status: active
+  - slug: damp-hair-elastic-stuck-to-a-wrist-in-the-heat
+    label: damp hair elastic stuck to a wrist in the heat
+    category: object_detail
+    rarity: uncommon
+    weight: 14
+    visibility: foreground
+    seasonality: [summer]
+    weather: [humid]
+    environment: [residential, commercial, street]
+    time_context: [afternoon, late_afternoon, evening]
+    tags: [summer, clothing, humid]
+    status: active

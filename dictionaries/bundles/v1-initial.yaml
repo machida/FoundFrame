@@ -1,0 +1,12 @@
+version: v1-initial
+country_scope:
+  - jp
+  - us
+includes:
+  - countries/jp/places.yaml
+  - countries/jp/moments.yaml
+  - countries/jp/object-details.yaml
+  - countries/us/places.yaml
+  - countries/us/moments.yaml
+  - countries/us/object-details.yaml
+notes: Initial editorial sample bundle for local development and schema validation.

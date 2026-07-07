@@ -1,0 +1,10 @@
+bundle: v1-minimal
+country: jp
+entries:
+  - slug: fixture-train-platform
+    label: fixture train platform
+    category: place
+    rarity: common
+    weight: 100
+    visibility: midground
+    status: active

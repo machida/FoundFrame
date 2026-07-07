@@ -1,0 +1,231 @@
+version: 1
+country: us
+entries:
+  - slug: neighborhood-gas-station-side-lot
+    label: neighborhood gas station side lot
+    category: place
+    rarity: common
+    weight: 90
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain]
+    time_context: [morning, afternoon, evening, night]
+    environment: [street, commercial, outdoor]
+    tags: [routine, commercial]
+    status: active
+  - slug: apartment-mailbox-corridor
+    label: apartment mailbox corridor
+    category: place
+    rarity: uncommon
+    weight: 55
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, snow]
+    time_context: [morning, afternoon, evening]
+    environment: [indoor, residential]
+    tags: [routine, residential]
+    status: active
+  - slug: laundromat-row-near-the-folding-table
+    label: laundromat row near the folding table
+    category: place
+    rarity: common
+    weight: 68
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, snow]
+    time_context: [morning, afternoon, evening, night]
+    environment: [indoor, commercial, residential]
+    tags: [laundry, routine, waiting]
+    status: active
+  - slug: strip-mall-sidewalk-between-a-pharmacy-and-a-pizza-place
+    label: strip mall sidewalk between a pharmacy and a pizza place
+    category: place
+    rarity: common
+    weight: 72
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain]
+    time_context: [afternoon, evening, night]
+    environment: [commercial, street, outdoor]
+    tags: [errand, storefronts, routine]
+    status: active
+  - slug: apartment-stairwell-landing-with-a-small-window
+    label: apartment stairwell landing with a small window
+    category: place
+    rarity: uncommon
+    weight: 41
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, snow]
+    time_context: [morning, afternoon, evening, night]
+    environment: [indoor, residential]
+    tags: [residential, quiet, ordinary]
+    status: active
+  - slug: grocery-store-cart-return-edge
+    label: grocery store cart return edge
+    category: place
+    rarity: common
+    weight: 66
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, snow]
+    time_context: [morning, afternoon, evening]
+    environment: [commercial, outdoor, street]
+    tags: [shopping, parking-lot, routine]
+    status: active
+  - slug: city-bus-stop-beside-a-chain-link-fence
+    label: city bus stop beside a chain link fence
+    category: place
+    rarity: uncommon
+    weight: 49
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, snow]
+    time_context: [early_morning, morning, afternoon, evening, night]
+    environment: [transit, street, outdoor]
+    tags: [waiting, transit, routine]
+    status: active
+  - slug: convenience-store-drink-cooler-aisle
+    label: convenience store drink cooler aisle
+    category: place
+    rarity: common
+    weight: 58
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, snow]
+    time_context: [morning, afternoon, evening, night]
+    environment: [indoor, commercial]
+    tags: [shopping, fluorescent, ordinary]
+    status: active
+  - slug: school-pickup-curb-beside-a-low-fence
+    label: school pickup curb beside a low fence
+    category: place
+    rarity: uncommon
+    weight: 44
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain]
+    time_context: [afternoon]
+    environment: [street, outdoor, transit]
+    tags: [school, waiting, routine]
+    status: active
+  - slug: suburban-sidewalk-near-a-mailbox-cluster
+    label: suburban sidewalk near a mailbox cluster
+    category: place
+    rarity: common
+    weight: 53
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, snow]
+    time_context: [morning, afternoon, evening]
+    environment: [residential, outdoor, street]
+    tags: [residential, routine, quiet]
+    status: active
+  - slug: office-park-curb-outside-a-side-entrance
+    label: office park curb outside a side entrance
+    category: place
+    rarity: uncommon
+    weight: 37
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain]
+    time_context: [morning, late_afternoon, evening]
+    environment: [commercial, outdoor, street]
+    tags: [workday, parked-cars, routine]
+    status: active
+  - slug: fast-food-drive-through-walkup-corner
+    label: fast food drive-through walkup corner
+    category: place
+    rarity: uncommon
+    weight: 33
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain]
+    time_context: [morning, afternoon, evening, night]
+    environment: [commercial, outdoor, street]
+    tags: [takeout, waiting, ordinary]
+    status: active
+  - slug: discount-store-entryway-with-stacked-baskets
+    label: discount store entryway with stacked baskets
+    category: place
+    rarity: common
+    weight: 47
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, snow]
+    time_context: [morning, afternoon, evening]
+    environment: [indoor, commercial]
+    tags: [shopping, fluorescent, routine]
+    status: active
+  - slug: strip-mall-bench-near-a-faded-vending-machine
+    label: strip mall bench near a faded vending machine
+    category: place
+    rarity: uncommon
+    weight: 28
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain]
+    time_context: [noon, afternoon, late_afternoon]
+    environment: [commercial, outdoor, street]
+    tags: [pause, storefronts, ordinary]
+    status: active
+  - slug: supermarket-deli-pickup-shelf-near-the-back-wall
+    label: supermarket deli pickup shelf near the back wall
+    category: place
+    rarity: common
+    weight: 36
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, snow]
+    time_context: [noon, late_afternoon, evening]
+    environment: [indoor, commercial]
+    tags: [shopping, dinner, fluorescent]
+    status: active
+  - slug: office-park-picnic-table-edge-in-thin-shade
+    label: office park picnic table edge in thin shade
+    category: place
+    rarity: uncommon
+    weight: 24
+    visibility: midground
+    seasonality: [spring, summer, autumn]
+    weather: [clear, cloudy, humid]
+    time_context: [noon, afternoon]
+    environment: [commercial, outdoor]
+    tags: [workday, lunch, pause]
+    status: active
+  - slug: package-locker-bay-beside-an-apartment-office
+    label: package locker bay beside an apartment office
+    category: place
+    rarity: uncommon
+    weight: 26
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, snow]
+    time_context: [late_afternoon, evening, night]
+    environment: [residential, outdoor]
+    tags: [delivery, residential, routine]
+    status: active
+  - slug: covered-strip-mall-walkway-with-a-dark-damp-edge
+    label: covered strip mall walkway with a dark damp edge
+    category: place
+    rarity: uncommon
+    weight: 21
+    visibility: midground
+    seasonality: [spring, autumn]
+    weather: [drizzle, rain, cloudy]
+    time_context: [afternoon, evening]
+    environment: [commercial, outdoor, street]
+    tags: [drizzle, storefronts, ordinary]
+    status: active
+  - slug: apartment-breezeway-holding-on-to-the-day-heat
+    label: apartment breezeway holding on to the day heat
+    category: place
+    rarity: uncommon
+    weight: 19
+    visibility: midground
+    seasonality: [summer]
+    weather: [humid, cloudy]
+    time_context: [late_afternoon, evening, night]
+    environment: [residential, outdoor]
+    tags: [summer, residential, still-air]
+    status: active

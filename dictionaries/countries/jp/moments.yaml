@@ -1,0 +1,309 @@
+version: 1
+country: jp
+entries:
+  - slug: waiting-for-someone-who-is-late
+    label: waiting for someone who is late
+    category: moment
+    rarity: uncommon
+    weight: 50
+    visibility: ambient
+    time_context: [afternoon, evening, night]
+    environment: [street, transit, commercial]
+    tags: [waiting, routine]
+    status: active
+  - slug: walking-home-with-one-small-errand-left
+    label: walking home with one small errand left
+    category: moment
+    rarity: common
+    weight: 80
+    visibility: ambient
+    time_context: [late_afternoon, evening, night]
+    environment: [street, residential, commercial]
+    tags: [routine]
+    status: active
+  - slug: stopping-by-the-convenience-store-before-going-home
+    label: stopping by the convenience store before going home
+    category: moment
+    rarity: common
+    weight: 95
+    visibility: ambient
+    time_context: [evening, night]
+    environment: [street, commercial, residential]
+    tags: [routine, errand]
+    status: active
+  - slug: leaving-the-station-without-being-in-a-hurry
+    label: leaving the station without being in a hurry
+    category: moment
+    rarity: common
+    weight: 90
+    visibility: ambient
+    time_context: [late_afternoon, evening, night]
+    environment: [transit, street]
+    tags: [transit, routine]
+    status: active
+  - slug: carrying-breakfast-back-from-a-nearby-shop
+    label: carrying breakfast back from a nearby shop
+    category: moment
+    rarity: uncommon
+    weight: 55
+    visibility: ambient
+    time_context: [early_morning, morning]
+    environment: [street, residential, commercial]
+    tags: [morning, errand]
+    status: active
+  - slug: standing-under-the-awning-until-the-rain-softens
+    label: standing under the awning until the rain softens
+    category: moment
+    rarity: uncommon
+    weight: 60
+    visibility: ambient
+    seasonality: [spring, summer, autumn]
+    weather: [rain, drizzle]
+    time_context: [afternoon, evening, night]
+    environment: [street, commercial, transit]
+    tags: [rain, waiting]
+    status: active
+  - slug: heading-back-with-a-small-bag-from-the-pharmacy
+    label: heading back with a small bag from the pharmacy
+    category: moment
+    rarity: common
+    weight: 75
+    visibility: ambient
+    time_context: [afternoon, evening]
+    environment: [street, commercial, residential]
+    tags: [errand, routine]
+    status: active
+  - slug: pausing-at-the-vending-machine-without-really-needing-anything
+    label: pausing at the vending machine without really needing anything
+    category: moment
+    rarity: uncommon
+    weight: 45
+    visibility: ambient
+    time_context: [afternoon, evening, night]
+    environment: [street, residential, transit]
+    tags: [hesitation, routine]
+    status: active
+  - slug: crossing-the-side-street-after-the-light-has-already-changed
+    label: crossing the side street after the light has already changed
+    category: moment
+    rarity: common
+    weight: 70
+    visibility: ambient
+    time_context: [morning, afternoon, evening]
+    environment: [street, commercial, residential]
+    tags: [movement, routine]
+    status: active
+  - slug: returning-to-the-bicycle-after-a-short-purchase
+    label: returning to the bicycle after a short purchase
+    category: moment
+    rarity: uncommon
+    weight: 50
+    visibility: ambient
+    time_context: [morning, afternoon, late_afternoon]
+    environment: [street, commercial, residential]
+    tags: [errand, movement]
+    status: active
+  - slug: stepping-out-into-the-cold-for-a-quick-lunch
+    label: stepping out into the cold for a quick lunch
+    category: moment
+    rarity: common
+    weight: 62
+    visibility: ambient
+    seasonality: [winter]
+    weather: [clear, cloudy, snow]
+    time_context: [noon, afternoon]
+    environment: [street, commercial]
+    tags: [lunch, winter, routine]
+    status: active
+  - slug: lingering-near-the-heater-section-of-a-small-shop
+    label: lingering near the heater section of a small shop
+    category: moment
+    rarity: uncommon
+    weight: 38
+    visibility: ambient
+    seasonality: [winter]
+    weather: [clear, cloudy, snow]
+    time_context: [afternoon, evening]
+    environment: [indoor, commercial]
+    tags: [winter, hesitation, indoor]
+    status: active
+  - slug: carrying-a-convenience-store-coffee-back-to-work
+    label: carrying a convenience store coffee back to work
+    category: moment
+    rarity: common
+    weight: 68
+    visibility: ambient
+    time_context: [morning, noon, afternoon]
+    environment: [street, commercial]
+    tags: [coffee, routine, workday]
+    status: active
+  - slug: cutting-through-the-underpass-to-avoid-the-wind
+    label: cutting through the underpass to avoid the wind
+    category: moment
+    rarity: uncommon
+    weight: 36
+    visibility: ambient
+    seasonality: [winter]
+    weather: [clear, cloudy]
+    time_context: [morning, afternoon, evening]
+    environment: [transit, street, indoor]
+    tags: [winter, movement, shelter]
+    status: active
+  - slug: standing-in-line-with-a-tray-at-midday
+    label: standing in line with a tray at midday
+    category: moment
+    rarity: common
+    weight: 58
+    visibility: ambient
+    time_context: [noon]
+    environment: [indoor, commercial]
+    tags: [lunch, queue, routine]
+    status: active
+  - slug: carrying-a-small-fan-while-looking-for-shade
+    label: carrying a small fan while looking for shade
+    category: moment
+    rarity: common
+    weight: 57
+    visibility: ambient
+    seasonality: [summer]
+    weather: [clear, humid]
+    time_context: [noon, afternoon, late_afternoon]
+    environment: [street, commercial, transit]
+    tags: [summer, heat, movement]
+    status: active
+  - slug: waiting-at-the-crosswalk-after-the-rain-has-mostly-stopped
+    label: waiting at the crosswalk after the rain has mostly stopped
+    category: moment
+    rarity: common
+    weight: 61
+    visibility: ambient
+    seasonality: [spring, summer, autumn]
+    weather: [rain, drizzle, cloudy]
+    time_context: [afternoon, late_afternoon, evening]
+    environment: [street, commercial, residential]
+    tags: [rain, waiting, routine]
+    status: active
+  - slug: stepping-out-to-put-the-trash-out-a-little-late
+    label: stepping out to put the trash out a little late
+    category: moment
+    rarity: uncommon
+    weight: 34
+    visibility: ambient
+    time_context: [early_morning, morning]
+    environment: [residential, street, outdoor]
+    tags: [residential, chore, routine]
+    status: active
+  - slug: looking-down-at-a-phone-near-the-last-local-train
+    label: looking down at a phone near the last local train
+    category: moment
+    rarity: uncommon
+    weight: 32
+    visibility: ambient
+    time_context: [night]
+    environment: [transit, street, commercial]
+    tags: [night, transit, waiting]
+    status: active
+  - slug: carrying-home-a-supermarket-side-dish-while-it-is-still-warm
+    label: carrying home a supermarket side dish while it is still warm
+    category: moment
+    rarity: common
+    weight: 64
+    visibility: ambient
+    time_context: [evening, night]
+    environment: [street, residential, commercial]
+    tags: [shopping, dinner, routine]
+    status: active
+  - slug: stepping-into-the-apartment-corridor-with-wet-soles
+    label: stepping into the apartment corridor with wet soles
+    category: moment
+    rarity: uncommon
+    weight: 33
+    visibility: ambient
+    seasonality: [spring, summer, autumn, winter]
+    weather: [rain, drizzle, snow]
+    time_context: [morning, afternoon, evening]
+    environment: [residential, indoor]
+    tags: [weather-trace, residential, return]
+    status: active
+  - slug: carrying-a-lunch-tray-looking-for-an-empty-seat-near-the-window
+    label: carrying a lunch tray looking for an empty seat near the window
+    category: moment
+    rarity: common
+    weight: 47
+    visibility: ambient
+    time_context: [noon]
+    environment: [indoor, commercial]
+    tags: [lunch, searching, routine]
+    status: active
+  - slug: slowing-down-near-the-bicycle-parking-to-check-which-one-is-yours
+    label: slowing down near the bicycle parking to check which one is yours
+    category: moment
+    rarity: common
+    weight: 44
+    visibility: ambient
+    time_context: [morning, late_afternoon, evening, night]
+    environment: [residential, street, outdoor]
+    tags: [bicycle, hesitation, routine]
+    status: active
+  - slug: waiting-for-the-microwave-at-a-convenience-store-late-at-night
+    label: waiting for the microwave at a convenience store late at night
+    category: moment
+    rarity: uncommon
+    weight: 28
+    visibility: ambient
+    time_context: [night]
+    environment: [indoor, commercial]
+    tags: [late-night, convenience-store, dinner]
+    status: active
+  - slug: stepping-aside-on-the-station-passage-to-answer-a-short-call
+    label: stepping aside on the station passage to answer a short call
+    category: moment
+    rarity: uncommon
+    weight: 31
+    visibility: ambient
+    time_context: [morning, afternoon, evening]
+    environment: [transit, indoor, street]
+    tags: [transit, pause, routine]
+    status: active
+  - slug: leaving-a-drugstore-with-just-one-small-thing-in-hand
+    label: leaving a drugstore with just one small thing in hand
+    category: moment
+    rarity: common
+    weight: 53
+    visibility: ambient
+    time_context: [afternoon, evening, night]
+    environment: [commercial, street, residential]
+    tags: [errand, small-purchase, routine]
+    status: active
+  - slug: carrying-a-small-bag-from-the-bakery-before-the-street-fills-up
+    label: carrying a small bag from the bakery before the street fills up
+    category: moment
+    rarity: uncommon
+    weight: 29
+    visibility: ambient
+    time_context: [early_morning, morning]
+    environment: [street, residential, commercial]
+    tags: [morning, errand, quiet]
+    status: active
+  - slug: waiting-by-the-bicycle-with-the-lock-still-in-hand
+    label: waiting by the bicycle with the lock still in hand
+    category: moment
+    rarity: uncommon
+    weight: 24
+    visibility: ambient
+    time_context: [early_morning, morning]
+    environment: [residential, street, outdoor]
+    tags: [bicycle, pause, routine]
+    status: active
+  - slug: stepping-out-of-the-building-holding-a-convenience-store-coffee-for-warmth
+    label: stepping out of the building holding a convenience store coffee for warmth
+    category: moment
+    rarity: uncommon
+    weight: 22
+    visibility: ambient
+    seasonality: [autumn, winter]
+    weather: [clear, cloudy]
+    time_context: [early_morning, morning]
+    environment: [residential, street, commercial]
+    tags: [coffee, winter, workday]
+    status: active

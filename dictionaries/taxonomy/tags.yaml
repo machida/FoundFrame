@@ -1,0 +1,11 @@
+version: 1
+tags:
+  - transit
+  - residential
+  - commercial
+  - street
+  - routine
+  - minor-clutter
+  - color-accent
+  - rain-trace
+  - waiting

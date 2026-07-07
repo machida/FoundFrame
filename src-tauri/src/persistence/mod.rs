@@ -1,0 +1,10 @@
+pub mod dictionary_repository;
+pub mod database;
+pub mod favorites_repository;
+pub mod frame_repository;
+pub mod generation_job_repository;
+pub mod migrations;
+pub mod presets_repository;
+pub mod provider_health_repository;
+pub mod review_repository;
+pub mod roll_repository;

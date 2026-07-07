@@ -1,0 +1,315 @@
+version: 1
+country: jp
+entries:
+  - slug: clear-umbrella-dripping-near-door
+    label: clear umbrella dripping near the door
+    category: object_detail
+    rarity: common
+    weight: 70
+    visibility: foreground
+    seasonality: [spring, summer, autumn]
+    weather: [rain, drizzle]
+    environment: [indoor, commercial, residential]
+    tags: [rain-trace]
+    status: active
+  - slug: blue-plastic-basket-half-visible
+    label: blue plastic basket half visible
+    category: object_detail
+    rarity: common
+    weight: 65
+    visibility: foreground
+    environment: [indoor, commercial, residential]
+    tags: [minor-clutter, color-accent]
+    status: active
+  - slug: convenience-store-receipt-folded-into-a-pocket
+    label: convenience store receipt folded into a pocket
+    category: object_detail
+    rarity: common
+    weight: 80
+    visibility: foreground
+    environment: [commercial, street, residential]
+    time_context: [evening, night]
+    tags: [paper, errand, half-noticed]
+    status: active
+  - slug: bicycle-basket-with-one-plain-shopping-bag
+    label: bicycle basket with one plain shopping bag
+    category: object_detail
+    rarity: common
+    weight: 78
+    visibility: foreground
+    environment: [street, residential, commercial]
+    time_context: [morning, afternoon, evening]
+    tags: [shopping, routine]
+    status: active
+  - slug: vending-machine-drink-left-on-the-ledge
+    label: vending machine drink left on the ledge
+    category: object_detail
+    rarity: uncommon
+    weight: 48
+    visibility: foreground
+    environment: [street, transit, commercial]
+    time_context: [afternoon, evening, night]
+    tags: [pause, color-accent]
+    status: active
+  - slug: damp-cuff-brushing-against-a-clear-umbrella
+    label: damp cuff brushing against a clear umbrella
+    category: object_detail
+    rarity: uncommon
+    weight: 52
+    visibility: foreground
+    seasonality: [spring, summer, autumn]
+    weather: [rain, drizzle]
+    environment: [street, transit, commercial]
+    tags: [rain-trace, clothing]
+    status: active
+  - slug: grocery-basket-edge-cutting-into-the-frame
+    label: grocery basket edge cutting into the frame
+    category: object_detail
+    rarity: common
+    weight: 68
+    visibility: foreground
+    environment: [commercial, indoor]
+    time_context: [morning, afternoon, evening]
+    tags: [shopping, obstruction]
+    status: active
+  - slug: slightly-wet-leaf-stuck-near-the-drain
+    label: slightly wet leaf stuck near the drain
+    category: object_detail
+    rarity: uncommon
+    weight: 40
+    visibility: foreground
+    seasonality: [spring, summer, autumn]
+    weather: [rain, drizzle, cloudy]
+    environment: [street, residential, outdoor]
+    tags: [weather-trace, ground]
+    status: active
+  - slug: white-plastic-bag-knotted-twice
+    label: white plastic bag knotted twice
+    category: object_detail
+    rarity: common
+    weight: 72
+    visibility: foreground
+    environment: [residential, street, commercial]
+    time_context: [morning, afternoon, evening]
+    tags: [routine, carrying]
+    status: active
+  - slug: small-towel-looping-out-of-a-bag
+    label: small towel looping out of a bag
+    category: object_detail
+    rarity: common
+    weight: 66
+    visibility: foreground
+    seasonality: [summer]
+    weather: [clear, cloudy, humid]
+    environment: [street, transit, residential]
+    tags: [summer, ordinary, clothing]
+    status: active
+  - slug: knit-glove-held-with-the-fingers
+    label: knit glove held with the fingers
+    category: object_detail
+    rarity: common
+    weight: 54
+    visibility: foreground
+    seasonality: [winter]
+    weather: [clear, cloudy, snow]
+    environment: [street, transit, commercial]
+    time_context: [morning, afternoon, evening]
+    tags: [winter, clothing, half-noticed]
+    status: active
+  - slug: melted-snow-darkening-the-curb-edge
+    label: melted snow darkening the curb edge
+    category: object_detail
+    rarity: uncommon
+    weight: 28
+    visibility: foreground
+    seasonality: [winter]
+    weather: [snow, cloudy]
+    environment: [street, residential, outdoor]
+    tags: [winter, weather-trace, ground]
+    status: active
+  - slug: steamed-lid-on-a-small-coffee-cup
+    label: steamed lid on a small coffee cup
+    category: object_detail
+    rarity: common
+    weight: 46
+    visibility: foreground
+    seasonality: [autumn, winter]
+    weather: [clear, cloudy, rain, snow]
+    environment: [street, commercial, transit]
+    time_context: [morning, noon, afternoon]
+    tags: [coffee, warmth, routine]
+    status: active
+  - slug: cafeteria-tray-corner-entering-the-frame
+    label: cafeteria tray corner entering the frame
+    category: object_detail
+    rarity: uncommon
+    weight: 33
+    visibility: foreground
+    environment: [indoor, commercial]
+    time_context: [noon, afternoon]
+    tags: [lunch, obstruction, routine]
+    status: active
+  - slug: damp-wool-sleeve-brushing-a-rail
+    label: damp wool sleeve brushing a rail
+    category: object_detail
+    rarity: uncommon
+    weight: 31
+    visibility: foreground
+    seasonality: [winter]
+    weather: [rain, snow, cloudy]
+    environment: [transit, street, commercial]
+    time_context: [morning, evening, night]
+    tags: [winter, weather-trace, clothing]
+    status: active
+  - slug: hand-towel-wrapped-around-a-cold-drink-bottle
+    label: hand towel wrapped around a cold drink bottle
+    category: object_detail
+    rarity: common
+    weight: 41
+    visibility: foreground
+    seasonality: [summer]
+    weather: [clear, humid, cloudy]
+    environment: [street, transit, commercial]
+    time_context: [noon, afternoon, late_afternoon]
+    tags: [summer, carrying, ordinary]
+    status: active
+  - slug: flyer-corner-caught-under-a-bicycle-tire
+    label: flyer corner caught under a bicycle tire
+    category: object_detail
+    rarity: uncommon
+    weight: 29
+    visibility: foreground
+    environment: [residential, street, commercial]
+    time_context: [morning, afternoon, evening]
+    tags: [paper, obstruction, ground]
+    status: active
+  - slug: half-visible-pack-of-kitchen-sponge-refills
+    label: half visible pack of kitchen sponge refills
+    category: object_detail
+    rarity: uncommon
+    weight: 26
+    visibility: foreground
+    environment: [commercial, residential, street]
+    time_context: [afternoon, evening]
+    tags: [shopping, ordinary, plastic]
+    status: active
+  - slug: damp-hem-of-trousers-near-a-puddle-edge
+    label: damp hem of trousers near a puddle edge
+    category: object_detail
+    rarity: common
+    weight: 43
+    visibility: foreground
+    seasonality: [spring, summer, autumn]
+    weather: [rain, drizzle, cloudy]
+    environment: [street, transit, residential]
+    time_context: [morning, afternoon, evening]
+    tags: [rain-trace, clothing, ground]
+    status: active
+  - slug: plastic-fan-peeking-out-of-a-tote-bag
+    label: plastic fan peeking out of a tote bag
+    category: object_detail
+    rarity: common
+    weight: 35
+    visibility: foreground
+    seasonality: [summer]
+    weather: [clear, humid, cloudy]
+    environment: [street, transit, commercial]
+    time_context: [afternoon, late_afternoon, evening]
+    tags: [summer, bag, color-accent]
+    status: active
+  - slug: damp-floor-mat-curled-up-at-one-corner
+    label: damp floor mat curled up at one corner
+    category: object_detail
+    rarity: uncommon
+    weight: 27
+    visibility: foreground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [rain, drizzle, snow, cloudy]
+    environment: [residential, indoor]
+    time_context: [morning, afternoon, evening]
+    tags: [weather-trace, shared-space, ground]
+    status: active
+  - slug: plastic-spoon-still-inside-a-convenience-store-bag
+    label: plastic spoon still inside a convenience store bag
+    category: object_detail
+    rarity: common
+    weight: 38
+    visibility: foreground
+    environment: [commercial, street, residential]
+    time_context: [evening, night]
+    tags: [dinner, plastic, errand]
+    status: active
+  - slug: bicycle-key-with-a-faded-rubber-cap
+    label: bicycle key with a faded rubber cap
+    category: object_detail
+    rarity: uncommon
+    weight: 25
+    visibility: foreground
+    environment: [residential, street, outdoor]
+    time_context: [morning, afternoon, evening, night]
+    tags: [bicycle, keys, ordinary]
+    status: active
+  - slug: lunch-tray-shadow-crossing-a-paper-cup
+    label: lunch tray shadow crossing a paper cup
+    category: object_detail
+    rarity: uncommon
+    weight: 24
+    visibility: foreground
+    environment: [indoor, commercial]
+    time_context: [noon, afternoon]
+    tags: [lunch, obstruction, paper]
+    status: active
+  - slug: tied-trash-bag-resting-by-the-entry-step
+    label: tied trash bag resting by the entry step
+    category: object_detail
+    rarity: uncommon
+    weight: 23
+    visibility: foreground
+    environment: [residential, outdoor, street]
+    time_context: [early_morning, morning]
+    tags: [residential, chore, plastic]
+    status: active
+  - slug: convenience-store-bento-band-peeled-halfway-off
+    label: convenience store bento band peeled halfway off
+    category: object_detail
+    rarity: uncommon
+    weight: 21
+    visibility: foreground
+    environment: [commercial, residential, indoor]
+    time_context: [night]
+    tags: [late-night, dinner, plastic]
+    status: active
+  - slug: keychain-touching-a-cold-metal-mailbox-door
+    label: keychain touching a cold metal mailbox door
+    category: object_detail
+    rarity: uncommon
+    weight: 19
+    visibility: foreground
+    seasonality: [autumn, winter]
+    weather: [clear, cloudy]
+    environment: [residential, outdoor]
+    time_context: [early_morning, morning, evening]
+    tags: [keys, residential, cold]
+    status: active
+  - slug: folded-umbrella-strap-still-undone-near-midnight
+    label: folded umbrella strap still undone near midnight
+    category: object_detail
+    rarity: uncommon
+    weight: 17
+    visibility: foreground
+    seasonality: [spring, summer, autumn]
+    weather: [rain, drizzle, cloudy]
+    environment: [residential, transit, indoor]
+    time_context: [night]
+    tags: [rain-trace, return-home, fabric]
+    status: active
+  - slug: clear-file-corner-sticking-out-of-a-fabric-bag
+    label: clear file corner sticking out of a fabric bag
+    category: object_detail
+    rarity: common
+    weight: 34
+    visibility: foreground
+    environment: [transit, commercial, street]
+    time_context: [morning, afternoon, evening]
+    tags: [paper, bag, workday]
+    status: active

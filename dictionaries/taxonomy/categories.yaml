@@ -1,0 +1,14 @@
+version: 1
+categories:
+  - key: place
+    display_name: Place
+    description: Ordinary locations and spatial contexts.
+  - key: moment
+    display_name: Moment
+    description: Situational or social moment framing.
+  - key: object_detail
+    display_name: Object Detail
+    description: Quiet details that sharpen memory-feeling.
+  - key: weather_detail
+    display_name: Weather Detail
+    description: Small weather-linked observations.

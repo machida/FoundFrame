@@ -1,0 +1,315 @@
+version: 1
+country: jp
+entries:
+  - slug: suburban-train-platform
+    label: suburban train platform
+    description: An ordinary commuter platform outside a major city center.
+    category: place
+    rarity: common
+    weight: 100
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle]
+    time_context: [early_morning, morning, afternoon, evening, night]
+    environment: [transit, outdoor]
+    tags: [transit, routine, waiting]
+    status: active
+  - slug: neighborhood-coin-laundry
+    label: neighborhood coin laundry
+    description: A practical laundry space with fluorescent light and plastic baskets.
+    category: place
+    rarity: uncommon
+    weight: 60
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, humid]
+    time_context: [morning, afternoon, evening, night]
+    environment: [indoor, residential, commercial]
+    tags: [routine, residential, minor-clutter]
+    status: active
+  - slug: narrow-shopping-street-near-the-station
+    label: narrow shopping street near the station
+    description: A covered or semi-covered street with small practical shops and passing foot traffic.
+    category: place
+    rarity: common
+    weight: 95
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle]
+    time_context: [morning, afternoon, late_afternoon, evening]
+    environment: [commercial, street]
+    tags: [routine, storefronts, walking]
+    status: active
+  - slug: apartment-building-bicycle-parking
+    label: apartment building bicycle parking
+    description: A cramped bike area with overlapping handlebars and everyday storage spillover.
+    category: place
+    rarity: common
+    weight: 85
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle, humid]
+    time_context: [early_morning, morning, evening, night]
+    environment: [residential, outdoor]
+    tags: [residential, minor-clutter, routine]
+    status: active
+  - slug: convenience-store-side-parking-area
+    label: convenience store side parking area
+    description: A side area with delivery markings, parked bicycles, and leftover fluorescent spill.
+    category: place
+    rarity: common
+    weight: 80
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle]
+    time_context: [late_afternoon, evening, night]
+    environment: [commercial, street, outdoor]
+    tags: [commercial, routine, lighting]
+    status: active
+  - slug: pedestrian-overpass-near-the-main-road
+    label: pedestrian overpass near the main road
+    description: A practical crossing above traffic with railings, signs, and views interrupted by infrastructure.
+    category: place
+    rarity: uncommon
+    weight: 55
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle, humid]
+    time_context: [morning, afternoon, evening]
+    environment: [street, outdoor]
+    tags: [infrastructure, transit, movement]
+    status: active
+  - slug: residential-lane-with-small-front-gardens
+    label: residential lane with small front gardens
+    description: A quiet lane where potted plants, parked bicycles, and utility boxes share the edge of the frame.
+    category: place
+    rarity: common
+    weight: 75
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle, humid]
+    time_context: [morning, afternoon, late_afternoon]
+    environment: [residential, street, outdoor]
+    tags: [residential, quiet, routine]
+    status: active
+  - slug: supermarket-bagging-counter-area
+    label: supermarket bagging counter area
+    description: A practical corner with baskets, plastic bags, and brief pauses after checkout.
+    category: place
+    rarity: uncommon
+    weight: 60
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle, humid, snow]
+    time_context: [morning, afternoon, evening]
+    environment: [indoor, commercial]
+    tags: [shopping, minor-clutter, routine]
+    status: active
+  - slug: bus-stop-with-low-rail-and-ad-board
+    label: bus stop with low rail and ad board
+    description: A modest stop with seating, guard rails, and a view partly blocked by the road.
+    category: place
+    rarity: common
+    weight: 70
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle, humid]
+    time_context: [early_morning, morning, afternoon, evening, night]
+    environment: [transit, street, outdoor]
+    tags: [waiting, transit, routine]
+    status: active
+  - slug: riverside-path-below-housing-blocks
+    label: riverside path below housing blocks
+    description: A plain local riverside path where laundry, railings, and concrete edges matter more than scenery.
+    category: place
+    rarity: uncommon
+    weight: 45
+    visibility: background
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, humid]
+    time_context: [morning, afternoon, late_afternoon]
+    environment: [outdoor, residential]
+    tags: [walking, residential, open-space]
+    status: active
+  - slug: office-building-smoking-corner-without-anyone-smoking
+    label: office building smoking corner without anyone smoking
+    description: A plain sheltered side area with signs, metal stands, and traces of brief pauses.
+    category: place
+    rarity: uncommon
+    weight: 35
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle, snow]
+    time_context: [noon, afternoon, evening]
+    environment: [commercial, outdoor]
+    tags: [workday, pause, side-space]
+    status: active
+  - slug: cafeteria-return-shelf-area
+    label: cafeteria return shelf area
+    description: A narrow indoor corner of stacked trays, cups, and brief lunchtime movement.
+    category: place
+    rarity: uncommon
+    weight: 42
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle, humid, snow]
+    time_context: [noon, afternoon]
+    environment: [indoor, commercial]
+    tags: [lunch, trays, routine]
+    status: active
+  - slug: convenience-store-front-on-a-cloudy-morning
+    label: convenience store front on a cloudy morning
+    description: A familiar storefront whose colors feel flatter under overcast light and practical traffic.
+    category: place
+    rarity: common
+    weight: 52
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [cloudy]
+    time_context: [early_morning, morning]
+    environment: [commercial, street, outdoor]
+    tags: [cloudy, storefront, routine]
+    status: active
+  - slug: apartment-corridor-with-damp-floor-mat
+    label: apartment corridor with damp floor mat
+    description: A shared corridor where the weather lingers quietly on the ground and door edges.
+    category: place
+    rarity: uncommon
+    weight: 40
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [cloudy, rain, drizzle, snow]
+    time_context: [morning, afternoon, evening]
+    environment: [residential, indoor]
+    tags: [residential, weather-trace, quiet]
+    status: active
+  - slug: supermarket-prepared-food-shelf-edge
+    label: supermarket prepared food shelf edge
+    description: A practical aisle edge with price cards, plastic lids, and people briefly deciding what to take home.
+    category: place
+    rarity: common
+    weight: 63
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle, humid, snow]
+    time_context: [afternoon, evening, night]
+    environment: [indoor, commercial]
+    tags: [shopping, dinner, routine]
+    status: active
+  - slug: residential-alley-with-recycling-crates
+    label: residential alley with recycling crates
+    description: A narrow back lane where stacked crates, posted notices, and utility pipes crowd the ordinary path.
+    category: place
+    rarity: uncommon
+    weight: 44
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle, humid]
+    time_context: [early_morning, morning, afternoon]
+    environment: [residential, street, outdoor]
+    tags: [residential, clutter, routine]
+    status: active
+  - slug: train-station-underpass-with-ticket-machines-off-to-the-side
+    label: train station underpass with ticket machines off to the side
+    description: A passage below the tracks where signage, columns, and side queues disrupt any clean view.
+    category: place
+    rarity: common
+    weight: 58
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle, humid, snow]
+    time_context: [early_morning, morning, afternoon, evening, night]
+    environment: [transit, indoor, street]
+    tags: [transit, obstruction, routine]
+    status: active
+  - slug: apartment-entrance-with-parcel-lockers
+    label: apartment entrance with parcel lockers
+    description: A shared building entrance where delivery lockers, umbrellas, and taped notices quietly fill the edges.
+    category: place
+    rarity: uncommon
+    weight: 39
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle, humid, snow]
+    time_context: [morning, afternoon, evening, night]
+    environment: [residential, indoor]
+    tags: [residential, delivery, minor-clutter]
+    status: active
+  - slug: shaded-path-beside-a-school-fence
+    label: shaded path beside a school fence
+    description: A plain side path with railings, posted signs, and alternating patches of shadow and open light.
+    category: place
+    rarity: uncommon
+    weight: 37
+    visibility: background
+    seasonality: [spring, summer, autumn]
+    weather: [clear, cloudy, humid]
+    time_context: [morning, afternoon, late_afternoon]
+    environment: [street, residential, outdoor]
+    tags: [walking, quiet, ordinary]
+    status: active
+  - slug: drugstore-entrance-with-stacked-baskets-and-sale-signs
+    label: drugstore entrance with stacked baskets and sale signs
+    description: A practical storefront threshold where baskets, signs, and automatic doors squeeze the passing view.
+    category: place
+    rarity: common
+    weight: 49
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle, humid, snow]
+    time_context: [morning, afternoon, evening, night]
+    environment: [commercial, street, outdoor]
+    tags: [errand, storefront, routine]
+    status: active
+  - slug: apartment-stair-landing-with-a-small-wire-window
+    label: apartment stair landing with a small wire window
+    description: A narrow shared landing where concrete, railings, and weak daylight make the space feel briefly paused.
+    category: place
+    rarity: uncommon
+    weight: 34
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle, humid, snow]
+    time_context: [morning, afternoon, evening, night]
+    environment: [residential, indoor]
+    tags: [residential, quiet, shared-space]
+    status: active
+  - slug: station-passage-with-lockers-and-a-ticket-gate-beyond
+    label: station passage with lockers and a ticket gate beyond
+    description: A functional connector space where lockers, columns, and passing bodies keep interrupting the view toward the gate.
+    category: place
+    rarity: common
+    weight: 46
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle, humid, snow]
+    time_context: [early_morning, morning, afternoon, evening, night]
+    environment: [transit, indoor, street]
+    tags: [transit, obstruction, routine]
+    status: active
+  - slug: office-side-street-with-vending-machines-and-delivery-crates
+    label: office side street with vending machines and delivery crates
+    description: A back-side workday street where deliveries, smokers, bicycles, and utility edges compete for space.
+    category: place
+    rarity: uncommon
+    weight: 32
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle, humid]
+    time_context: [morning, noon, afternoon, evening]
+    environment: [commercial, street, outdoor]
+    tags: [workday, clutter, side-space]
+    status: active
+  - slug: convenience-store-microwave-counter-edge
+    label: convenience store microwave counter edge
+    description: A small waiting area where microwaves, napkins, and plastic utensils quietly crowd the frame.
+    category: place
+    rarity: uncommon
+    weight: 29
+    visibility: midground
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain, drizzle, humid, snow]
+    time_context: [evening, night]
+    environment: [indoor, commercial]
+    tags: [convenience-store, dinner, waiting]
+    status: active

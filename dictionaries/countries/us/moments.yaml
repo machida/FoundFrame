@@ -1,0 +1,203 @@
+version: 1
+country: us
+entries:
+  - slug: carrying-takeout-back-to-the-car-before-it-gets-cold
+    label: carrying takeout back to the car before it gets cold
+    category: moment
+    rarity: common
+    weight: 78
+    visibility: ambient
+    time_context: [afternoon, evening, night]
+    environment: [commercial, street, outdoor]
+    tags: [errand, dinner, routine]
+    status: active
+  - slug: checking-the-mailboxes-on-the-way-back-in
+    label: checking the mailboxes on the way back in
+    category: moment
+    rarity: common
+    weight: 64
+    visibility: ambient
+    time_context: [afternoon, evening]
+    environment: [residential, indoor]
+    tags: [residential, routine, pause]
+    status: active
+  - slug: waiting-for-the-light-with-a-grocery-bag-cutting-into-the-hand
+    label: waiting for the light with a grocery bag cutting into the hand
+    category: moment
+    rarity: common
+    weight: 70
+    visibility: ambient
+    time_context: [afternoon, evening]
+    environment: [street, commercial, outdoor]
+    tags: [shopping, waiting, routine]
+    status: active
+  - slug: heading-across-the-parking-lot-after-a-short-store-run
+    label: heading across the parking lot after a short store run
+    category: moment
+    rarity: common
+    weight: 74
+    visibility: ambient
+    time_context: [morning, afternoon, evening]
+    environment: [commercial, outdoor, street]
+    tags: [errand, movement, routine]
+    status: active
+  - slug: lingering-by-the-laundry-machines-until-one-opens-up
+    label: lingering by the laundry machines until one opens up
+    category: moment
+    rarity: uncommon
+    weight: 43
+    visibility: ambient
+    time_context: [morning, afternoon, evening]
+    environment: [indoor, residential, commercial]
+    tags: [waiting, laundry, routine]
+    status: active
+  - slug: pulling-into-a-school-pickup-line-a-little-too-early
+    label: pulling into a school pickup line a little too early
+    category: moment
+    rarity: common
+    weight: 57
+    visibility: ambient
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain]
+    time_context: [afternoon]
+    environment: [street, outdoor, transit]
+    tags: [waiting, school, routine]
+    status: active
+  - slug: standing-with-a-drink-carrier-outside-the-drive-through-window
+    label: standing with a drink carrier outside the drive-through window
+    category: moment
+    rarity: uncommon
+    weight: 39
+    visibility: ambient
+    time_context: [morning, afternoon, evening]
+    environment: [commercial, outdoor, street]
+    tags: [takeout, waiting, ordinary]
+    status: active
+  - slug: crossing-a-big-parking-lot-toward-the-store-entrance-in-heat
+    label: crossing a big parking lot toward the store entrance in heat
+    category: moment
+    rarity: common
+    weight: 62
+    visibility: ambient
+    seasonality: [summer]
+    weather: [clear, humid]
+    time_context: [noon, afternoon]
+    environment: [commercial, outdoor, street]
+    tags: [summer, errand, movement]
+    status: active
+  - slug: pausing-at-the-office-park-curb-before-getting-back-in-the-car
+    label: pausing at the office park curb before getting back in the car
+    category: moment
+    rarity: uncommon
+    weight: 36
+    visibility: ambient
+    time_context: [late_afternoon, evening]
+    environment: [commercial, street, outdoor]
+    tags: [workday, pause, routine]
+    status: active
+  - slug: waiting-out-a-short-rain-under-a-grocery-store-overhang
+    label: waiting out a short rain under a grocery store overhang
+    category: moment
+    rarity: uncommon
+    weight: 41
+    visibility: ambient
+    seasonality: [spring, summer, autumn]
+    weather: [rain, drizzle]
+    time_context: [afternoon, evening]
+    environment: [commercial, outdoor, street]
+    tags: [rain, shopping, waiting]
+    status: active
+  - slug: brushing-light-snow-off-the-windshield-before-heading-home
+    label: brushing light snow off the windshield before heading home
+    category: moment
+    rarity: uncommon
+    weight: 26
+    visibility: ambient
+    seasonality: [winter]
+    weather: [snow, cloudy]
+    time_context: [late_afternoon, evening]
+    environment: [street, outdoor, transit]
+    tags: [winter, car, routine]
+    status: active
+  - slug: standing-just-inside-the-store-entry-to-cool-down
+    label: standing just inside the store entry to cool down
+    category: moment
+    rarity: uncommon
+    weight: 24
+    visibility: ambient
+    seasonality: [summer]
+    weather: [clear, humid]
+    time_context: [afternoon, evening]
+    environment: [commercial, indoor]
+    tags: [summer, pause, errand]
+    status: active
+  - slug: carrying-a-travel-mug-across-the-apartment-lot-before-work
+    label: carrying a travel mug across the apartment lot before work
+    category: moment
+    rarity: common
+    weight: 34
+    visibility: ambient
+    seasonality: [spring, autumn, winter]
+    weather: [clear, cloudy]
+    time_context: [early_morning, morning]
+    environment: [residential, outdoor, street]
+    tags: [workday, coffee, routine]
+    status: active
+  - slug: waiting-for-the-gas-pump-screen-to-wake-up-before-sunrise
+    label: waiting for the gas pump screen to wake up before sunrise
+    category: moment
+    rarity: uncommon
+    weight: 22
+    visibility: ambient
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, rain]
+    time_context: [early_morning]
+    environment: [commercial, outdoor, street]
+    tags: [gas-station, workday, waiting]
+    status: active
+  - slug: carrying-takeout-up-the-stairs-trying-not-to-drop-the-drink
+    label: carrying takeout up the stairs trying not to drop the drink
+    category: moment
+    rarity: common
+    weight: 31
+    visibility: ambient
+    time_context: [evening, night]
+    environment: [residential, indoor, street]
+    tags: [takeout, return-home, routine]
+    status: active
+  - slug: standing-in-the-driveway-for-a-second-before-going-inside
+    label: standing in the driveway for a second before going inside
+    category: moment
+    rarity: uncommon
+    weight: 19
+    visibility: ambient
+    seasonality: [spring, summer, autumn, winter]
+    weather: [clear, cloudy, humid, snow]
+    time_context: [night]
+    environment: [residential, outdoor]
+    tags: [return-home, pause, quiet]
+    status: active
+  - slug: slowing-down-under-a-store-awning-while-the-drizzle-keeps-going
+    label: slowing down under a store awning while the drizzle keeps going
+    category: moment
+    rarity: uncommon
+    weight: 18
+    visibility: ambient
+    seasonality: [spring, autumn]
+    weather: [drizzle, cloudy]
+    time_context: [afternoon, evening]
+    environment: [commercial, outdoor, street]
+    tags: [drizzle, waiting, errand]
+    status: active
+  - slug: standing-near-the-car-for-air-before-turning-on-the-engine
+    label: standing near the car for air before turning on the engine
+    category: moment
+    rarity: uncommon
+    weight: 17
+    visibility: ambient
+    seasonality: [summer]
+    weather: [humid, cloudy]
+    time_context: [late_afternoon, evening, night]
+    environment: [residential, outdoor, street]
+    tags: [summer, pause, car]
+    status: active

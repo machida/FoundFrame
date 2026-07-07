@@ -1,0 +1,29 @@
+version: 1
+compatibility_vocabularies:
+  seasons:
+    - spring
+    - summer
+    - autumn
+    - winter
+  weather:
+    - clear
+    - cloudy
+    - rain
+    - drizzle
+    - humid
+    - snow
+  time_context:
+    - early_morning
+    - morning
+    - noon
+    - afternoon
+    - late_afternoon
+    - evening
+    - night
+  environment:
+    - indoor
+    - outdoor
+    - transit
+    - residential
+    - commercial
+    - street
