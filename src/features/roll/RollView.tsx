@@ -187,9 +187,14 @@ export function RollView({
             {rollDetail.frames.map((frame) => (
               <article className="frame-card" key={frame.id}>
                 <h3>{locale === "ja" ? `フレーム ${frame.frameIndex}` : `Frame ${frame.frameIndex}`}</h3>
-                {imagePreviewSrc(frame.imagePath) ? (
+                {imagePreviewSrc(frame.thumbnailPath ?? frame.imagePath) ? (
                   <div className="frame-preview-shell">
-                    <img className="frame-preview" src={imagePreviewSrc(frame.imagePath) ?? undefined} alt={`Frame ${frame.frameIndex}`} />
+                    <img
+                      className="frame-preview"
+                      src={imagePreviewSrc(frame.thumbnailPath ?? frame.imagePath) ?? undefined}
+                      alt={`Frame ${frame.frameIndex}`}
+                      loading="lazy"
+                    />
                   </div>
                 ) : null}
                 <p>{localized(locale, "Type", "種類")}: {frameStageLabel(frame.stage, locale)}</p>
