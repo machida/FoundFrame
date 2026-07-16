@@ -39,6 +39,7 @@ Read this first, then move into the linked design or progress documents as neede
 - Situation starters with save, overwrite-by-name, rename, delete, search, and filtering
 - Roll creation with persisted roll/event/job records
 - Fixed 8-frame contact-sheet flow
+- Indeterminate, accessible generation progress panels for the contact sheet and nearby take; the provider does not expose a trustworthy percentage
 - Frame selection plus one nearby alternate take
 - Rule-based review output
 - Archive browsing, roll reopen, and favorites
@@ -86,6 +87,7 @@ Verified on 2026-07-17 from a clean `main` worktree before this handoff update:
 
 - `docs/logs/` is intended to be versioned handoff material. Keep the root-only `/logs/` ignore rule in `.gitignore`; a broad `logs` pattern also hides these documents.
 - The local SQLite file and generated images live under the Tauri app-data directory, not inside the repository. The exact database path is shown in the app's local-base panel.
+- Generated image previews use Tauri's asset protocol. It is enabled with the `protocol-asset` Cargo feature and scoped narrowly to `$APPDATA/images/**`; removing either setting produces broken-image placeholders even though the PNG files are valid on disk.
 - `scripts/dictionary/validate.sh` is still a placeholder. `scripts/dictionary/audit-coverage.sh` is useful for editorial coverage checks, but it is not strict YAML/schema validation.
 - Current frontend tests cover setup presentation and the dictionary-audit script. There is no browser-level or Tauri command integration test suite yet.
 - Japanese localization currently covers the application chrome, controls, workflow state, provider guidance, and rule-based review summaries. Editorial dictionary labels remain source-authored content and should gain a separate localized-content field rather than being embedded in UI translation tables.
