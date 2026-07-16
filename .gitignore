@@ -1,5 +1,7 @@
 # Logs
-logs
+/logs/
+!docs/logs/
+!docs/logs/*.md
 *.log
 npm-debug.log*
 yarn-debug.log*

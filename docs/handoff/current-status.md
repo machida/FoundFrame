@@ -69,6 +69,23 @@ Read this first, then move into the linked design or progress documents as neede
   - provider-failure degradation rules
   - dictionary repository behavior
 
+## Verification Snapshot
+
+Verified on 2026-07-17 from a clean `main` worktree before this handoff update:
+
+- `CI=true pnpm test`: 2 frontend test files, 5 tests passed
+- `CI=true pnpm build`: TypeScript compilation and Vite production build passed
+- `cargo test` from `src-tauri/`: 18 Rust tests passed
+- The OpenAI network path was not exercised during this verification because it requires a user-owned Keychain credential and may incur remote API usage
+
+## Practical Development Notes
+
+- `docs/logs/` is intended to be versioned handoff material. Keep the root-only `/logs/` ignore rule in `.gitignore`; a broad `logs` pattern also hides these documents.
+- The local SQLite file and generated images live under the Tauri app-data directory, not inside the repository. The exact database path is shown in the app's local-base panel.
+- `scripts/dictionary/validate.sh` is still a placeholder. `scripts/dictionary/audit-coverage.sh` is useful for editorial coverage checks, but it is not strict YAML/schema validation.
+- Current frontend tests cover setup presentation and the dictionary-audit script. There is no browser-level or Tauri command integration test suite yet.
+- Remote image generation uses `gpt-image-1`; no saved API key means the same workflow runs with local SVG stand-ins.
+
 ## Known Gaps
 
 - Dictionary depth is still sample-scale, not editorial-production scale.
@@ -76,6 +93,7 @@ Read this first, then move into the linked design or progress documents as neede
 - Remote generation exists, but the product still depends on fallback paths during development.
 - UI copy is much cleaner than before, but more implementation-language audit work is still possible.
 - README and docs are now usable for handoff, but architecture notes should keep evolving as boundaries harden.
+- Strict dictionary validation and end-to-end desktop workflow tests are not implemented yet.
 
 ## Next Recommended Work
 

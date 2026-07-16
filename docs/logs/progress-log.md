@@ -1,0 +1,172 @@
+# Progress Log
+
+## 2026-07-17
+
+- Re-audited repository structure, implementation boundaries, documentation, and Git state for a fresh development handoff.
+- Verified `CI=true pnpm test` with 5 passing frontend tests, `CI=true pnpm build`, and `cargo test` with 18 passing Rust tests.
+- Documented that the OpenAI network path was not exercised during this verification because it requires a user-owned Keychain credential and remote API usage.
+- Fixed the root log ignore rule so `docs/logs/decision-log.md` and `docs/logs/progress-log.md` can be tracked as intended.
+- Added practical handoff notes for Tauri app-data storage, placeholder dictionary validation, current test boundaries, and local-study fallback behavior.
+
+## 2026-06-30
+
+- Created initial docs-first planning set for overview, spec review, architecture, database, domain, UI, and roadmap.
+- Chose `FoundFrame` as the project name and `https://github.com/machida/FoundFrame.git` as the remote.
+- Chose OpenAI as the first provider.
+- Chose 8 individually generated frames as the v1 contact sheet model.
+- Chose one nearby alternate take as the post-selection step.
+- Chose a rule-based review engine for v1.
+- Chose YAML dictionary source files imported into SQLite.
+- Chose Zustand plus direct Tauri commands for v1 frontend state/data access.
+- Chose app-managed image storage for v1.
+- Chose `pnpm` as the package manager.
+- Scaffolded the initial Tauri v2 + React + TypeScript application.
+- Installed frontend dependencies with `pnpm`.
+- Approved the `esbuild` postinstall build required by `pnpm`.
+- Renamed template metadata to `FoundFrame`.
+- Added planned top-level directories for frontend, Rust backend, dictionaries, scripts, and tests.
+- Replaced the default template screen with a FoundFrame-specific placeholder shell.
+- Verified frontend TypeScript compilation with `CI=true pnpm exec tsc --noEmit`.
+- Verified frontend production build with `CI=true pnpm exec vite build`.
+- Reconstructed docs after scaffold generation overwrote the uncommitted `docs/` directory.
+- Added YAML schema starter files under `dictionaries/schemas/` and taxonomy files under `dictionaries/taxonomy/`.
+- Added initial sample dictionary content for Japan and the United States.
+- Added initial dictionary bundle manifest and fixture data.
+- Added `src-tauri/migrations/0001_initial.sql` for the v1 SQLite schema foundation.
+- Added dictionary and database script placeholders under `scripts/`.
+- Replaced the Rust `greet` template command with a FoundFrame bootstrap-status command and backend module skeletons.
+- Added Rust SQLite bootstrap helpers for app-managed database initialization.
+- Added a migration runner that applies `0001_initial.sql`.
+- Added YAML DTOs and dictionary loader services for taxonomy, bundle, and entry files.
+- Added backend debug/bootstrap commands that exercise database setup and dictionary file loading.
+- Verified `cargo check` succeeds after adding SQLite and YAML dependencies.
+- Added SQLite dictionary repository logic for upserting bundles, countries, categories, and entries.
+- Added a bootstrap application layer that initializes the DB and imports the initial bundle.
+- Added a setup bootstrap Tauri command that returns country options and suggested time/season/weather values.
+- Connected the frontend placeholder shell to real Tauri bootstrap/setup data.
+- Re-verified `cargo check`, `CI=true pnpm exec tsc --noEmit`, and `CI=true pnpm exec vite build`.
+- Added `CreateRollRequest` / `CreatedRollSummary` DTOs and backend roll creation flow.
+- Added SQLite roll persistence and initial `roll_created` event insertion.
+- Added a minimal setup form in the frontend for the seven core input fields.
+- Connected setup form submission to a real Tauri `create_roll` command.
+- Re-verified `cargo check`, `CI=true pnpm exec tsc --noEmit`, and `CI=true pnpm exec vite build` after roll-creation work.
+- Added a first-pass Roll DNA resolver module.
+- Changed new rolls from plain draft placeholders to queued rolls with a queued `contact_sheet` generation job record.
+- Added `contact_sheet_queued` event insertion during roll creation.
+- Updated the frontend created-roll panel to show generation job state.
+- Re-verified `cargo check`, `CI=true pnpm exec tsc --noEmit`, and `CI=true pnpm exec vite build` after Roll DNA and job-queue work.
+- Added a local contact-sheet simulation path that creates 8 frame records and updates roll/job status to ready/succeeded.
+- Added backend commands for processing a roll and fetching roll detail with frames.
+- Updated the frontend to trigger contact-sheet simulation and display generated frame records.
+- Re-verified `cargo check`, `CI=true pnpm exec tsc --noEmit`, and `CI=true pnpm exec vite build` after contact-sheet simulation work.
+- Added frame selection and alternate-take simulation flow in the backend.
+- Added alternate-take frame persistence and rule-based review placeholder persistence.
+- Added frontend actions for choosing a frame and displaying nearby-take review results.
+- Re-verified `cargo check`, `CI=true pnpm exec tsc --noEmit`, and `CI=true pnpm exec vite build` after alternate-take and review work.
+- Added a first macOS Keychain integration path for storing and clearing the OpenAI API key outside SQLite.
+- Added Tauri settings commands for reporting provider credential status and updating the OpenAI key.
+- Added a frontend provider settings panel for saving and clearing the OpenAI API key through backend-owned commands.
+- Re-verified `cargo check`, `CI=true pnpm exec tsc --noEmit`, and `CI=true pnpm exec vite build` after Keychain/settings work.
+- Added a hidden prompt-engine module based on `Universal Snapshot Prompt v25`.
+- Added an OpenAI provider module that calls `/v1/images/generations` for contact sheets and `/v1/images/edits` for nearby alternate takes.
+- Added app-managed PNG persistence for remotely generated images while preserving placeholder fallback behavior when no API key is configured.
+- Re-verified `cargo check`, `CI=true pnpm exec tsc --noEmit`, and `CI=true pnpm exec vite build` after provider and prompt-engine work.
+- Added SQLite-backed favorites repository functions and Tauri commands for favoriting frames.
+- Added a recent-rolls archive query and frontend archive panel.
+- Fixed Tauri DTO serialization to `camelCase` so the Rust/TypeScript command boundary matches the frontend types.
+- Re-verified `cargo check`, `CI=true pnpm exec tsc --noEmit`, and `CI=true pnpm exec vite build` after archive/favorites work.
+- Added SQLite-backed preset persistence and frontend preset save/apply controls.
+- Replaced the fixed review placeholder with rule-based scoring derived from the stored input snapshot and frame generation context.
+- Expanded the review DTO/UI to include `aiFeeling`, `compositionBalance`, and a human-readable summary.
+- Re-verified `cargo check`, `CI=true pnpm exec tsc --noEmit`, and `CI=true pnpm exec vite build` after presets/review work.
+- Added generation-job failure persistence with `error_code` / `error_message` propagation and roll status fallback to `failed`.
+- Added roll-level UI visibility for failed generation state and persisted error details.
+- Reorganized the frontend into clearer `Setup`, `Roll`, `Archive`, and `Settings` sections without introducing routing yet.
+- Added roll summary stat cards and inline frame preview shells in the roll view.
+- Switched local image preview rendering to Tauri `convertFileSrc(...)` for app-managed file paths.
+- Added a retry action for failed rolls and simplified archive-to-roll reopening.
+- Added preset deletion and removed the last preset-management dead end in the UI.
+- Improved archive roll reopening so the roll view restores persisted provider/prompt metadata from `RollDetail`.
+- Added archive search, status filtering, and sort controls in the frontend for growing roll history.
+- Changed preset save behavior to overwrite by name and exposed locked-random template state in the frontend.
+- Added provider-specific error classification so failed generation jobs can store codes like `provider_auth_invalid`, `provider_quota_exceeded`, `provider_rate_limited`, and `provider_timeout`.
+- Moved archive search/filter/sort from frontend-only filtering to a backend query contract with `query`, `status`, `sort`, and `limit`.
+- Added roll event timeline display in the roll view from persisted `roll_events`, improving workflow observability without exposing hidden prompts directly.
+- Added persisted review lookup on roll detail so reopening a roll also restores its latest evaluation summary.
+- Added Rust unit tests for review scoring behavior and preset overwrite behavior.
+- Verified `cargo test` passes with 3 passing tests in `src-tauri`.
+- Added preset rename support in both backend and frontend, plus one more Rust unit test for rename behavior.
+- Re-verified `cargo test` with 4 passing tests in `src-tauri`.
+- Added a backend-owned OpenAI connection-test command that validates the Keychain-stored API key against the model endpoint without exposing prompt internals.
+- Added a `Test Connection` button in Settings so provider credential health can be checked before running a roll.
+- Added frontend provider-health copy that distinguishes remote-photo mode from local-study fallback mode.
+- Added user-facing error translation for common OpenAI connection failures such as missing key, invalid auth, quota, rate limit, timeout, and server-side trouble.
+- Updated overview, UI direction, and roadmap docs so connection testing and placeholder fallback are explicit in handoff material.
+- Added SQLite-backed persistent `provider_health` state so Settings can survive restart with last check result and timestamp.
+- Connected contact-sheet and alternate-take provider failures back into persisted provider health, so auth/network failures degrade the shared provider state automatically.
+- Moved provider-health derivation and provider-error copy mapping out of `App.tsx` into `src/features/settings/providerHealth.ts`.
+- Broke the single-file frontend shell into feature-level view components for setup, settings, roll, and archive sections.
+- Moved setup field controls into `src/features/setup/SetupFields.tsx`, reducing `App.tsx` to orchestration and cross-view state.
+- Moved cross-view frontend loading/state/actions into `src/app/useFoundFrameApp.ts`, leaving `App.tsx` focused on shell composition.
+- Added `zustand` and moved shell state/actions into `src/stores/appStore.ts`, with `useFoundFrameApp` reduced to a thin hook bridge.
+- Split the Zustand shell store into workflow-oriented slices for shell, setup, archive, roll, and settings concerns while preserving the current hook API.
+- Added selector hooks on top of the Zustand store so `App.tsx` subscribes by workflow view instead of reading the entire shell state at once.
+- Changed roll creation so `random` and empty `locked_random` setup fields resolve to concrete country-aware values from controlled vocab and SQLite dictionary data instead of fixed fallback text.
+- Added a setup preview path so the frontend can show resolved current values for random and locked-random fields before roll creation.
+- Added field-level resolved preview copy in the setup form so each variable shows the current concrete outcome of manual, random, or locked-random state before roll creation.
+- Improved preset cards so they show country display name, country mode, template/lock mix, and a short situation-focus summary instead of a sparse code-only listing.
+- Reframed roll timeline events in the UI from raw internal event codes into user-facing photographic workflow language such as situation fixed, contact sheet returned, and nearby take developed.
+- Reworked the roll detail panel so it emphasizes photographic phase, returned frames, chosen frame, and nearby take status instead of exposing prompt-engine and job-oriented implementation terms as primary labels.
+- Added preset search and filtering in the setup view so growing libraries can be narrowed by name/content query, country, and locked-random vs standard template type.
+- Expanded architecture and roadmap docs so current UI copy rules, setup preview semantics, preset filtering behavior, and frontend/backend boundaries are explicit for future handoff.
+- Added Rust tests for setup resolution so manual inputs, empty locked-random inputs, and fallback country selection are now verified in backend test coverage.
+- Added Rust tests for archive queries so status filtering, free-text matching, and favorites-first sorting are now verified in backend coverage.
+- Expanded database and domain-model docs with current Roll DNA semantics, runtime persistence roles, archive read-model notes, and the latest backend coverage status for handoff quality.
+- Refined the roadmap into explicit execution tracks with scope, done criteria, and suggested order so future contributors can pick up concrete next implementation work without re-planning.
+- Expanded the Japan dictionary entries across `moment`, `place`, and `object_detail` so setup preview and roll creation have a broader everyday-life base before falling back to generic text.
+- Filled more Japan dictionary gaps for winter, snow, noon, and cloudy/indoor ordinary situations so runtime resolution depends less on broad catch-all entries.
+- Added shared frontend presentation helpers for roll/archive wording and reduced more technical labels in archive, settings, and review sections.
+- Continued Track B by softening setup and shell copy, including mode labels, starter actions, shell stats, and local-base status wording.
+- Added backend tests for roll creation persistence and provider-health upsert behavior, bringing Rust test coverage to 11 passing tests across workflow-critical persistence and service paths.
+- Added backend tests for archive default-limit and limit-clamping behavior, bringing Rust test coverage to 12 passing tests.
+- Extracted shared generation-failure persistence handling and added application-layer tests proving provider-coded failures degrade shared provider health while non-provider failures do not, bringing Rust test coverage to 14 passing tests.
+- Clarified Track D boundaries by documenting placeholder provider execution, shared failure persistence, and local rule-based review as explicit substitution layers rather than incidental implementation detail.
+- Split OpenAI provider implementation and rule-based review implementation into dedicated modules so placeholder/remote and review-boundary replacement points are clearer in the codebase.
+- Split placeholder SVG writing and app-managed image storage into dedicated filesystem modules so workflow code has clearer storage boundaries alongside the provider/review separation.
+- Moved shell-specific presentation helpers and the local-base bootstrap panel out of `App.tsx`, keeping the app shell closer to pure composition and improving future handoff clarity.
+- Removed raw country codes from roll and archive presentation by adding a shared country-display helper, aligning those screens with the UI rule that countries should read by display name.
+- Removed raw country codes from setup preview and softened review-metric labels so the primary workflow shows photographic-reading language instead of backend field names.
+- Removed `placeholder` from the primary settings copy and softened the shell intro so implementation-only fallback terminology leaks less into the user-facing product voice.
+- Expanded Japan dictionary coverage again across summer heat, after-rain pauses, late-night transit, prepared-food errands, residential back-lane spaces, and new small foreground interruptions so setup resolution depends less on generic fallback combinations.
+- Added minimum viable United States `moment` and `object_detail` dictionaries and bundled them into the initial sample set, reducing country-specific fallback gaps for the second selectable country.
+- Added dictionary repository tests for country import/default behavior and country-specific random lookup, bringing Rust backend coverage to 16 passing tests.
+- Added setup resolver tests for sparse-country behavior so partial country dictionaries keep their available ordinary-life fragments while missing categories fall back cleanly, bringing Rust backend coverage to 18 passing tests.
+- Expanded United States place coverage with laundromat, strip-mall, bus-stop, apartment stairwell, cart-return, and convenience-store aisle entries so non-Japan place resolution feels less narrow and repetitive.
+- Refined setup wording around open choices, kept surprises, starter filters, and current situation reading so the setup screen reads less like form-state mechanics and more like shaping a photographic situation.
+- Added shared setup label mapping for time, season, and weather so controlled vocab keys no longer leak into setup selectors, starter summaries, or the current situation reading panel.
+- Added shared local datetime formatting for preset updates, roll timestamps, archive cards, and timeline entries so raw persisted timestamp strings no longer leak into the main UI.
+- Replaced more raw numeric UI output with user-facing roll/frame wording, including archive saved-frame counts, roll frame counts, and chosen-frame presentation without leaking internal record ids.
+- Softened settings and archive copy again so terms like saved key, path check, preview, and roll opening lead ahead of lower-level storage or trace wording.
+- Centralized provider-mode presentation copy so Settings, Setup, and Roll now share the same remote-photo and local-study wording instead of drifting by screen.
+- Standardized the remaining shell and settings wording on `local study mode`, reducing mixed fallback terminology in the primary UI.
+- Reworked setup mode and starter-summary copy so preset cards and field previews now use user-facing phrases like fixed choices and kept surprises instead of leaking raw setup-mode jargon.
+- Expanded `README.md` so a new contributor or another AI can see the implemented workflow, verification commands, and handoff-document expectations without reading the whole codebase first.
+- Added `docs/handoff/current-status.md` as a fast handoff entry point that summarizes implemented scope, known gaps, next recommended work, and the recommended reading order across the longer docs set.
+- Expanded United States dictionary coverage again across school pickup, suburban mailbox-cluster sidewalks, office-park curbs, drive-through edges, discount-store entryways, and matching cup/key/paper/rain object details so non-Japan randomization feels less pinned to a narrow errand loop.
+- Expanded Japan dictionary coverage again across apartment shared corridors and stair landings, station passages, drugstore entrances, office side streets, convenience-store microwave waiting, and matching wet-floor/key/file/lunch-tray details so setup resolution has better continuity between indoor, transit, and end-of-day scenes.
+- Added `scripts/dictionary/audit-coverage.sh` as a lightweight editorial audit tool so thin `time_context` / `weather` / `seasonality` coverage can be spotted quickly by country and category before adding more entries.
+- Used the new coverage audit to identify that United States `moments` and `object-details` lacked seasonal and weather specificity, then added summer heat, short-rain, and winter car/boot/cup traces to close part of that gap.
+- Added setup-preview source hints so the current situation reading now shows whether each resolved field came from a fixed choice, a kept surprise, or an app choice without exposing hidden prompt assembly.
+- Expanded Japan and United States `object-details` again with early-morning and night-specific ordinary remnants such as trash bags, mailbox/key contact, folded umbrellas, windshield streaks, takeout sauce tubs, and porch-light plastic reflections so the smallest clues are less biased toward daytime-only situations.
+- Expanded United States `moments` with early-morning and night-specific ordinary actions such as apartment-lot coffee walks, pre-sunrise gas pumps, takeout stair climbs, and driveway pauses so US situation resolution is less concentrated in afternoon errand scenes.
+- Expanded United States `places` with more noon and late-afternoon anchors such as strip-mall bench edges, supermarket deli pickup shelves, office-park lunch tables, and apartment package-locker bays so the place layer better supports midday and return-hour ordinary life.
+- Expanded Japan `moments` with more early-morning ordinary actions such as bakery carry-outs, bicycle-lock pauses, and warm coffee just after stepping outside so Japan setup resolution has better continuity before the commute fully settles into day.
+- Expanded United States `object-details` with more late-afternoon return-hour clues such as warm deli bags, folded work lanyards, and receipts caught under drink trays so the foreground evidence better matches the newer place and moment timing coverage.
+- Added a short setup-preview situation-feel sentence so the current combination reads less like a raw field dump and more like a lightly interpreted photographic situation without exposing prompt internals.
+- Expanded United States dictionary coverage across `moments`, `places`, and `object-details` for drizzle and humid conditions, adding awning slowdowns, damp strip-mall walkways, heat-holding breezeways, misted lids, and humid wrist details so weather variation feels less binary.
+- Refined the setup-preview situation-feel text so Japan and United States combinations now read with slightly more country-specific ordinary-life rhythm instead of sharing one mostly generic atmospheric sentence pattern.
+- Refined the setup-preview situation-feel text again so the sentence now also carries a light seasonal weight instead of reading only from country, time, weather, and place.
+- Added `vitest` plus focused frontend unit tests for `setupSituationFeel`, covering Japan-specific transit wording, United States parking-lot wording, and the generic fallback path so preview-copy branches have a minimum regression net.
+- Added a lightweight `vitest` regression test for `scripts/dictionary/audit-coverage.sh`, proving the audit output still reports both countries and the expected metric sections without snapshotting volatile counts.
+- Confirmed local `pnpm tauri dev` startup succeeds on macOS for the current repo state, including frontend startup and Rust desktop launch.
+- Documented that `CI=true pnpm test` is the safer frontend test command in restricted environments because plain `pnpm test` may fail during pnpm dependency-state checks unrelated to the actual test run.
