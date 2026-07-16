@@ -36,13 +36,19 @@ export function formatCheckTimestamp(value: string | null, locale: Locale = "ja"
 }
 
 export function describeProviderError(message: string, locale: Locale = "ja") {
+  const normalizedMessage = message.toLowerCase();
   if (message.includes("provider_auth_missing") || message.includes("not stored in Keychain")) {
     return localized(locale, "No OpenAI key is saved yet. Save one in Settings first.", "OpenAIのキーがまだ保存されていません。まず設定画面で保存してください。");
   }
   if (message.includes("provider_auth_invalid") || message.includes("HTTP 401")) {
     return localized(locale, "The saved OpenAI key could not be verified. Check the key and try again.", "保存されているOpenAIのキーを確認できませんでした。入力内容を見直してください。");
   }
-  if (message.includes("provider_quota_exceeded")) {
+  if (
+    message.includes("provider_quota_exceeded") ||
+    normalizedMessage.includes("billing hard limit") ||
+    normalizedMessage.includes("billing quota") ||
+    normalizedMessage.includes("usage limit has been reached")
+  ) {
     return localized(locale, "The OpenAI quota has been reached. Check billing and usage.", "OpenAIの利用枠に達しています。請求設定または利用状況を確認してください。");
   }
   if (message.includes("provider_rate_limited")) {

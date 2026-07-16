@@ -79,6 +79,19 @@ fn openai_error_code(status: reqwest::StatusCode, response_json: &Value) -> Stri
         .get("error")
         .and_then(|error| error.get("type"))
         .and_then(Value::as_str);
+    let api_message = response_json
+        .get("error")
+        .and_then(|error| error.get("message"))
+        .and_then(Value::as_str)
+        .unwrap_or_default()
+        .to_lowercase();
+
+    if api_message.contains("billing hard limit")
+        || api_message.contains("billing quota")
+        || api_message.contains("usage limit has been reached")
+    {
+        return "provider_quota_exceeded".to_string();
+    }
 
     match (status.as_u16(), api_code, api_type) {
         (401, _, _) => "provider_auth_invalid".to_string(),
@@ -87,6 +100,26 @@ fn openai_error_code(status: reqwest::StatusCode, response_json: &Value) -> Stri
         (400, _, Some("invalid_request_error")) => "provider_request_invalid".to_string(),
         (500..=599, _, _) => "provider_server_error".to_string(),
         _ => "provider_request_failed".to_string(),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::openai_error_code;
+
+    #[test]
+    fn billing_hard_limit_is_classified_as_quota_even_for_http_400() {
+        let response = serde_json::json!({
+            "error": {
+                "message": "Billing hard limit has been reached.",
+                "type": "image_generation_user_error"
+            }
+        });
+
+        assert_eq!(
+            openai_error_code(reqwest::StatusCode::BAD_REQUEST, &response),
+            "provider_quota_exceeded"
+        );
     }
 }
 

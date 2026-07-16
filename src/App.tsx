@@ -15,6 +15,7 @@ import { BootstrapPanel } from "./features/shell/BootstrapPanel";
 import { countryLabel, imagePreviewSrc, viewLabel } from "./features/shell/shellPresentation";
 import {
   deriveProviderHealth,
+  describeProviderError,
   formatCheckTimestamp,
 } from "./features/settings/providerHealth";
 import { SettingsView } from "./features/settings/SettingsView";
@@ -166,7 +167,7 @@ function App() {
       {error ? (
         <section className="panel error-panel">
           <h2>{t("Something Needs Attention")}</h2>
-          <p>{t(error)}</p>
+          <p>{describeProviderError(t(error), locale)}</p>
         </section>
       ) : null}
 

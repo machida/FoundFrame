@@ -79,7 +79,7 @@ Verified on 2026-07-17 from a clean `main` worktree before this handoff update:
 
 - `CI=true pnpm test`: 2 frontend test files, 6 tests passed
 - `CI=true pnpm build`: TypeScript compilation and Vite production build passed
-- `cargo test` from `src-tauri/`: 22 Rust tests passed
+- `cargo test` from `src-tauri/`: 23 Rust tests passed
 - The OpenAI network path was not exercised during this verification because it requires a user-owned Keychain credential and may incur remote API usage
 
 ## Practical Development Notes
@@ -90,6 +90,7 @@ Verified on 2026-07-17 from a clean `main` worktree before this handoff update:
 - Current frontend tests cover setup presentation and the dictionary-audit script. There is no browser-level or Tauri command integration test suite yet.
 - Japanese localization currently covers the application chrome, controls, workflow state, provider guidance, and rule-based review summaries. Editorial dictionary labels remain source-authored content and should gain a separate localized-content field rather than being embedded in UI translation tables.
 - Remote image generation uses `gpt-image-1`; no saved API key means the same workflow runs with local SVG stand-ins.
+- OpenAI billing hard-limit HTTP 400 responses are classified as quota failures and shown with localized billing guidance instead of raw provider text.
 
 ## Known Gaps
 
