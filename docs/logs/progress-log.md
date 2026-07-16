@@ -2,6 +2,7 @@
 
 ## 2026-07-17
 
+- Changed the Roll tab to restore the most recent archived roll automatically after app restart, and added an explicit empty state when no roll exists.
 - Fixed repeated startup failure caused by replaying the initial `CREATE TABLE` migration against an existing database.
 - Added schema-version tracking, complete legacy-schema adoption, partial-schema protection, and three migration regression tests; verified 21 Rust tests pass.
 - Confirmed the running Tauri app rebuilt and restarted successfully against the existing local database without deleting user data.

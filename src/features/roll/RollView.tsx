@@ -80,6 +80,14 @@ export function RollView({
 
   return (
     <>
+      {!createdRoll && !rollDetail ? (
+        <section className="panel">
+          <h2>{localized(locale, "No roll is open", "開いているロールはありません")}</h2>
+          <p className="default-copy">
+            {localized(locale, "Create a roll in Setup, or open an existing roll from Archive.", "「状況をつくる」で新しいロールを作るか、「アーカイブ」から既存のロールを開いてください。")}
+          </p>
+        </section>
+      ) : null}
       {createdRoll ? (
         <section className="panel">
           <h2>{t("Current Roll")}</h2>

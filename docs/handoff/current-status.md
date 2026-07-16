@@ -48,6 +48,7 @@ Read this first, then move into the linked design or progress documents as neede
 - Local stand-in frame fallback when no usable remote credential is available
 - Japanese and English interface switching, with Japanese as the first-launch default and the choice persisted locally
 - A three-step first-roll guide on the setup screen that explains situation shaping, contact-sheet creation, and nearby-take selection
+- Roll-tab restoration of the newest archived roll after restart, avoiding a blank roll screen before contact-sheet generation
 - Local `pnpm tauri dev` startup has been confirmed recently on macOS in this repository state
 
 ## Current Coverage

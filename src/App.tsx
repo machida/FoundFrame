@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import "./App.css";
 import {
   useArchiveViewState,
@@ -106,6 +107,12 @@ function App() {
   const providerCheckedAt = formatCheckTimestamp(providerHealth.checkedAt, locale);
   const displayedReview = rollDetail?.latestReview ?? alternateTake?.review ?? null;
   const archiveStatuses = Array.from(new Set(archive.map((item) => item.status))).sort();
+
+  useEffect(() => {
+    if (activeView === "roll" && !rollDetail && archive.length > 0) {
+      void openRoll(archive[0].rollId);
+    }
+  }, [activeView, archive, openRoll, rollDetail]);
 
   return (
     <main className="shell">
