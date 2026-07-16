@@ -2,6 +2,7 @@
 
 ## 2026-07-17
 
+- Fixed roll-detail loading after a favorites join made the unqualified frame `id` sort ambiguous in SQLite; added a direct roll-detail regression test and verified 22 Rust tests pass.
 - Changed the Roll tab to restore the most recent archived roll automatically after app restart, and added an explicit empty state when no roll exists.
 - Fixed repeated startup failure caused by replaying the initial `CREATE TABLE` migration against an existing database.
 - Added schema-version tracking, complete legacy-schema adoption, partial-schema protection, and three migration regression tests; verified 21 Rust tests pass.

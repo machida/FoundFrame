@@ -79,7 +79,7 @@ Verified on 2026-07-17 from a clean `main` worktree before this handoff update:
 
 - `CI=true pnpm test`: 2 frontend test files, 6 tests passed
 - `CI=true pnpm build`: TypeScript compilation and Vite production build passed
-- `cargo test` from `src-tauri/`: 21 Rust tests passed
+- `cargo test` from `src-tauri/`: 22 Rust tests passed
 - The OpenAI network path was not exercised during this verification because it requires a user-owned Keychain credential and may incur remote API usage
 
 ## Practical Development Notes

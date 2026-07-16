@@ -209,8 +209,8 @@ pub fn fetch_roll_detail(connection: &Connection, roll_id: i64) -> Result<RollDe
               CASE WHEN favorites.id IS NULL THEN 0 ELSE 1 END AS is_favorite
             FROM frames
             LEFT JOIN favorites ON favorites.frame_id = frames.id
-            WHERE roll_id = ?1
-            ORDER BY frame_index ASC, id ASC
+            WHERE frames.roll_id = ?1
+            ORDER BY frames.frame_index ASC, frames.id ASC
             ",
         )
         .map_err(|source| AppError::Sqlite {
@@ -429,7 +429,7 @@ pub fn list_recent_rolls(
 mod tests {
     use rusqlite::Connection;
 
-    use super::list_recent_rolls;
+    use super::{fetch_roll_detail, list_recent_rolls};
     use crate::dto::frame::ArchiveQueryRequest;
     use crate::persistence::migrations;
 
@@ -488,6 +488,17 @@ mod tests {
                 [frame_id],
             )
             .expect("insert favorite");
+    }
+
+    #[test]
+    fn roll_detail_prepares_frame_query_with_favorites_join() {
+        let connection = setup_connection();
+        insert_roll(&connection, 1, 1, "queued", "2026-07-01T10:00:00Z");
+
+        let detail = fetch_roll_detail(&connection, 1).expect("fetch roll detail");
+
+        assert_eq!(detail.roll_id, 1);
+        assert!(detail.frames.is_empty());
     }
 
     #[test]
