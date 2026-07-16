@@ -427,6 +427,105 @@ body {
   margin-top: 24px;
 }
 
+.generation-progress {
+  margin-top: 20px;
+  padding: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(73, 104, 72, 0.3);
+  background: rgba(244, 248, 241, 0.92);
+}
+
+.generation-progress-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.generation-spinner {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  margin-top: 2px;
+  border: 3px solid rgba(73, 104, 72, 0.2);
+  border-top-color: #496848;
+  border-radius: 50%;
+  animation: generation-spin 0.9s linear infinite;
+}
+
+.generation-progress-title {
+  margin: 0;
+  color: #2c2018;
+  font-weight: 700;
+}
+
+.generation-progress-copy {
+  margin: 5px 0 0;
+  color: #58463a;
+  font-size: 0.92rem;
+}
+
+.generation-progress-track {
+  height: 4px;
+  margin-top: 16px;
+  overflow: hidden;
+  background: rgba(73, 104, 72, 0.15);
+}
+
+.generation-progress-track span {
+  display: block;
+  width: 38%;
+  height: 100%;
+  background: #496848;
+  animation: generation-travel 1.6s ease-in-out infinite;
+}
+
+.generation-progress-state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 0;
+  color: #496848;
+  font-size: 0.86rem;
+}
+
+.generation-progress-state span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #496848;
+  animation: generation-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes generation-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes generation-travel {
+  from {
+    transform: translateX(-105%);
+  }
+
+  to {
+    transform: translateX(270%);
+  }
+}
+
+@keyframes generation-pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .generation-spinner,
+  .generation-progress-track span,
+  .generation-progress-state span {
+    animation-duration: 3s;
+  }
+}
+
 .button-row {
   display: flex;
   flex-wrap: wrap;

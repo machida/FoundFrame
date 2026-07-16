@@ -41,6 +41,44 @@ function alternateTakeLabel(rollDetail: RollDetail, locale: Locale) {
   return frame ? (locale === "ja" ? `フレーム ${frame.frameIndex}` : `Frame ${frame.frameIndex}`) : localized(locale, "Ready", "完成");
 }
 
+function GenerationProgress({ kind, frameCount = 1 }: { kind: "contact-sheet" | "alternate"; frameCount?: number }) {
+  const { locale } = useLocale();
+  const isContactSheet = kind === "contact-sheet";
+  const title = isContactSheet
+    ? localized(locale, `Generating ${frameCount} photographs`, `${frameCount}枚の写真を生成しています`)
+    : localized(locale, "Generating a nearby take", "別テイクを生成しています");
+  const detail = isContactSheet
+    ? localized(
+        locale,
+        "The photographs will appear together when OpenAI finishes. Keep this window open while the request is running.",
+        "OpenAIでの生成が終わると、写真がまとめて表示されます。この画面を開いたままお待ちください。",
+      )
+    : localized(
+        locale,
+        "The new take will appear beside the contact sheet when it is ready.",
+        "生成が終わると、コンタクトシートの隣に新しい別テイクが表示されます。",
+      );
+
+  return (
+    <div className="generation-progress" role="status" aria-live="polite">
+      <div className="generation-progress-heading">
+        <span className="generation-spinner" aria-hidden="true" />
+        <div>
+          <p className="generation-progress-title">{title}</p>
+          <p className="generation-progress-copy">{detail}</p>
+        </div>
+      </div>
+      <div className="generation-progress-track" aria-hidden="true">
+        <span />
+      </div>
+      <p className="generation-progress-state">
+        <span aria-hidden="true" />
+        {localized(locale, "Waiting for the generated images…", "生成結果を待っています…")}
+      </p>
+    </div>
+  );
+}
+
 export function RollView({
   createdRoll,
   rollDetail,
@@ -89,7 +127,7 @@ export function RollView({
         </section>
       ) : null}
       {createdRoll ? (
-        <section className="panel">
+        <section className="panel" aria-busy={processingRoll}>
           <h2>{t("Current Roll")}</h2>
           <p className="default-copy">{localized(locale, "Next, build an 8-frame contact sheet. Then choose one frame to make a nearby take.", "次に8枚のコンタクトシートを作ります。気になる1枚を選ぶと、その近くの別テイクを作れます。")}</p>
           <ul className="detail-list">
@@ -113,6 +151,9 @@ export function RollView({
                   : t("Build Local Study Contact Sheet")}
             </button>
           </div>
+          {processingRoll ? (
+            <GenerationProgress kind="contact-sheet" frameCount={createdRoll.contactSheetFrameCount} />
+          ) : null}
         </section>
       ) : null}
 
@@ -133,14 +174,15 @@ export function RollView({
               <p className="failure-copy">
                 {localized(locale, "The roll was interrupted before the images came back. Adjust Settings if needed, then retry.", "画像が返る前に処理が中断しました。必要なら設定を確認して、再試行してください。")}
               </p>
-              <button className="secondary-button inline-button" type="button" onClick={onRetryCurrentRoll}>
-                {t("Retry Roll")}
+              <button className="secondary-button inline-button" type="button" disabled={processingRoll} onClick={onRetryCurrentRoll}>
+                {processingRoll ? t("Building Contact Sheet...") : t("Retry Roll")}
               </button>
             </div>
           ) : null}
           {rollDetail.generationErrorMessage ? (
             <p className="status-line">{localized(locale, "Last interruption", "直前のエラー")}: {rollDetail.generationErrorMessage}</p>
           ) : null}
+          {processingAlternate !== null ? <GenerationProgress kind="alternate" /> : null}
           <div className="frame-grid">
             {rollDetail.frames.map((frame) => (
               <article className="frame-card" key={frame.id}>
@@ -168,7 +210,7 @@ export function RollView({
                 {frame.stage === "contact_sheet" ? (
                   <button
                     className="secondary-button inline-button"
-                    disabled={processingAlternate === frame.id}
+                    disabled={processingAlternate !== null}
                     onClick={() => onChooseFrame(frame.id)}
                   >
                     {t(processingAlternate === frame.id ? "Generating Nearby Take..." : "Generate Nearby Take")}
