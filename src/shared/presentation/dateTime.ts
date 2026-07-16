@@ -1,4 +1,6 @@
-export function formatDateTime(value: string | null) {
+import type { Locale } from "../../i18n";
+
+export function formatDateTime(value: string | null, locale: Locale = "ja") {
   if (!value) {
     return null;
   }
@@ -8,7 +10,7 @@ export function formatDateTime(value: string | null) {
     return value;
   }
 
-  return date.toLocaleString("ja-JP", {
+  return date.toLocaleString(locale === "ja" ? "ja-JP" : "en-US", {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",

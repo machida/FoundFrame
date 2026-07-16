@@ -50,4 +50,21 @@ describe("setupSituationFeel", () => {
     expect(result).toContain("routines have gone slightly loose at the edges");
     expect(result).toContain("passes through more often than they notice");
   });
+
+  it("provides a Japanese situation reading", () => {
+    const result = setupSituationFeel({
+      countryCode: "jp",
+      moment: "leaving the station without being in a hurry",
+      place: "train station underpass",
+      time: "evening",
+      season: "autumn",
+      weather: "cloudy",
+      tinyDetail: "a folded receipt",
+    }, "ja");
+
+    expect(result).toContain("日本の日常");
+    expect(result).toContain("夕方");
+    expect(result).toContain("曇り");
+    expect(result).toContain("秋らしさ");
+  });
 });

@@ -18,10 +18,12 @@ import {
 } from "./features/settings/providerHealth";
 import { SettingsView } from "./features/settings/SettingsView";
 import { SetupView } from "./features/setup/SetupView";
+import { useLocale } from "./i18n";
 
 const appViews = ["setup", "roll", "archive", "settings"] as const;
 
 function App() {
+  const { locale, setLocale, t } = useLocale();
   useFoundFrameApp();
   const {
     activeView,
@@ -94,26 +96,30 @@ function App() {
   } = useSettingsViewState();
 
   const countryOptions = setupData?.countries ?? [];
-  const displayCountry = (countryCode: string) => countryLabel(countryCode, countryOptions);
+  const displayCountry = (countryCode: string) => countryLabel(countryCode, countryOptions, locale);
   const timeOptions = setupData?.suggestedTimes ?? [];
   const seasonOptions = setupData?.suggestedSeasons ?? [];
   const weatherOptions = setupData?.suggestedWeather ?? [];
   const openAiCredential =
     settings?.providerCredentials.find((credential) => credential.providerKey === "openai") ?? null;
-  const providerHealth = deriveProviderHealth(openAiCredential);
-  const providerCheckedAt = formatCheckTimestamp(providerHealth.checkedAt);
+  const providerHealth = deriveProviderHealth(openAiCredential, locale);
+  const providerCheckedAt = formatCheckTimestamp(providerHealth.checkedAt, locale);
   const displayedReview = rollDetail?.latestReview ?? alternateTake?.review ?? null;
   const archiveStatuses = Array.from(new Set(archive.map((item) => item.status))).sort();
 
   return (
     <main className="shell">
       <section className="hero">
-        <p className="eyebrow">FoundFrame</p>
-        <h1>Not generated. Found.</h1>
+        <div className="hero-topline">
+          <p className="eyebrow">FoundFrame</p>
+          <div className="language-switch" aria-label={locale === "ja" ? "表示言語" : "Display language"}>
+            <button className={locale === "ja" ? "language-button active" : "language-button"} onClick={() => setLocale("ja")}>日本語</button>
+            <button className={locale === "en" ? "language-button active" : "language-button"} onClick={() => setLocale("en")}>English</button>
+          </div>
+        </div>
+        <h1>{t("Not generated. Found.")}</h1>
         <p className="intro">
-          FoundFrame turns a small situation into one quiet roll of photographs.
-          When OpenAI is connected it can produce remote frames. Without that
-          connection, the same flow stays available in local study mode.
+          {t("FoundFrame turns a small situation into one quiet roll of photographs. When OpenAI is connected it can produce remote frames. Without that connection, the same flow stays available in local study mode.")}
         </p>
       </section>
 
@@ -126,25 +132,25 @@ function App() {
               className={view === activeView ? "nav-chip nav-chip-active" : "nav-chip"}
               onClick={() => setActiveView(view)}
             >
-              {viewLabel(view)}
+              {viewLabel(view, locale)}
             </button>
           ))}
         </div>
         <div className="stats-row">
           <article className="stat-card">
-            <span>Rolls</span>
+            <span>{t("Rolls")}</span>
             <strong>{archive.length}</strong>
           </article>
           <article className="stat-card">
-            <span>Presets</span>
+            <span>{t("Presets")}</span>
             <strong>{presets.length}</strong>
           </article>
           <article className="stat-card">
-            <span>Frames</span>
+            <span>{t("Frames")}</span>
             <strong>{rollDetail?.frames.length ?? 0}</strong>
           </article>
           <article className="stat-card">
-            <span>Photo Path</span>
+            <span>{t("Photo Path")}</span>
             <strong>{providerHealth.title}</strong>
           </article>
         </div>
@@ -152,8 +158,8 @@ function App() {
 
       {error ? (
         <section className="panel error-panel">
-          <h2>Something Needs Attention</h2>
-          <p>{error}</p>
+          <h2>{t("Something Needs Attention")}</h2>
+          <p>{t(error)}</p>
         </section>
       ) : null}
 
@@ -224,7 +230,7 @@ function App() {
           onToggleFavorite={(frameId, isFavorite) => void toggleFavorite(frameId, isFavorite)}
           imagePreviewSrc={imagePreviewSrc}
           countryLabel={displayCountry}
-          describeRollEvent={describeRollEvent}
+          describeRollEvent={(event) => describeRollEvent(event, locale)}
         />
       ) : null}
 

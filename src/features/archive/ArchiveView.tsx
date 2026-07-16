@@ -6,6 +6,7 @@ import {
   rollTitleLabel,
   savedFramesLabel,
 } from "../roll/rollPresentation";
+import { localized, useLocale } from "../../i18n";
 
 export function ArchiveView({
   archiveQuery,
@@ -34,47 +35,48 @@ export function ArchiveView({
   countryLabel: (countryCode: string) => string;
   onOpenRoll: (rollId: number) => void;
 }) {
+  const { locale, t } = useLocale();
   return (
     <section className="panel">
-      <h2>Archive</h2>
+      <h2>{t("Archive")}</h2>
       <div className="archive-controls">
         <input
           value={archiveQuery}
-          placeholder="Search by roll, country, or small detail"
+          placeholder={t("Search by roll, country, or small detail")}
           onChange={(event) => setArchiveQuery(event.target.value)}
         />
         <select value={archiveStatusFilter} onChange={(event) => setArchiveStatusFilter(event.target.value)}>
-          <option value="all">All phases</option>
-          {archiveStatusOptions(archiveStatuses).map((status) => (
+          <option value="all">{t("All phases")}</option>
+          {archiveStatusOptions(archiveStatuses, locale).map((status) => (
             <option key={status.value} value={status.value}>
               {status.label}
             </option>
           ))}
         </select>
         <select value={archiveSort} onChange={(event) => setArchiveSort(event.target.value as "newest" | "oldest" | "favorites")}>
-          <option value="newest">Newest first</option>
-          <option value="oldest">Oldest first</option>
-          <option value="favorites">Most favorites</option>
+          <option value="newest">{t("Newest first")}</option>
+          <option value="oldest">{t("Oldest first")}</option>
+          <option value="favorites">{t("Most favorites")}</option>
         </select>
       </div>
       {archive.length > 0 ? (
         <div className="archive-grid">
           {archive.map((item) => (
             <article className="archive-card" key={item.rollId}>
-              <h3>{rollTitleLabel(item.rollId)}</h3>
-              <p>Phase: {archiveStatusLabel(item.status)}</p>
-              <p>Country: {countryLabel(item.countryCode)}</p>
-              <p>Loaded: {formatDateTime(item.createdAt)}</p>
-              <p>{savedFramesLabel(item.favoriteCount)}</p>
-              <p>Chosen frame: {item.selectedFrameId ? "Chosen" : "None yet"}</p>
+              <h3>{rollTitleLabel(item.rollId, locale)}</h3>
+              <p>{localized(locale, "Phase", "段階")}: {archiveStatusLabel(item.status, locale)}</p>
+              <p>{t("Country")}: {countryLabel(item.countryCode)}</p>
+              <p>{localized(locale, "Loaded", "作成日時")}: {formatDateTime(item.createdAt, locale)}</p>
+              <p>{savedFramesLabel(item.favoriteCount, locale)}</p>
+              <p>{localized(locale, "Chosen frame", "選んだフレーム")}: {item.selectedFrameId ? localized(locale, "Chosen", "選択済み") : localized(locale, "None yet", "未選択")}</p>
               {imagePreviewSrc(item.previewImagePath ?? "") ? (
                 <div className="frame-preview-shell archive-preview-shell">
                   <img className="frame-preview" src={imagePreviewSrc(item.previewImagePath ?? "") ?? undefined} alt={`Roll ${item.rollId}`} />
                 </div>
               ) : null}
-              <p className="frame-path">{item.previewImagePath ?? "No frame preview yet"}</p>
+              <p className="frame-path">{item.previewImagePath ?? t("No frame preview yet")}</p>
               <button className="secondary-button inline-button" type="button" onClick={() => onOpenRoll(item.rollId)}>
-                Open Roll
+                {t("Open Roll")}
               </button>
             </article>
           ))}
@@ -82,10 +84,10 @@ export function ArchiveView({
       ) : (
         <p className="loading-copy">
           {loadingArchive
-            ? "Loading rolls..."
+            ? t("Loading rolls...")
             : archiveQuery || archiveStatusFilter !== "all"
-              ? "No rolls match the current filters."
-              : "No rolls yet."}
+              ? t("No rolls match the current filters.")
+              : t("No rolls yet.")}
         </p>
       )}
     </section>

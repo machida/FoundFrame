@@ -39,6 +39,14 @@
 
 ## Copy Direction
 
+### Interface language
+
+- Japanese and English are supported at the frontend presentation layer.
+- First launch defaults to Japanese; the explicit language switch is stored in local storage for later launches.
+- User-facing workflow labels and explanations must pass through locale-aware presentation helpers or the locale context.
+- Dictionary entry text is editorial content, not interface copy. Future translated dictionary content should use an explicit localized data field instead of growing the frontend UI translation table.
+- The setup view should keep the three-step first-roll guide visible until a more complete onboarding flow replaces it.
+
 Prefer:
 
 - roll

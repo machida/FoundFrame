@@ -4,6 +4,7 @@ import {
   type ProviderHealth,
 } from "./providerHealth";
 import type { ProviderCredentialStatus } from "../../lib/tauri/system";
+import { localized, useLocale } from "../../i18n";
 
 export function SettingsView({
   providerHealth,
@@ -30,49 +31,51 @@ export function SettingsView({
   onTestConnection: () => void;
   onClearApiKey: () => void;
 }) {
+  const { locale, t } = useLocale();
   return (
     <section className="panel">
-      <h2>Remote Photo Path</h2>
+      <h2>{t("Remote Photo Path")}</h2>
       <div className="settings-card">
         <p className="default-copy">
-          {settingsIntroCopy()}
+          {settingsIntroCopy(locale)}
         </p>
         <div className={`status-box status-${providerHealth.state}`}>
           <p className="status-title">{providerHealth.title}</p>
           <p className="status-copy">{providerHealth.detail}</p>
-          {providerCheckedAt ? <p className="status-meta">Last connection check: {providerCheckedAt}</p> : null}
+          {providerCheckedAt ? <p className="status-meta">{t("Last connection check")}: {providerCheckedAt}</p> : null}
         </div>
         <label className="field-card">
           <span>OpenAI API Key</span>
           <input
             type="password"
             value={apiKeyDraft}
-            placeholder={openAiCredential?.hasApiKey ? "Saved on this Mac" : "sk-..."}
+            placeholder={openAiCredential?.hasApiKey ? t("Saved on this Mac") : "sk-..."}
             onChange={(event) => setApiKeyDraft(event.target.value)}
           />
         </label>
         <div className="button-row">
           <button className="primary-button" disabled={savingApiKey} onClick={onSaveApiKey}>
-            {savingApiKey ? "Saving..." : "Save Key"}
+            {t(savingApiKey ? "Saving..." : "Save Key")}
           </button>
           <button
             className="secondary-button inline-button"
             disabled={testingConnection || !openAiCredential?.hasApiKey}
             onClick={onTestConnection}
           >
-            {testingConnection ? "Checking..." : "Check Path"}
+            {t(testingConnection ? "Checking..." : "Check Path")}
           </button>
           <button
             className="secondary-button inline-button"
             disabled={clearingApiKey || !openAiCredential?.hasApiKey}
             onClick={onClearApiKey}
           >
-            {clearingApiKey ? "Removing..." : "Remove Key"}
+            {t(clearingApiKey ? "Removing..." : "Remove Key")}
           </button>
         </div>
         <p className="status-line">
-          {settingsFallbackCopy()}
+          {settingsFallbackCopy(locale)}
         </p>
+        <p className="status-line">{localized(locale, "To try the app now, you can skip this screen and use local study mode.", "すぐ試すだけなら、この設定は飛ばして「状況をつくる」から始められます。")}</p>
       </div>
     </section>
   );

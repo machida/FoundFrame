@@ -43,6 +43,35 @@ body {
   color: #8b5e3f;
 }
 
+.hero-topline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.language-switch {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid rgba(68, 45, 31, 0.16);
+  background: rgba(255, 248, 239, 0.86);
+}
+
+.language-button {
+  border: 0;
+  background: transparent;
+  color: #6b5648;
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.language-button.active {
+  background: #3e2d21;
+  color: #f8eee4;
+}
+
 .hero h1 {
   margin: 0;
   font-size: clamp(2.6rem, 7vw, 5rem);
@@ -70,6 +99,44 @@ body {
 .panel h3 {
   margin: 0 0 12px;
   font-size: 0.95rem;
+}
+
+.getting-started {
+  margin: 0 0 28px;
+  padding: 18px;
+  border: 1px solid rgba(73, 104, 72, 0.22);
+  background: rgba(244, 248, 241, 0.88);
+}
+
+.getting-started h2 {
+  margin-bottom: 14px;
+}
+
+.getting-started-steps {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.getting-started-steps li {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  align-items: start;
+  gap: 10px;
+}
+
+.getting-started-steps strong {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #496848;
+  color: #fffaf4;
+  font-size: 0.8rem;
 }
 
 .nav-panel {

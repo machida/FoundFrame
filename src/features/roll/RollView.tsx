@@ -14,29 +14,31 @@ import {
   frameStageLabel,
   generationStatusLabel,
   reviewMetricLabel,
+  reviewSummaryLabel,
   reviewStyleLabel,
   reviewStatusLabel,
   returnedFramesLabel,
   rollStatusLabel,
   rollTitleLabel,
 } from "./rollPresentation";
+import { localized, useLocale, type Locale } from "../../i18n";
 
-function selectedFrameLabel(rollDetail: RollDetail) {
+function selectedFrameLabel(rollDetail: RollDetail, locale: Locale) {
   if (!rollDetail.selectedFrameId) {
-    return "None yet";
+    return localized(locale, "None yet", "未選択");
   }
 
   const frame = rollDetail.frames.find((item) => item.id === rollDetail.selectedFrameId);
-  return frame ? `Frame ${frame.frameIndex}` : "Chosen";
+  return frame ? (locale === "ja" ? `フレーム ${frame.frameIndex}` : `Frame ${frame.frameIndex}`) : localized(locale, "Chosen", "選択済み");
 }
 
-function alternateTakeLabel(rollDetail: RollDetail) {
+function alternateTakeLabel(rollDetail: RollDetail, locale: Locale) {
   if (!rollDetail.alternateTakeFrameId) {
-    return "Not made yet";
+    return localized(locale, "Not made yet", "未作成");
   }
 
   const frame = rollDetail.frames.find((item) => item.id === rollDetail.alternateTakeFrameId);
-  return frame ? `Frame ${frame.frameIndex}` : "Ready";
+  return frame ? (locale === "ja" ? `フレーム ${frame.frameIndex}` : `Frame ${frame.frameIndex}`) : localized(locale, "Ready", "完成");
 }
 
 export function RollView({
@@ -73,20 +75,22 @@ export function RollView({
     detail: string;
   };
 }) {
-  const modeCopy = rollModeCopy(providerHealth);
+  const { locale, t } = useLocale();
+  const modeCopy = rollModeCopy(providerHealth, locale);
 
   return (
     <>
       {createdRoll ? (
         <section className="panel">
-          <h2>Current Roll</h2>
+          <h2>{t("Current Roll")}</h2>
+          <p className="default-copy">{localized(locale, "Next, build an 8-frame contact sheet. Then choose one frame to make a nearby take.", "次に8枚のコンタクトシートを作ります。気になる1枚を選ぶと、その近くの別テイクを作れます。")}</p>
           <ul className="detail-list">
-            <li>Roll: {rollTitleLabel(createdRoll.rollId)}</li>
-            <li>Current phase: {rollStatusLabel(createdRoll.status)}</li>
-            <li>Country: {countryLabel(createdRoll.countryCode)}</li>
-            <li>{expectedFramesLabel(createdRoll.contactSheetFrameCount)}</li>
-            <li>First pass status: {generationStatusLabel(createdRoll.generationJobStatus)}</li>
-            <li>Created at: {formatDateTime(createdRoll.createdAt)}</li>
+            <li>{localized(locale, "Roll", "ロール")}: {rollTitleLabel(createdRoll.rollId, locale)}</li>
+            <li>{localized(locale, "Current phase", "現在の段階")}: {rollStatusLabel(createdRoll.status, locale)}</li>
+            <li>{t("Country")}: {countryLabel(createdRoll.countryCode)}</li>
+            <li>{expectedFramesLabel(createdRoll.contactSheetFrameCount, locale)}</li>
+            <li>{localized(locale, "First pass status", "コンタクトシート")}: {generationStatusLabel(createdRoll.generationJobStatus, locale)}</li>
+            <li>{localized(locale, "Created at", "作成日時")}: {formatDateTime(createdRoll.createdAt, locale)}</li>
           </ul>
           <div className={`mode-box mode-${providerHealth.state}`}>
             <p className="status-title">{modeCopy.title}</p>
@@ -95,10 +99,10 @@ export function RollView({
           <div className="action-row">
             <button className="primary-button" disabled={processingRoll} onClick={onProcessCreatedRoll}>
               {processingRoll
-                ? "Building Contact Sheet..."
+                ? t("Building Contact Sheet...")
                 : providerHealth.allowsRemoteGeneration
-                  ? "Build Contact Sheet"
-                  : "Build Local Study Contact Sheet"}
+                  ? t("Build Contact Sheet")
+                  : t("Build Local Study Contact Sheet")}
             </button>
           </div>
         </section>
@@ -106,41 +110,41 @@ export function RollView({
 
       {rollDetail ? (
         <section className="panel">
-          <h2>Roll State</h2>
+          <h2>{t("Roll State")}</h2>
           <ul className="detail-list">
-            <li>Overall state: {rollStatusLabel(rollDetail.status)}</li>
-            <li>Country: {countryLabel(rollDetail.countryCode)}</li>
-            <li>{returnedFramesLabel(rollDetail.frames.length)}</li>
-            <li>First pass status: {generationStatusLabel(rollDetail.generationJobStatus)}</li>
-            <li>Chosen frame: {selectedFrameLabel(rollDetail)}</li>
-            <li>Nearby take: {alternateTakeLabel(rollDetail)}</li>
-            <li>Started at: {formatDateTime(rollDetail.createdAt)}</li>
+            <li>{localized(locale, "Overall state", "全体の状態")}: {rollStatusLabel(rollDetail.status, locale)}</li>
+            <li>{t("Country")}: {countryLabel(rollDetail.countryCode)}</li>
+            <li>{returnedFramesLabel(rollDetail.frames.length, locale)}</li>
+            <li>{localized(locale, "First pass status", "コンタクトシート")}: {generationStatusLabel(rollDetail.generationJobStatus, locale)}</li>
+            <li>{localized(locale, "Chosen frame", "選んだフレーム")}: {selectedFrameLabel(rollDetail, locale)}</li>
+            <li>{localized(locale, "Nearby take", "別テイク")}: {alternateTakeLabel(rollDetail, locale)}</li>
+            <li>{localized(locale, "Started at", "開始日時")}: {formatDateTime(rollDetail.createdAt, locale)}</li>
           </ul>
           {rollDetail.generationJobStatus === "failed" ? (
             <div className="failure-box">
               <p className="failure-copy">
-                The roll was interrupted before the images came back. Adjust Settings if needed, then retry.
+                {localized(locale, "The roll was interrupted before the images came back. Adjust Settings if needed, then retry.", "画像が返る前に処理が中断しました。必要なら設定を確認して、再試行してください。")}
               </p>
               <button className="secondary-button inline-button" type="button" onClick={onRetryCurrentRoll}>
-                Retry Roll
+                {t("Retry Roll")}
               </button>
             </div>
           ) : null}
           {rollDetail.generationErrorMessage ? (
-            <p className="status-line">Last interruption: {rollDetail.generationErrorMessage}</p>
+            <p className="status-line">{localized(locale, "Last interruption", "直前のエラー")}: {rollDetail.generationErrorMessage}</p>
           ) : null}
           <div className="frame-grid">
             {rollDetail.frames.map((frame) => (
               <article className="frame-card" key={frame.id}>
-                <h3>Frame {frame.frameIndex}</h3>
+                <h3>{locale === "ja" ? `フレーム ${frame.frameIndex}` : `Frame ${frame.frameIndex}`}</h3>
                 {imagePreviewSrc(frame.imagePath) ? (
                   <div className="frame-preview-shell">
                     <img className="frame-preview" src={imagePreviewSrc(frame.imagePath) ?? undefined} alt={`Frame ${frame.frameIndex}`} />
                   </div>
                 ) : null}
-                <p>Type: {frameStageLabel(frame.stage)}</p>
-                <p>Review: {reviewStatusLabel(frame.reviewStatus)}</p>
-                <p>Favorite: {frame.isFavorite ? "Saved" : "Not saved"}</p>
+                <p>{localized(locale, "Type", "種類")}: {frameStageLabel(frame.stage, locale)}</p>
+                <p>{localized(locale, "Review", "読み取り")}: {reviewStatusLabel(frame.reviewStatus, locale)}</p>
+                <p>{localized(locale, "Favorite", "お気に入り")}: {frame.isFavorite ? localized(locale, "Saved", "保存済み") : localized(locale, "Not saved", "未保存")}</p>
                 <p className="frame-path">{frame.imagePath}</p>
                 <button
                   className="secondary-button inline-button"
@@ -148,10 +152,10 @@ export function RollView({
                   onClick={() => onToggleFavorite(frame.id, !frame.isFavorite)}
                 >
                   {favoriteFrameId === frame.id
-                    ? "Saving..."
+                    ? t("Saving...")
                     : frame.isFavorite
-                      ? "Remove Favorite"
-                      : "Save Favorite"}
+                      ? t("Remove Favorite")
+                      : t("Save Favorite")}
                 </button>
                 {frame.stage === "contact_sheet" ? (
                   <button
@@ -159,7 +163,7 @@ export function RollView({
                     disabled={processingAlternate === frame.id}
                     onClick={() => onChooseFrame(frame.id)}
                   >
-                    {processingAlternate === frame.id ? "Generating Nearby Take..." : "Generate Nearby Take"}
+                    {t(processingAlternate === frame.id ? "Generating Nearby Take..." : "Generate Nearby Take")}
                   </button>
                 ) : null}
               </article>
@@ -170,24 +174,24 @@ export function RollView({
 
       {displayedReview ? (
         <section className="panel">
-          <h2>Frame Reading</h2>
+          <h2>{t("Frame Reading")}</h2>
           <ul className="detail-list">
-            <li>Reading style: {reviewStyleLabel(displayedReview.evaluatorType)}</li>
-            <li>{reviewMetricLabel("overall")}: {displayedReview.overallScore}</li>
-            <li>{reviewMetricLabel("aiFeeling")}: {displayedReview.aiFeeling}</li>
-            <li>{reviewMetricLabel("accidentalFeeling")}: {displayedReview.accidentalFeeling}</li>
-            <li>{reviewMetricLabel("everydayLife")}: {displayedReview.everydayLife}</li>
-            <li>{reviewMetricLabel("memoryQuality")}: {displayedReview.memoryQuality}</li>
-            <li>{reviewMetricLabel("imperfection")}: {displayedReview.imperfection}</li>
-            <li>{reviewMetricLabel("compositionBalance")}: {displayedReview.compositionBalance}</li>
-            <li>Reading: {displayedReview.summary}</li>
+            <li>{localized(locale, "Reading style", "読み取り方式")}: {reviewStyleLabel(displayedReview.evaluatorType, locale)}</li>
+            <li>{reviewMetricLabel("overall", locale)}: {displayedReview.overallScore}</li>
+            <li>{reviewMetricLabel("aiFeeling", locale)}: {displayedReview.aiFeeling}</li>
+            <li>{reviewMetricLabel("accidentalFeeling", locale)}: {displayedReview.accidentalFeeling}</li>
+            <li>{reviewMetricLabel("everydayLife", locale)}: {displayedReview.everydayLife}</li>
+            <li>{reviewMetricLabel("memoryQuality", locale)}: {displayedReview.memoryQuality}</li>
+            <li>{reviewMetricLabel("imperfection", locale)}: {displayedReview.imperfection}</li>
+            <li>{reviewMetricLabel("compositionBalance", locale)}: {displayedReview.compositionBalance}</li>
+            <li>{localized(locale, "Reading", "コメント")}: {reviewSummaryLabel(displayedReview.summary, locale)}</li>
           </ul>
         </section>
       ) : null}
 
       {rollDetail ? (
         <section className="panel">
-          <h2>Roll Timeline</h2>
+          <h2>{t("Roll Timeline")}</h2>
           {rollDetail.events.length > 0 ? (
             <div className="timeline-list">
               {rollDetail.events.map((event) => {
@@ -197,7 +201,7 @@ export function RollView({
                   <article className="timeline-card" key={event.id}>
                     <div className="timeline-header">
                       <strong>{description.title}</strong>
-                      <span>{formatDateTime(event.createdAt)}</span>
+                      <span>{formatDateTime(event.createdAt, locale)}</span>
                     </div>
                     <p className="frame-path">{description.detail}</p>
                   </article>
@@ -205,7 +209,7 @@ export function RollView({
               })}
             </div>
           ) : (
-            <p className="loading-copy">No workflow events yet.</p>
+            <p className="loading-copy">{t("No workflow events yet.")}</p>
           )}
         </section>
       ) : null}

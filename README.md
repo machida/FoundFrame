@@ -12,6 +12,8 @@ The product is not an image generator. It is a photographic experience simulator
 - The Tauri desktop shell, SQLite bootstrap, dictionary import, and core roll workflow are implemented.
 - Setup supports `Country`, `Moment`, `Place`, `Time`, `Season`, `Weather`, and `Tiny Detail`.
 - Each setup field supports app-chosen, manual, and kept-surprise behavior.
+- The interface supports Japanese and English, defaults to Japanese on first launch, and remembers the selected language on this Mac.
+- The setup screen includes a three-step first-roll guide so the core workflow can be discovered without reading the project docs.
 - The app can create a roll, build a fixed 8-frame contact sheet, select a frame, generate one nearby take, and read a rule-based review.
 - OpenAI is the first remote photo path. API keys are stored in macOS Keychain, not SQLite.
 - Without a saved key, the workflow remains usable in local study mode with stand-in frames.

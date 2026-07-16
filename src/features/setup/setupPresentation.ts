@@ -1,9 +1,13 @@
 import type { ResolvedSetupPreview } from "../../lib/tauri/system";
 import type { InputMode } from "../../lib/tauri/system";
+import type { Locale } from "../../i18n";
 
 export type SetupSourceTone = "fixed" | "surprise" | "open";
 
-export function timeLabel(value: string) {
+export function timeLabel(value: string, locale: Locale = "en") {
+  if (locale === "ja") {
+    return ({ early_morning: "早朝", morning: "朝", noon: "昼", afternoon: "午後", late_afternoon: "夕方前", evening: "夕方", night: "夜" } as Record<string, string>)[value] ?? value;
+  }
   switch (value) {
     case "early_morning":
       return "Early morning";
@@ -24,7 +28,10 @@ export function timeLabel(value: string) {
   }
 }
 
-export function seasonLabel(value: string) {
+export function seasonLabel(value: string, locale: Locale = "en") {
+  if (locale === "ja") {
+    return ({ spring: "春", summer: "夏", autumn: "秋", winter: "冬" } as Record<string, string>)[value] ?? value;
+  }
   switch (value) {
     case "spring":
       return "Spring";
@@ -39,7 +46,10 @@ export function seasonLabel(value: string) {
   }
 }
 
-export function weatherLabel(value: string) {
+export function weatherLabel(value: string, locale: Locale = "en") {
+  if (locale === "ja") {
+    return ({ clear: "晴れ", cloudy: "曇り", rain: "雨", drizzle: "小雨", humid: "蒸し暑い", snow: "雪" } as Record<string, string>)[value] ?? value;
+  }
   switch (value) {
     case "clear":
       return "Clear";
@@ -58,18 +68,21 @@ export function weatherLabel(value: string) {
   }
 }
 
-export function setupValueLabel(field: "time" | "season" | "weather", value: string) {
+export function setupValueLabel(field: "time" | "season" | "weather", value: string, locale: Locale = "en") {
   switch (field) {
     case "time":
-      return timeLabel(value);
+      return timeLabel(value, locale);
     case "season":
-      return seasonLabel(value);
+      return seasonLabel(value, locale);
     case "weather":
-      return weatherLabel(value);
+      return weatherLabel(value, locale);
   }
 }
 
-export function setupModeLabel(mode: InputMode) {
+export function setupModeLabel(mode: InputMode, locale: Locale = "en") {
+  if (locale === "ja") {
+    return ({ random: "アプリにおまかせ", manual: "自分で決める", locked_random: "この結果を固定" } as Record<InputMode, string>)[mode];
+  }
   switch (mode) {
     case "random":
       return "App Chooses";
@@ -80,7 +93,10 @@ export function setupModeLabel(mode: InputMode) {
   }
 }
 
-export function previewModeLabel(mode: InputMode) {
+export function previewModeLabel(mode: InputMode, locale: Locale = "en") {
+  if (locale === "ja") {
+    return ({ random: "今回のおまかせ", manual: "指定した内容", locked_random: "固定した結果" } as Record<InputMode, string>)[mode];
+  }
   switch (mode) {
     case "locked_random":
       return "Kept surprise";
@@ -91,12 +107,19 @@ export function previewModeLabel(mode: InputMode) {
   }
 }
 
-export function presetModeSummary(lockedFields: number, manualFields: number, isLockedRandomTemplate: boolean) {
+export function presetModeSummary(lockedFields: number, manualFields: number, isLockedRandomTemplate: boolean, locale: Locale = "en") {
+  if (locale === "ja") {
+    const baseLabel = isLockedRandomTemplate ? "結果固定スターター" : "状況スターター";
+    return `${baseLabel}・結果固定 ${lockedFields}項目・指定 ${manualFields}項目`;
+  }
   const baseLabel = isLockedRandomTemplate ? "Keep-surprise starter" : "Situation starter";
   return `${baseLabel} • ${lockedFields} kept surprises • ${manualFields} fixed choices`;
 }
 
-export function setupSourceLabel(mode: InputMode) {
+export function setupSourceLabel(mode: InputMode, locale: Locale = "en") {
+  if (locale === "ja") {
+    return ({ manual: "指定", locked_random: "結果を固定", random: "おまかせ" } as Record<InputMode, string>)[mode];
+  }
   switch (mode) {
     case "manual":
       return "Fixed choice";
@@ -207,7 +230,11 @@ function placeFeel(place: string) {
   return "It feels like a place someone passes through more often than they notice.";
 }
 
-export function setupSituationFeel(preview: ResolvedSetupPreview) {
+export function setupSituationFeel(preview: ResolvedSetupPreview, locale: Locale = "en") {
+  if (locale === "ja") {
+    const country = preview.countryCode === "jp" ? "日本の日常" : preview.countryCode === "us" ? "アメリカの日常" : "日常";
+    return `${country}のなかで、${timeLabel(preview.time, locale)}の${weatherLabel(preview.weather, locale)}にふと見つけたような場面です。${seasonLabel(preview.season, locale)}らしさと、普段は見過ごす場所の気配を残します。`;
+  }
   const loweredPlace = preview.place.toLowerCase();
   const loweredMoment = preview.moment.toLowerCase();
 

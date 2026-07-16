@@ -1,5 +1,6 @@
 import type { InputMode, SetupInputField } from "../../lib/tauri/system";
 import { previewModeLabel, setupModeLabel, setupValueLabel } from "./setupPresentation";
+import { useLocale } from "../../i18n";
 
 function ModeSelect({
   value,
@@ -8,11 +9,12 @@ function ModeSelect({
   value: InputMode;
   onChange: (value: InputMode) => void;
 }) {
+  const { locale } = useLocale();
   return (
     <select className="mode-select" value={value} onChange={(event) => onChange(event.target.value as InputMode)}>
-      <option value="random">{setupModeLabel("random")}</option>
-      <option value="manual">{setupModeLabel("manual")}</option>
-      <option value="locked_random">{setupModeLabel("locked_random")}</option>
+      <option value="random">{setupModeLabel("random", locale)}</option>
+      <option value="manual">{setupModeLabel("manual", locale)}</option>
+      <option value="locked_random">{setupModeLabel("locked_random", locale)}</option>
     </select>
   );
 }
@@ -24,13 +26,14 @@ function FieldPreview({
   mode: InputMode;
   value?: string | null;
 }) {
+  const { locale } = useLocale();
   if (!value) {
     return null;
   }
 
   return (
     <small className="field-preview">
-      {previewModeLabel(mode)}: {value}
+      {previewModeLabel(mode, locale)}: {value}
     </small>
   );
 }
@@ -48,13 +51,14 @@ export function TextField({
   onModeChange: (mode: InputMode) => void;
   onValueChange: (value: string | null) => void;
 }) {
+  const { t } = useLocale();
   return (
     <label className="field-card">
       <span>{label}</span>
       <ModeSelect value={field.mode} onChange={onModeChange} />
       <input
         value={field.value ?? ""}
-        placeholder={field.mode === "random" ? "Leave open" : ""}
+        placeholder={field.mode === "random" ? t("Leave open") : ""}
         onChange={(event) => onValueChange(event.target.value || null)}
       />
       <FieldPreview mode={field.mode} value={resolvedPreview} />
@@ -79,21 +83,22 @@ export function SelectField({
   onModeChange: (mode: InputMode) => void;
   onValueChange: (value: string | null) => void;
 }) {
+  const { locale, t } = useLocale();
   return (
     <label className="field-card">
       <span>{label}</span>
       <ModeSelect value={field.mode} onChange={onModeChange} />
       <select value={field.value ?? ""} onChange={(event) => onValueChange(event.target.value || null)}>
-        <option value="">Leave open for now</option>
+        <option value="">{t("Leave open for now")}</option>
         {options.map((option) => (
           <option key={option} value={option}>
-            {setupValueLabel(displayField, option)}
+            {setupValueLabel(displayField, option, locale)}
           </option>
         ))}
       </select>
       <FieldPreview
         mode={field.mode}
-        value={resolvedPreview ? setupValueLabel(displayField, resolvedPreview) : resolvedPreview}
+        value={resolvedPreview ? setupValueLabel(displayField, resolvedPreview, locale) : resolvedPreview}
       />
     </label>
   );

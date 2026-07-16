@@ -45,6 +45,8 @@ Read this first, then move into the linked design or progress documents as neede
 - Explicit connection-test button in Settings
 - Shared provider-health presentation for remote photo path vs local study mode
 - Local stand-in frame fallback when no usable remote credential is available
+- Japanese and English interface switching, with Japanese as the first-launch default and the choice persisted locally
+- A three-step first-roll guide on the setup screen that explains situation shaping, contact-sheet creation, and nearby-take selection
 - Local `pnpm tauri dev` startup has been confirmed recently on macOS in this repository state
 
 ## Current Coverage
@@ -73,7 +75,7 @@ Read this first, then move into the linked design or progress documents as neede
 
 Verified on 2026-07-17 from a clean `main` worktree before this handoff update:
 
-- `CI=true pnpm test`: 2 frontend test files, 5 tests passed
+- `CI=true pnpm test`: 2 frontend test files, 6 tests passed
 - `CI=true pnpm build`: TypeScript compilation and Vite production build passed
 - `cargo test` from `src-tauri/`: 18 Rust tests passed
 - The OpenAI network path was not exercised during this verification because it requires a user-owned Keychain credential and may incur remote API usage
@@ -84,6 +86,7 @@ Verified on 2026-07-17 from a clean `main` worktree before this handoff update:
 - The local SQLite file and generated images live under the Tauri app-data directory, not inside the repository. The exact database path is shown in the app's local-base panel.
 - `scripts/dictionary/validate.sh` is still a placeholder. `scripts/dictionary/audit-coverage.sh` is useful for editorial coverage checks, but it is not strict YAML/schema validation.
 - Current frontend tests cover setup presentation and the dictionary-audit script. There is no browser-level or Tauri command integration test suite yet.
+- Japanese localization currently covers the application chrome, controls, workflow state, provider guidance, and rule-based review summaries. Editorial dictionary labels remain source-authored content and should gain a separate localized-content field rather than being embedded in UI translation tables.
 - Remote image generation uses `gpt-image-1`; no saved API key means the same workflow runs with local SVG stand-ins.
 
 ## Known Gaps

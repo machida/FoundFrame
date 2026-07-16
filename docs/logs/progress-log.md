@@ -2,6 +2,10 @@
 
 ## 2026-07-17
 
+- Added Japanese and English interface switching, with Japanese as the first-launch default and the selected language persisted locally.
+- Localized the setup, roll, archive, settings, provider-health, workflow-state, review-summary, country-name, and date presentation surfaces.
+- Added an in-product three-step first-roll guide explaining the shortest path through situation shaping, contact-sheet creation, frame selection, and nearby-take generation.
+- Added Japanese setup-reading coverage and re-verified the frontend with 6 passing tests plus a successful production build.
 - Re-audited repository structure, implementation boundaries, documentation, and Git state for a fresh development handoff.
 - Verified `CI=true pnpm test` with 5 passing frontend tests, `CI=true pnpm build`, and `cargo test` with 18 passing Rust tests.
 - Documented that the OpenAI network path was not exercised during this verification because it requires a user-owned Keychain credential and remote API usage.
