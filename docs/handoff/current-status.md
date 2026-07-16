@@ -27,6 +27,7 @@ Read this first, then move into the linked design or progress documents as neede
 
 - Tauri v2 + React + TypeScript + Rust + SQLite desktop foundation
 - SQLite bootstrap with migration runner
+- Restart-safe schema version tracking that adopts complete pre-versioning databases without deleting their data
 - YAML dictionary import into SQLite at bootstrap
 - Setup flow for `Country`, `Moment`, `Place`, `Time`, `Season`, `Weather`, `Tiny Detail`
 - Three setup behaviors per field: app-chosen, manual, kept surprise
@@ -77,7 +78,7 @@ Verified on 2026-07-17 from a clean `main` worktree before this handoff update:
 
 - `CI=true pnpm test`: 2 frontend test files, 6 tests passed
 - `CI=true pnpm build`: TypeScript compilation and Vite production build passed
-- `cargo test` from `src-tauri/`: 18 Rust tests passed
+- `cargo test` from `src-tauri/`: 21 Rust tests passed
 - The OpenAI network path was not exercised during this verification because it requires a user-owned Keychain credential and may incur remote API usage
 
 ## Practical Development Notes

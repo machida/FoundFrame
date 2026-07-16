@@ -1,5 +1,15 @@
 # Decision Log
 
+## 2026-07-17
+
+### Decision
+
+Use SQLite `PRAGMA user_version` for migration state. Adopt a complete unversioned v1 schema in place, preserve its data, and reject partial legacy schemas instead of replaying destructive or conflicting DDL.
+
+### Status
+
+Accepted
+
 ## 2026-07-01
 
 ### Decision

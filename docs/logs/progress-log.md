@@ -2,6 +2,9 @@
 
 ## 2026-07-17
 
+- Fixed repeated startup failure caused by replaying the initial `CREATE TABLE` migration against an existing database.
+- Added schema-version tracking, complete legacy-schema adoption, partial-schema protection, and three migration regression tests; verified 21 Rust tests pass.
+- Confirmed the running Tauri app rebuilt and restarted successfully against the existing local database without deleting user data.
 - Added Japanese and English interface switching, with Japanese as the first-launch default and the selected language persisted locally.
 - Localized the setup, roll, archive, settings, provider-health, workflow-state, review-summary, country-name, and date presentation surfaces.
 - Added an in-product three-step first-roll guide explaining the shortest path through situation shaping, contact-sheet creation, frame selection, and nearby-take generation.

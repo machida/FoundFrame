@@ -84,6 +84,9 @@
 - initial SQL migration file exists at `src-tauri/migrations/0001_initial.sql`
 - the migration includes editorial tables, runtime tables, and primary indexes for v1
 - Rust-side database bootstrap now opens an app-managed SQLite file and applies the initial migration batch
+- SQLite `PRAGMA user_version` records the applied schema version so startup does not replay `CREATE TABLE` statements.
+- Databases created before version tracking are adopted in place when all v1 tables are present; their data is preserved and marked as schema version 1.
+- A partial legacy schema is treated as an explicit error instead of being overwritten or silently completed.
 - dictionary categories, bundles, countries, and entries are now upserted into SQLite from YAML during bootstrap
 - provider health is now persisted in SQLite so the settings view can survive restart and reflect connection failures from generation flows
 - roll creation now persists both `input_snapshot_json` and a resolved `roll_dna_json`, then immediately creates a queued `generation_jobs` row and initial `roll_events`
