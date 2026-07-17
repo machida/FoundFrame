@@ -4,6 +4,7 @@
 
 - Classified OpenAI HTTP 400 billing-hard-limit responses as quota failures, localized the surfaced guidance, and added provider regression coverage; verified 23 Rust tests, 6 frontend tests, and the production build.
 - Tightened the hidden prompt engine against person-centered/portrait-like outputs and generated-photo color/texture tells; added prompt regression tests and verified 26 Rust tests pass.
+- Tightened the hidden prompt engine again so foreground interruptions stay incidental instead of centered hands/bags becoming substitute subjects; external prompt research found useful principles but no ready-made natural-snapshot skill suitable for direct adoption.
 - Fixed roll-detail loading after a favorites join made the unqualified frame `id` sort ambiguous in SQLite; added a direct roll-detail regression test and verified 22 Rust tests pass.
 - Changed the Roll tab to restore the most recent archived roll automatically after app restart, and added an explicit empty state when no roll exists.
 - Fixed repeated startup failure caused by replaying the initial `CREATE TABLE` migration against an existing database.

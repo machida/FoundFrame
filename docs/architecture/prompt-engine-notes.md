@@ -17,6 +17,8 @@ The internal reference prompt is constraint-first and anti-beauty:
 - Treat alternate take as another nearby frame, not correction
 - Treat people as incidental environmental fragments, not centered subjects or portrait candidates
 - Push color and texture toward mundane automatic-camera output, avoiding generated-photo tells such as glossy surfaces, smooth AI skin, HDR clarity, cinematic grading, artificial grain, and designed palettes
+- Keep obstructions incidental. Hands, sleeves, bags, straps, umbrellas, cups, and reflections may interrupt an edge or corner, but should not become centered substitute subjects.
+- Recent external prompt guidance consistently points toward concrete capture conditions, mundane light, small fitting imperfections, off-center subjects, and avoiding vague quality/style boosters. For FoundFrame, do not import generic "photorealistic DSLR" or portrait-oriented prompt recipes directly; translate them into ordinary automatic-camera constraints instead.
 
 ## Review Implications
 
