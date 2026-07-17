@@ -16,6 +16,9 @@ dist-ssr
 *.local
 src-tauri/target
 
+# Local visual references
+_sample/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

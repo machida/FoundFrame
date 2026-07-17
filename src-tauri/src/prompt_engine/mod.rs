@@ -84,6 +84,8 @@ Things that should quietly exist:
 - visual interruptions
 - slightly awkward framing
 - meaningless objects
+- shopfronts, signs, shelves, vending machines, chairs, walls, windows, traffic markings, and small public surfaces
+- large areas of ordinary pavement, sky, wall, counter, road, grass, or water
 - small primary colors
 - everyday movement
 - subtle imperfection
@@ -98,6 +100,14 @@ People policy:
 - no person should occupy the center as a clean subject
 - no person should feel cast, styled, posed, or emotionally directed
 - the frame may work even if no person is visible
+
+Everyday surface policy:
+
+- a frame may be led by a place, surface, sign, shelf, chair, vending machine, storefront, window, table, street marking, wall, number, or ordinary object
+- keep local text, signs, price boards, posters, labels, stickers, menus, packaging, and street furniture visible when they naturally belong
+- allow plain empty space and distance; the subject does not need to fill the frame
+- many successful frames can feel like someone noticed a small public surface, not a person
+- avoid turning these objects into clean product photography, graphic design studies, or symmetrical catalog shots
 
 Color and texture policy:
 
@@ -175,7 +185,7 @@ pub fn prompt_engine_version() -> &'static str {
 
 pub fn build_contact_sheet_prompt(roll_dna: &Value, frame_count: usize) -> String {
     format!(
-        "{UNIVERSAL_SNAPSHOT_PROMPT}\n\nUser Variables\n{}\n\nGenerate {} square frames from the same roll of film. The situation, country, camera behavior, and ordinary world are shared across the roll. Each frame should differ naturally through timing drift, overlapping people, small focus mistakes, edge interruptions, partial blocked sight lines, and accidental composition changes. Do not make the frames feel like curated variations, portraits, fashion images, travel images, or cinematic storyboards. If people appear, keep them incidental, off-center, small, partially hidden, or visually interrupted, but do not make them all turn their backs to the camera. Do not solve person-centered composition by replacing the person with a centered hand, bag, sleeve, or other foreground object. Several frames may be mostly place, objects, weather, light, or traces of activity rather than people. They are separate survivals from one mundane roll.",
+        "{UNIVERSAL_SNAPSHOT_PROMPT}\n\nUser Variables\n{}\n\nGenerate {} square frames from the same roll of film. The situation, country, camera behavior, and ordinary world are shared across the roll. Each frame should differ naturally through timing drift, overlapping people, small focus mistakes, edge interruptions, partial blocked sight lines, distance, empty areas, and accidental composition changes. Do not make the frames feel like curated variations, portraits, fashion images, travel images, product photography, street-photography trophies, or cinematic storyboards. If people appear, keep them incidental, off-center, small, partially hidden, or visually interrupted, but do not make them all turn their backs to the camera. Do not solve person-centered composition by replacing the person with a centered hand, bag, sleeve, or other foreground object. Several frames may be mostly place, signs, shopfronts, shelves, chairs, vending machines, walls, roads, tables, objects, weather, light, or traces of activity rather than people. They are separate survivals from one mundane roll.",
         base_situation_block(roll_dna),
         frame_count
     )
@@ -183,7 +193,7 @@ pub fn build_contact_sheet_prompt(roll_dna: &Value, frame_count: usize) -> Strin
 
 pub fn build_alternate_take_prompt(roll_dna: &Value) -> String {
     format!(
-        "{UNIVERSAL_SNAPSHOT_PROMPT}\n\nUser Variables\n{}\n\nGenerate one nearby alternate take from the same roll. It should feel like it happened a moment before or after the chosen frame, with the same place and light, but slightly shifted timing, edge interruptions, incidental people, object positions, and camera mistakes. Keep it ordinary and accidental. Do not improve the chosen frame. Do not make it cleaner, more centered, more portrait-like, more foreground-obstructed, more colorful, or more beautiful.",
+        "{UNIVERSAL_SNAPSHOT_PROMPT}\n\nUser Variables\n{}\n\nGenerate one nearby alternate take from the same roll. It should feel like it happened a moment before or after the chosen frame, with the same place and light, but slightly shifted timing, edge interruptions, incidental people, object positions, signs, surfaces, empty space, and camera mistakes. Keep it ordinary and accidental. Do not improve the chosen frame. Do not make it cleaner, more centered, more portrait-like, more foreground-obstructed, more colorful, or more beautiful.",
         base_situation_block(roll_dna)
     )
 }
@@ -201,7 +211,7 @@ mod tests {
         assert!(prompt.contains("centered foreground obstructions"));
         assert!(prompt.contains("portrait-like images"));
         assert!(prompt.contains("If people appear, keep them incidental"));
-        assert!(prompt.contains("Several frames may be mostly place, objects, weather, light, or traces of activity"));
+        assert!(prompt.contains("Several frames may be mostly place, signs, shopfronts"));
     }
 
     #[test]
@@ -255,5 +265,16 @@ mod tests {
         assert!(prompt.contains("do not make everyone face away"));
         assert!(prompt.contains("do not make them all turn their backs"));
         assert!(prompt.contains("front-facing, three-quarter, profile"));
+    }
+
+    #[test]
+    fn prompts_allow_place_and_surface_led_frames() {
+        let roll_dna = serde_json::json!({});
+        let prompt = build_contact_sheet_prompt(&roll_dna, 8);
+
+        assert!(prompt.contains("Everyday surface policy"));
+        assert!(prompt.contains("shopfronts, signs, shelves, vending machines"));
+        assert!(prompt.contains("plain empty space and distance"));
+        assert!(prompt.contains("street-photography trophies"));
     }
 }
