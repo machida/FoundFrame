@@ -60,14 +60,23 @@ Never create:
 - perfect exposure
 - balanced composition
 - hero subjects
+- centered people
+- portrait-like images
+- model-like faces or bodies
+- clear main characters
 - cinematic lighting
+- cinematic color grading
+- teal-orange grading
+- glossy digital texture
+- painterly texture
 - intentional nostalgia
+- artificial film grain
 - commercial beauty
 - portfolio aesthetics
 
 Things that should quietly exist:
 
-- ordinary people
+- ordinary people only as part of the environment
 - minor clutter
 - visual interruptions
 - slightly awkward framing
@@ -76,6 +85,22 @@ Things that should quietly exist:
 - everyday movement
 - subtle imperfection
 - quiet mystery
+
+People policy:
+
+- people may appear, but they are not the point of the photograph
+- faces are often turned away, partly blocked, small, soft, or outside the frame
+- no person should occupy the center as a clean subject
+- no person should feel cast, styled, posed, or emotionally directed
+- the frame may work even if no person is visible
+
+Color and texture policy:
+
+- use ordinary automatic-camera color, not a designed palette
+- keep whites, shadows, skin, concrete, plastic, metal, and fabric mundane
+- allow mixed indoor light, weak flash, mild blur, sensor noise, and uneven exposure
+- avoid smooth AI skin, waxy surfaces, hyper-detailed eyes, synthetic bokeh, and HDR clarity
+- avoid the specific look of generated photography, fashion editorials, travel advertising, or movie stills
 
 If this image looks intentionally photographed, reject it.
 
@@ -123,7 +148,7 @@ pub fn prompt_engine_version() -> &'static str {
 
 pub fn build_contact_sheet_prompt(roll_dna: &Value, frame_count: usize) -> String {
     format!(
-        "{UNIVERSAL_SNAPSHOT_PROMPT}\n\nUser Variables\n{}\n\nGenerate {} square frames from the same roll of film. The situation, country, camera behavior, and ordinary world are shared across the roll. Each frame should differ naturally through timing drift, overlapping people, small focus mistakes, blocked sight lines, and accidental composition changes. Do not make the frames feel like curated variations or cinematic storyboards. They are separate survivals from one mundane roll.",
+        "{UNIVERSAL_SNAPSHOT_PROMPT}\n\nUser Variables\n{}\n\nGenerate {} square frames from the same roll of film. The situation, country, camera behavior, and ordinary world are shared across the roll. Each frame should differ naturally through timing drift, overlapping people, small focus mistakes, blocked sight lines, and accidental composition changes. Do not make the frames feel like curated variations, portraits, fashion images, travel images, or cinematic storyboards. If people appear, keep them incidental, off-center, partially hidden, or visually interrupted. Several frames may be mostly place, objects, weather, light, or traces of activity rather than people. They are separate survivals from one mundane roll.",
         base_situation_block(roll_dna),
         frame_count
     )
@@ -131,7 +156,36 @@ pub fn build_contact_sheet_prompt(roll_dna: &Value, frame_count: usize) -> Strin
 
 pub fn build_alternate_take_prompt(roll_dna: &Value) -> String {
     format!(
-        "{UNIVERSAL_SNAPSHOT_PROMPT}\n\nUser Variables\n{}\n\nGenerate one nearby alternate take from the same roll. It should feel like it happened a moment before or after the chosen frame, with the same people, place, and light, but slightly shifted timing, blocking, subject positions, and camera mistakes. Keep it ordinary and accidental. Do not improve the chosen frame. Do not make it cleaner or more beautiful.",
+        "{UNIVERSAL_SNAPSHOT_PROMPT}\n\nUser Variables\n{}\n\nGenerate one nearby alternate take from the same roll. It should feel like it happened a moment before or after the chosen frame, with the same place and light, but slightly shifted timing, blocking, incidental people, object positions, and camera mistakes. Keep it ordinary and accidental. Do not improve the chosen frame. Do not make it cleaner, more centered, more portrait-like, more colorful, or more beautiful.",
         base_situation_block(roll_dna)
     )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{build_alternate_take_prompt, build_contact_sheet_prompt};
+
+    #[test]
+    fn contact_sheet_prompt_discourages_portrait_like_people() {
+        let roll_dna = serde_json::json!({});
+        let prompt = build_contact_sheet_prompt(&roll_dna, 8);
+
+        assert!(prompt.contains("centered people"));
+        assert!(prompt.contains("portrait-like images"));
+        assert!(prompt.contains("If people appear, keep them incidental"));
+        assert!(prompt.contains("Several frames may be mostly place, objects, weather, light, or traces of activity"));
+    }
+
+    #[test]
+    fn prompts_discourage_generated_color_and_texture_tells() {
+        let roll_dna = serde_json::json!({});
+        let contact_sheet_prompt = build_contact_sheet_prompt(&roll_dna, 8);
+        let alternate_take_prompt = build_alternate_take_prompt(&roll_dna);
+
+        assert!(contact_sheet_prompt.contains("cinematic color grading"));
+        assert!(contact_sheet_prompt.contains("smooth AI skin"));
+        assert!(contact_sheet_prompt.contains("HDR clarity"));
+        assert!(alternate_take_prompt.contains("more colorful"));
+        assert!(alternate_take_prompt.contains("more portrait-like"));
+    }
 }
