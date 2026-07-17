@@ -7,6 +7,7 @@
 - Tightened the hidden prompt engine again so foreground interruptions stay incidental instead of centered hands/bags becoming substitute subjects; external prompt research found useful principles but no ready-made natural-snapshot skill suitable for direct adoption.
 - Added deterministic hidden camera profiles to Roll DNA and translated them into physical capture traits in prompt assembly; also softened people handling so incidental people do not all turn away from the camera.
 - Reviewed local `_sample/` reference photos without committing them, added `_sample/` to `.gitignore`, and abstracted their place-led/surface-led qualities into the prompt engine so frames can be carried by shopfronts, signs, shelves, vending machines, walls, road markings, chairs, packaging, numbers, and empty space.
+- Reduced US cup/drink/tray details from foreground-prop cues to surface/midground traces and added prompt constraints so one tiny detail is not repeated as a front object across every contact-sheet frame.
 - Fixed roll-detail loading after a favorites join made the unqualified frame `id` sort ambiguous in SQLite; added a direct roll-detail regression test and verified 22 Rust tests pass.
 - Changed the Roll tab to restore the most recent archived roll automatically after app restart, and added an explicit empty state when no roll exists.
 - Fixed repeated startup failure caused by replaying the initial `CREATE TABLE` migration against an existing database.

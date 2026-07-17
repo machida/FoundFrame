@@ -2,11 +2,11 @@ version: 1
 country: us
 entries:
   - slug: crumpled-receipt-near-the-cup-holder
-    label: crumpled receipt near the cup holder
+    label: crumpled receipt in a parking-lot door pocket
     category: object_detail
     rarity: common
     weight: 52
-    visibility: foreground
+    visibility: midground
     environment: [commercial, street, outdoor]
     time_context: [morning, afternoon, evening]
     tags: [paper, errand, half-noticed]
@@ -52,14 +52,14 @@ entries:
     tags: [laundry, clutter, ordinary]
     status: active
   - slug: condensation-ring-under-a-large-paper-cup
-    label: condensation ring under a large paper cup
+    label: faint condensation ring left on a laminate table
     category: object_detail
     rarity: common
     weight: 44
-    visibility: foreground
+    visibility: midground
     environment: [commercial, indoor, street]
     time_context: [morning, afternoon, evening]
-    tags: [drink, paper, half-noticed]
+    tags: [drink, surface, half-noticed]
     status: active
   - slug: faded-store-loyalty-tag-on-a-keyring
     label: faded store loyalty tag on a keyring
@@ -103,11 +103,11 @@ entries:
     tags: [rain, fabric, car]
     status: active
   - slug: melting-ice-water-running-down-a-large-takeout-cup
-    label: melting ice water running down a large takeout cup
+    label: melting ice water tracing the edge of a takeout counter
     category: object_detail
     rarity: common
     weight: 33
-    visibility: foreground
+    visibility: midground
     seasonality: [summer]
     weather: [clear, humid]
     environment: [commercial, street, car]
@@ -139,16 +139,16 @@ entries:
     tags: [rain, clothing, shopping]
     status: active
   - slug: misty-droplets-gathering-on-a-plastic-takeout-lid
-    label: misty droplets gathering on a plastic takeout lid
+    label: misty droplets gathering on a takeout counter sign
     category: object_detail
     rarity: uncommon
     weight: 15
-    visibility: foreground
+    visibility: midground
     seasonality: [spring, autumn]
     weather: [drizzle, cloudy]
     environment: [commercial, car, street]
     time_context: [afternoon, evening]
-    tags: [drizzle, takeout, plastic]
+    tags: [drizzle, takeout, surface]
     status: active
   - slug: tied-kitchen-trash-bag-waiting-by-the-garage-door
     label: tied kitchen trash bag waiting by the garage door
@@ -213,11 +213,11 @@ entries:
     tags: [workday, car, routine]
     status: active
   - slug: paper-receipt-caught-under-a-takeout-drink-tray-corner
-    label: paper receipt caught under a takeout drink tray corner
+    label: paper receipt caught under the edge of a takeout counter tray
     category: object_detail
     rarity: uncommon
     weight: 16
-    visibility: foreground
+    visibility: midground
     environment: [commercial, car, street]
     time_context: [late_afternoon, evening]
     tags: [paper, takeout, clutter]

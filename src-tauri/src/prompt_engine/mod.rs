@@ -109,6 +109,13 @@ Everyday surface policy:
 - many successful frames can feel like someone noticed a small public surface, not a person
 - avoid turning these objects into clean product photography, graphic design studies, or symmetrical catalog shots
 
+Tiny detail policy:
+
+- the tiny detail is a clue, not a required foreground prop
+- do not repeat the same cup, bag, hand, tray, bottle, or object in every frame
+- the tiny detail may appear in one or two frames, be off to the side, be partly hidden, become a background trace, or be absent
+- the roll should vary between place-led, surface-led, object-led, and people-at-a-distance frames
+
 Color and texture policy:
 
 - use ordinary automatic-camera color, not a designed palette
@@ -185,7 +192,7 @@ pub fn prompt_engine_version() -> &'static str {
 
 pub fn build_contact_sheet_prompt(roll_dna: &Value, frame_count: usize) -> String {
     format!(
-        "{UNIVERSAL_SNAPSHOT_PROMPT}\n\nUser Variables\n{}\n\nGenerate {} square frames from the same roll of film. The situation, country, camera behavior, and ordinary world are shared across the roll. Each frame should differ naturally through timing drift, overlapping people, small focus mistakes, edge interruptions, partial blocked sight lines, distance, empty areas, and accidental composition changes. Do not make the frames feel like curated variations, portraits, fashion images, travel images, product photography, street-photography trophies, or cinematic storyboards. If people appear, keep them incidental, off-center, small, partially hidden, or visually interrupted, but do not make them all turn their backs to the camera. Do not solve person-centered composition by replacing the person with a centered hand, bag, sleeve, or other foreground object. Several frames may be mostly place, signs, shopfronts, shelves, chairs, vending machines, walls, roads, tables, objects, weather, light, or traces of activity rather than people. They are separate survivals from one mundane roll.",
+        "{UNIVERSAL_SNAPSHOT_PROMPT}\n\nUser Variables\n{}\n\nGenerate {} square frames from the same roll of film. The situation, country, camera behavior, and ordinary world are shared across the roll. Each frame should differ naturally through timing drift, overlapping people, small focus mistakes, edge interruptions, partial blocked sight lines, distance, empty areas, and accidental composition changes. Do not make the frames feel like curated variations, portraits, fashion images, travel images, product photography, street-photography trophies, or cinematic storyboards. If people appear, keep them incidental, off-center, small, partially hidden, or visually interrupted, but do not make them all turn their backs to the camera. Do not solve person-centered composition by replacing the person with a centered hand, bag, sleeve, cup, tumbler, bottle, tray, or other foreground object. Do not repeat the same tiny detail as a foreground prop across the roll. Several frames may be mostly place, signs, shopfronts, shelves, chairs, vending machines, walls, roads, tables, objects, weather, light, or traces of activity rather than people. They are separate survivals from one mundane roll.",
         base_situation_block(roll_dna),
         frame_count
     )
@@ -276,5 +283,16 @@ mod tests {
         assert!(prompt.contains("shopfronts, signs, shelves, vending machines"));
         assert!(prompt.contains("plain empty space and distance"));
         assert!(prompt.contains("street-photography trophies"));
+    }
+
+    #[test]
+    fn prompts_prevent_repeated_tiny_detail_foreground_props() {
+        let roll_dna = serde_json::json!({});
+        let prompt = build_contact_sheet_prompt(&roll_dna, 8);
+
+        assert!(prompt.contains("Tiny detail policy"));
+        assert!(prompt.contains("do not repeat the same cup, bag, hand, tray, bottle, or object"));
+        assert!(prompt.contains("Do not repeat the same tiny detail as a foreground prop"));
+        assert!(prompt.contains("cup, tumbler, bottle, tray"));
     }
 }

@@ -23,6 +23,7 @@ The internal reference prompt is constraint-first and anti-beauty:
 - Avoid overcorrecting person-centered images into everyone-facing-away images. Incidental people can be front-facing, three-quarter, profile, looking down, partly blocked, small, or soft; variety matters more than hiding every face.
 - Local `_sample/` references showed that usable naturalness often comes from photographed surfaces and everyday public signs rather than from human subjects: shopfronts, signs, shelves, vending machines, chairs, walls, windows, road markings, tables, price boards, packaging, numbers, and plain empty space. Prompt changes should preserve this as an abstraction only; do not copy or commit the reference images.
 - Let some frames be place-led or object-led. Avoid forcing every frame to solve around a person, face, hand, or single central object.
+- Treat `Tiny Detail` as an optional clue, not a foreground prop contract. It may appear in one or two frames, move to an edge/background/surface trace, or be absent. Never repeat one cup, tumbler, bag, hand, tray, or bottle across every contact-sheet frame.
 
 ## Review Implications
 
