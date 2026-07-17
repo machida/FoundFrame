@@ -19,6 +19,8 @@ The internal reference prompt is constraint-first and anti-beauty:
 - Push color and texture toward mundane automatic-camera output, avoiding generated-photo tells such as glossy surfaces, smooth AI skin, HDR clarity, cinematic grading, artificial grain, and designed palettes
 - Keep obstructions incidental. Hands, sleeves, bags, straps, umbrellas, cups, and reflections may interrupt an edge or corner, but should not become centered substitute subjects.
 - Recent external prompt guidance consistently points toward concrete capture conditions, mundane light, small fitting imperfections, off-center subjects, and avoiding vague quality/style boosters. For FoundFrame, do not import generic "photorealistic DSLR" or portrait-oriented prompt recipes directly; translate them into ordinary automatic-camera constraints instead.
+- Camera and film references should stay behind the prompt engine. The app may use ordinary compact, disposable-camera, instant-camera, Lomo-like compact, or cheap point-and-shoot profiles, but the prompt should express their physical traits: soft edges, weak direct flash, lifted blacks, mild color cast, loose focus, or muted one-hour-print color.
+- Avoid overcorrecting person-centered images into everyone-facing-away images. Incidental people can be front-facing, three-quarter, profile, looking down, partly blocked, small, or soft; variety matters more than hiding every face.
 
 ## Review Implications
 

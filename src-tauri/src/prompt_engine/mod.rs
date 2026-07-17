@@ -92,7 +92,9 @@ Things that should quietly exist:
 People policy:
 
 - people may appear, but they are not the point of the photograph
-- faces are often turned away, partly blocked, small, soft, or outside the frame
+- faces may be front-facing, three-quarter, profile, looking down, partly blocked, small, soft, or outside the frame
+- do not make everyone face away from the camera
+- avoid a repeated pattern of backs of heads, turned backs, and people walking away
 - no person should occupy the center as a clean subject
 - no person should feel cast, styled, posed, or emotionally directed
 - the frame may work even if no person is visible
@@ -140,9 +142,19 @@ fn country_code(roll_dna: &Value) -> String {
         .to_string()
 }
 
+fn camera_text(roll_dna: &Value, key: &str, fallback: &str) -> String {
+    roll_dna
+        .get("camera_profile")
+        .and_then(|node| node.get(key))
+        .and_then(Value::as_str)
+        .filter(|value| !value.trim().is_empty())
+        .unwrap_or(fallback)
+        .replace('_', " ")
+}
+
 fn base_situation_block(roll_dna: &Value) -> String {
     format!(
-        "Country: {}\nMoment: {}\nPlace: {}\nTime: {}\nSeason: {}\nWeather: {}\nTiny Detail: {}",
+        "Country: {}\nMoment: {}\nPlace: {}\nTime: {}\nSeason: {}\nWeather: {}\nTiny Detail: {}\nCamera Behavior: {}\nLens Behavior: {}\nColor Response: {}\nFlash Behavior: {}",
         country_code(roll_dna),
         resolved_text(roll_dna, "moment_context", "ordinary passing moment"),
         resolved_text(roll_dna, "place_context", "somewhere routine"),
@@ -150,6 +162,10 @@ fn base_situation_block(roll_dna: &Value) -> String {
         resolved_text(roll_dna, "season_context", "autumn"),
         resolved_text(roll_dna, "weather_context", "cloudy"),
         resolved_text(roll_dna, "tiny_detail_context", "something half noticed"),
+        camera_text(roll_dna, "family", "consumer point and shoot"),
+        camera_text(roll_dna, "lens_behavior", "modest center sharpness soft edges"),
+        camera_text(roll_dna, "color_response", "plain consumer color"),
+        camera_text(roll_dna, "flash_behavior", "available light or weak auto flash"),
     )
 }
 
@@ -159,7 +175,7 @@ pub fn prompt_engine_version() -> &'static str {
 
 pub fn build_contact_sheet_prompt(roll_dna: &Value, frame_count: usize) -> String {
     format!(
-        "{UNIVERSAL_SNAPSHOT_PROMPT}\n\nUser Variables\n{}\n\nGenerate {} square frames from the same roll of film. The situation, country, camera behavior, and ordinary world are shared across the roll. Each frame should differ naturally through timing drift, overlapping people, small focus mistakes, edge interruptions, partial blocked sight lines, and accidental composition changes. Do not make the frames feel like curated variations, portraits, fashion images, travel images, or cinematic storyboards. If people appear, keep them incidental, off-center, partially hidden, or visually interrupted. Do not solve person-centered composition by replacing the person with a centered hand, bag, sleeve, or other foreground object. Several frames may be mostly place, objects, weather, light, or traces of activity rather than people. They are separate survivals from one mundane roll.",
+        "{UNIVERSAL_SNAPSHOT_PROMPT}\n\nUser Variables\n{}\n\nGenerate {} square frames from the same roll of film. The situation, country, camera behavior, and ordinary world are shared across the roll. Each frame should differ naturally through timing drift, overlapping people, small focus mistakes, edge interruptions, partial blocked sight lines, and accidental composition changes. Do not make the frames feel like curated variations, portraits, fashion images, travel images, or cinematic storyboards. If people appear, keep them incidental, off-center, small, partially hidden, or visually interrupted, but do not make them all turn their backs to the camera. Do not solve person-centered composition by replacing the person with a centered hand, bag, sleeve, or other foreground object. Several frames may be mostly place, objects, weather, light, or traces of activity rather than people. They are separate survivals from one mundane roll.",
         base_situation_block(roll_dna),
         frame_count
     )
@@ -211,5 +227,33 @@ mod tests {
         assert!(contact_sheet_prompt.contains("HDR clarity"));
         assert!(alternate_take_prompt.contains("more colorful"));
         assert!(alternate_take_prompt.contains("more portrait-like"));
+    }
+
+    #[test]
+    fn prompts_translate_camera_profile_into_capture_behavior() {
+        let roll_dna = serde_json::json!({
+            "camera_profile": {
+                "family": "cheap_plastic_lens_35mm",
+                "lens_behavior": "soft_edges_low_microcontrast",
+                "color_response": "mild_warm_or_green_cast",
+                "flash_behavior": "small_direct_flash_when_light_is_low"
+            }
+        });
+        let prompt = build_contact_sheet_prompt(&roll_dna, 8);
+
+        assert!(prompt.contains("Camera Behavior: cheap plastic lens 35mm"));
+        assert!(prompt.contains("Lens Behavior: soft edges low microcontrast"));
+        assert!(prompt.contains("Color Response: mild warm or green cast"));
+        assert!(prompt.contains("Flash Behavior: small direct flash when light is low"));
+    }
+
+    #[test]
+    fn prompts_discourage_everyone_facing_away() {
+        let roll_dna = serde_json::json!({});
+        let prompt = build_contact_sheet_prompt(&roll_dna, 8);
+
+        assert!(prompt.contains("do not make everyone face away"));
+        assert!(prompt.contains("do not make them all turn their backs"));
+        assert!(prompt.contains("front-facing, three-quarter, profile"));
     }
 }

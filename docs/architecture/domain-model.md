@@ -79,7 +79,8 @@ Stable v1 core:
 Current v1 implementation detail:
 
 - each field context currently stores `resolved_value` plus `source_mode`
-- `camera_profile`, `imperfection_profile`, and `frame_variation_policy` are application-owned defaults, not user-editable state
+- `camera_profile`, `imperfection_profile`, and `frame_variation_policy` are application-owned state, not user-editable state
+- `camera_profile` is resolved deterministically from the roll situation and may choose ordinary compact, disposable-camera, instant-camera, Lomo-like compact, or cheap point-and-shoot behavior; prompt assembly translates these into capture traits rather than presenting them as user-facing style presets
 - `provider_context` is persisted for reproducibility even when hidden from primary UI copy
 
 ## Domain Rules
