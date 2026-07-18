@@ -23,6 +23,8 @@ pub struct ProviderImage {
     pub bytes: Vec<u8>,
     pub width: i64,
     pub height: i64,
+    pub prompt: Option<String>,
+    pub frame_plan_json: Option<String>,
 }
 
 pub struct ProviderConnectionStatus {

@@ -1,8 +1,8 @@
 use rusqlite::{params, Connection};
 use serde_json::Value;
 
-use crate::dto::roll::CreateRollRequest;
 use crate::domain::roll_dna::{self, ResolvedSetupValues};
+use crate::dto::roll::CreateRollRequest;
 use crate::errors::AppError;
 const DEFAULT_PROVIDER_KEY: &str = "openai";
 use crate::prompt_engine;
@@ -28,7 +28,11 @@ pub struct RollGenerationContext {
     pub prompt_engine_version: String,
 }
 
-pub fn update_roll_status(connection: &Connection, roll_id: i64, status: &str) -> Result<(), AppError> {
+pub fn update_roll_status(
+    connection: &Connection,
+    roll_id: i64,
+    status: &str,
+) -> Result<(), AppError> {
     connection
         .execute(
             "
@@ -91,10 +95,12 @@ pub fn create_roll(
             source,
         })?;
 
-    let tx = connection.transaction().map_err(|source| AppError::Sqlite {
-        context: "failed to begin roll creation transaction".to_string(),
-        source,
-    })?;
+    let tx = connection
+        .transaction()
+        .map_err(|source| AppError::Sqlite {
+            context: "failed to begin roll creation transaction".to_string(),
+            source,
+        })?;
 
     tx.execute(
         "
@@ -276,7 +282,10 @@ mod tests {
             time: field(InputMode::LockedRandom, None),
             season: field(InputMode::Random, None),
             weather: field(InputMode::Random, None),
-            tiny_detail: field(InputMode::Manual, Some("clear umbrella dripping near the door")),
+            tiny_detail: field(
+                InputMode::Manual,
+                Some("clear umbrella dripping near the door"),
+            ),
         }
     }
 
@@ -321,7 +330,8 @@ mod tests {
         let current = request();
         let resolved = resolved_values();
 
-        let created = create_roll(&mut connection, 1, "jp", &current, &resolved).expect("create roll");
+        let created =
+            create_roll(&mut connection, 1, "jp", &current, &resolved).expect("create roll");
 
         assert_eq!(created.status, "queued");
         assert_eq!(created.country_code, "jp");
@@ -329,7 +339,10 @@ mod tests {
         assert_eq!(created.provider_model, "gpt-image-1");
         assert_eq!(created.contact_sheet_frame_count, 8);
         assert_eq!(created.generation_job_status, "queued");
-        assert_eq!(created.prompt_engine_version, prompt_engine::prompt_engine_version());
+        assert_eq!(
+            created.prompt_engine_version,
+            prompt_engine::prompt_engine_version()
+        );
 
         let (status, dna_version, provider_key, provider_model, frame_count, selected_frame_id): (
             String,
@@ -365,8 +378,12 @@ mod tests {
         assert_eq!(frame_count, 8);
         assert_eq!(selected_frame_id, None);
 
-        let context = fetch_roll_generation_context(&connection, created.roll_id).expect("fetch generation context");
-        assert_eq!(context.prompt_engine_version, prompt_engine::prompt_engine_version());
+        let context = fetch_roll_generation_context(&connection, created.roll_id)
+            .expect("fetch generation context");
+        assert_eq!(
+            context.prompt_engine_version,
+            prompt_engine::prompt_engine_version()
+        );
         assert_eq!(
             context
                 .roll_dna
@@ -429,7 +446,8 @@ mod tests {
             let rows = stmt
                 .query_map([created.roll_id], |row| Ok((row.get(0)?, row.get(1)?)))
                 .expect("query roll events");
-            rows.map(|row| row.expect("decode roll event row")).collect()
+            rows.map(|row| row.expect("decode roll event row"))
+                .collect()
         };
         assert_eq!(event_rows.len(), 2);
         assert_eq!(event_rows[0].0, "roll_created");
@@ -448,7 +466,9 @@ mod tests {
         let queued_payload: Value =
             serde_json::from_str(&event_rows[1].1).expect("parse queued payload");
         assert_eq!(
-            queued_payload.get("generation_job_id").and_then(Value::as_i64),
+            queued_payload
+                .get("generation_job_id")
+                .and_then(Value::as_i64),
             Some(created.generation_job_id)
         );
     }

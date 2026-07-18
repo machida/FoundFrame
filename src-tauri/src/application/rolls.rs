@@ -15,12 +15,16 @@ pub fn create_roll(
     let mut connection = database::open_connection(&db_path)?;
 
     let fallback_default = dictionary_repository::default_country_code(&connection)?;
-    let country_code = setup_resolver::resolved_country_code(&connection, &request, fallback_default)?;
+    let country_code =
+        setup_resolver::resolved_country_code(&connection, &request, fallback_default)?;
     let country_id = dictionary_repository::country_id_by_code(&connection, &country_code)?
         .ok_or_else(|| AppError::Config {
-            context: format!("country code {country_code} was not found in imported dictionary data"),
+            context: format!(
+                "country code {country_code} was not found in imported dictionary data"
+            ),
         })?;
-    let resolved_values = setup_resolver::resolve_setup_values(&connection, &request, &country_code)?;
+    let resolved_values =
+        setup_resolver::resolve_setup_values(&connection, &request, &country_code)?;
 
     let created = roll_repository::create_roll(
         &mut connection,

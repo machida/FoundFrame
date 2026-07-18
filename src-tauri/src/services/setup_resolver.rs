@@ -1,7 +1,7 @@
 use rusqlite::Connection;
 
-use crate::dto::roll::{CreateRollRequest, InputMode, SetupInputField};
 use crate::domain::roll_dna::ResolvedSetupValues;
+use crate::dto::roll::{CreateRollRequest, InputMode, SetupInputField};
 use crate::errors::AppError;
 use crate::persistence::dictionary_repository;
 
@@ -58,11 +58,21 @@ pub fn resolve_setup_values(
     request: &CreateRollRequest,
     country_code: &str,
 ) -> Result<ResolvedSetupValues, AppError> {
-    let time = choose_controlled_value(&request.time, &TIME_OPTIONS, &format!("{country_code}:time"));
-    let season =
-        choose_controlled_value(&request.season, &SEASON_OPTIONS, &format!("{country_code}:season"));
-    let weather =
-        choose_controlled_value(&request.weather, &WEATHER_OPTIONS, &format!("{country_code}:weather"));
+    let time = choose_controlled_value(
+        &request.time,
+        &TIME_OPTIONS,
+        &format!("{country_code}:time"),
+    );
+    let season = choose_controlled_value(
+        &request.season,
+        &SEASON_OPTIONS,
+        &format!("{country_code}:season"),
+    );
+    let weather = choose_controlled_value(
+        &request.weather,
+        &WEATHER_OPTIONS,
+        &format!("{country_code}:weather"),
+    );
 
     let moment = match request.moment.mode {
         InputMode::Manual => request
@@ -70,17 +80,39 @@ pub fn resolve_setup_values(
             .value
             .clone()
             .unwrap_or_else(|| "ordinary passing moment".to_string()),
-        InputMode::LockedRandom if request.moment.value.clone().unwrap_or_default().trim().is_empty() => {
-            dictionary_repository::random_entry_label(connection, country_code, "moment", None, None, Some(&time))?
-                .unwrap_or_else(|| "ordinary passing moment".to_string())
+        InputMode::LockedRandom
+            if request
+                .moment
+                .value
+                .clone()
+                .unwrap_or_default()
+                .trim()
+                .is_empty() =>
+        {
+            dictionary_repository::random_entry_label(
+                connection,
+                country_code,
+                "moment",
+                None,
+                None,
+                Some(&time),
+            )?
+            .unwrap_or_else(|| "ordinary passing moment".to_string())
         }
         InputMode::LockedRandom => request
             .moment
             .value
             .clone()
             .unwrap_or_else(|| "ordinary passing moment".to_string()),
-        InputMode::Random => dictionary_repository::random_entry_label(connection, country_code, "moment", None, None, Some(&time))?
-            .unwrap_or_else(|| "ordinary passing moment".to_string()),
+        InputMode::Random => dictionary_repository::random_entry_label(
+            connection,
+            country_code,
+            "moment",
+            None,
+            None,
+            Some(&time),
+        )?
+        .unwrap_or_else(|| "ordinary passing moment".to_string()),
     };
 
     let place = match request.place.mode {
@@ -89,7 +121,15 @@ pub fn resolve_setup_values(
             .value
             .clone()
             .unwrap_or_else(|| "somewhere routine".to_string()),
-        InputMode::LockedRandom if request.place.value.clone().unwrap_or_default().trim().is_empty() => {
+        InputMode::LockedRandom
+            if request
+                .place
+                .value
+                .clone()
+                .unwrap_or_default()
+                .trim()
+                .is_empty() =>
+        {
             dictionary_repository::random_entry_label(
                 connection,
                 country_code,
@@ -100,7 +140,11 @@ pub fn resolve_setup_values(
             )?
             .unwrap_or_else(|| "somewhere routine".to_string())
         }
-        InputMode::LockedRandom => request.place.value.clone().unwrap_or_else(|| "somewhere routine".to_string()),
+        InputMode::LockedRandom => request
+            .place
+            .value
+            .clone()
+            .unwrap_or_else(|| "somewhere routine".to_string()),
         InputMode::Random => dictionary_repository::random_entry_label(
             connection,
             country_code,
@@ -118,7 +162,15 @@ pub fn resolve_setup_values(
             .value
             .clone()
             .unwrap_or_else(|| "something half noticed".to_string()),
-        InputMode::LockedRandom if request.tiny_detail.value.clone().unwrap_or_default().trim().is_empty() => {
+        InputMode::LockedRandom
+            if request
+                .tiny_detail
+                .value
+                .clone()
+                .unwrap_or_default()
+                .trim()
+                .is_empty() =>
+        {
             dictionary_repository::random_entry_label(
                 connection,
                 country_code,
@@ -324,14 +376,15 @@ mod tests {
         migrations::apply_all(&connection).expect("apply migrations");
         let current = request();
 
-        let country_code =
-            resolved_country_code(&connection, &current, Some("jp".to_string())).expect("resolve country");
+        let country_code = resolved_country_code(&connection, &current, Some("jp".to_string()))
+            .expect("resolve country");
 
         assert_eq!(country_code, "jp");
     }
 
     #[test]
-    fn sparse_country_uses_country_specific_entries_when_present_and_generic_fallbacks_when_missing() {
+    fn sparse_country_uses_country_specific_entries_when_present_and_generic_fallbacks_when_missing(
+    ) {
         let connection = setup_sparse_country_connection();
         let mut current = request();
         current.country = field(InputMode::Manual, Some("us"));
@@ -354,9 +407,10 @@ mod tests {
         current.season = field(InputMode::Manual, Some("summer"));
         current.weather = field(InputMode::Manual, Some("humid"));
 
-        let country_code =
-            resolved_country_code(&connection, &current, Some("jp".to_string())).expect("resolve country");
-        let resolved = resolve_setup_values(&connection, &current, &country_code).expect("resolve setup");
+        let country_code = resolved_country_code(&connection, &current, Some("jp".to_string()))
+            .expect("resolve country");
+        let resolved =
+            resolve_setup_values(&connection, &current, &country_code).expect("resolve setup");
 
         if country_code == "us" {
             assert_eq!(resolved.place, "apartment mailbox corridor");

@@ -8,8 +8,9 @@ use crate::application::rolls;
 use crate::dto::frame::{AlternateTakeResult, ArchiveQueryRequest, ArchiveRollSummary, RollDetail};
 use crate::dto::roll::{CreateRollRequest, CreatedRollSummary};
 use crate::dto::setup::{
-    CountryOption, DeletePresetRequest, PresetSummary, ProviderCredentialStatusDto, RenamePresetRequest,
-    SavePresetRequest, SaveProviderApiKeyRequest, SettingsSnapshot, SetupBootstrapData,
+    CountryOption, DeletePresetRequest, PresetSummary, ProviderCredentialStatusDto,
+    RenamePresetRequest, SavePresetRequest, SaveProviderApiKeyRequest, SettingsSnapshot,
+    SetupBootstrapData,
 };
 use crate::errors::AppError;
 use crate::keychain;
@@ -85,14 +86,17 @@ pub fn app_bootstrap_status(app: tauri::AppHandle<Wry>) -> Result<AppBootstrapSt
 }
 
 #[tauri::command]
-pub fn dictionary_debug_status(app: tauri::AppHandle<Wry>) -> Result<DictionaryDebugStatus, String> {
+pub fn dictionary_debug_status(
+    app: tauri::AppHandle<Wry>,
+) -> Result<DictionaryDebugStatus, String> {
     let categories = dictionary_loader::load_categories(&app).map_err(to_string_error)?;
     let bundle = dictionary_loader::load_bundle(&app, "v1-initial").map_err(to_string_error)?;
     let first_include = bundle
         .includes
         .first()
         .ok_or_else(|| "bundle contains no include files".to_string())?;
-    let first_entries = dictionary_loader::load_entries_file(&app, first_include).map_err(to_string_error)?;
+    let first_entries =
+        dictionary_loader::load_entries_file(&app, first_include).map_err(to_string_error)?;
 
     Ok(DictionaryDebugStatus {
         categories_count: categories.categories.len(),
@@ -151,9 +155,11 @@ pub fn resolve_setup_preview(
 ) -> Result<ResolvedSetupPreviewDto, String> {
     let db_path = database::database_path(&app).map_err(to_string_error)?;
     let connection = database::open_connection(&db_path).map_err(to_string_error)?;
-    let fallback_default = dictionary_repository::default_country_code(&connection).map_err(to_string_error)?;
+    let fallback_default =
+        dictionary_repository::default_country_code(&connection).map_err(to_string_error)?;
     let country_code =
-        setup_resolver::resolved_country_code(&connection, &request, fallback_default).map_err(to_string_error)?;
+        setup_resolver::resolved_country_code(&connection, &request, fallback_default)
+            .map_err(to_string_error)?;
     let resolved = setup_resolver::resolve_setup_values(&connection, &request, &country_code)
         .map_err(to_string_error)?;
 
@@ -169,7 +175,10 @@ pub fn resolve_setup_preview(
 }
 
 #[tauri::command]
-pub fn process_contact_sheet_roll(app: tauri::AppHandle<Wry>, roll_id: i64) -> Result<RollDetail, String> {
+pub fn process_contact_sheet_roll(
+    app: tauri::AppHandle<Wry>,
+    roll_id: i64,
+) -> Result<RollDetail, String> {
     contact_sheet::simulate_contact_sheet(&app, roll_id).map_err(to_string_error)?;
 
     let db_path = database::database_path(&app).map_err(to_string_error)?;
@@ -201,8 +210,11 @@ pub fn settings_snapshot(app: tauri::AppHandle<Wry>) -> Result<SettingsSnapshot,
         .map_err(to_string_error)?
         .into_iter()
         .map(|status| {
-            let health = provider_health_repository::fetch_provider_health(&connection, &status.provider_key)
-                .map_err(to_string_error)?;
+            let health = provider_health_repository::fetch_provider_health(
+                &connection,
+                &status.provider_key,
+            )
+            .map_err(to_string_error)?;
             let health_status = if !status.has_api_key {
                 "unconfigured".to_string()
             } else {
@@ -217,7 +229,9 @@ pub fn settings_snapshot(app: tauri::AppHandle<Wry>) -> Result<SettingsSnapshot,
                 has_api_key: status.has_api_key,
                 account_label: status.account_label,
                 health_status,
-                last_check_message: health.as_ref().and_then(|record| record.last_check_message.clone()),
+                last_check_message: health
+                    .as_ref()
+                    .and_then(|record| record.last_check_message.clone()),
                 last_check_at: health.and_then(|record| record.last_check_at),
             })
         })
@@ -349,7 +363,8 @@ pub fn set_frame_favorite(
         return Err("frame does not belong to roll".to_string());
     }
 
-    favorites_repository::set_favorite(&connection, frame_id, is_favorite).map_err(to_string_error)?;
+    favorites_repository::set_favorite(&connection, frame_id, is_favorite)
+        .map_err(to_string_error)?;
     frame_repository::fetch_roll_detail(&connection, roll_id).map_err(to_string_error)
 }
 
@@ -408,6 +423,7 @@ pub fn rename_preset(
 ) -> Result<Vec<PresetSummary>, String> {
     let db_path = database::database_path(&app).map_err(to_string_error)?;
     let connection = database::open_connection(&db_path).map_err(to_string_error)?;
-    presets_repository::rename_preset(&connection, request.preset_id, &request.name).map_err(to_string_error)?;
+    presets_repository::rename_preset(&connection, request.preset_id, &request.name)
+        .map_err(to_string_error)?;
     presets_repository::list_presets(&connection).map_err(to_string_error)
 }

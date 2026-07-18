@@ -104,7 +104,11 @@ pub fn insert_alternate_take_frame(
     Ok(connection.last_insert_rowid())
 }
 
-pub fn update_frame_review_status(connection: &Connection, frame_id: i64, status: &str) -> Result<(), AppError> {
+pub fn update_frame_review_status(
+    connection: &Connection,
+    frame_id: i64,
+    status: &str,
+) -> Result<(), AppError> {
     connection
         .execute(
             "UPDATE frames SET review_status = ?2 WHERE id = ?1",
@@ -117,7 +121,11 @@ pub fn update_frame_review_status(connection: &Connection, frame_id: i64, status
     Ok(())
 }
 
-pub fn frame_exists(connection: &Connection, frame_id: i64, roll_id: i64) -> Result<bool, AppError> {
+pub fn frame_exists(
+    connection: &Connection,
+    frame_id: i64,
+    roll_id: i64,
+) -> Result<bool, AppError> {
     let count: i64 = connection
         .query_row(
             "SELECT COUNT(*) FROM frames WHERE id = ?1 AND roll_id = ?2",
@@ -141,7 +149,16 @@ pub fn fetch_roll_detail(connection: &Connection, roll_id: i64) -> Result<RollDe
         provider_model,
         contact_sheet_frame_count,
         selected_frame_id,
-    ): (String, String, String, String, String, String, i64, Option<i64>) = connection
+    ): (
+        String,
+        String,
+        String,
+        String,
+        String,
+        String,
+        i64,
+        Option<i64>,
+    ) = connection
         .query_row(
             "
             SELECT
@@ -191,7 +208,14 @@ pub fn fetch_roll_detail(connection: &Connection, roll_id: i64) -> Result<RollDe
             LIMIT 1
             ",
             [roll_id],
-            |row| Ok((Some(row.get(0)?), Some(row.get(1)?), row.get(2)?, row.get(3)?)),
+            |row| {
+                Ok((
+                    Some(row.get(0)?),
+                    Some(row.get(1)?),
+                    row.get(2)?,
+                    row.get(3)?,
+                ))
+            },
         )
         .unwrap_or((None, None, None, None));
 
@@ -396,17 +420,17 @@ pub fn list_recent_rolls(
         .query_map(
             rusqlite::params![normalized_status, normalized_query, query_like, limit],
             |row| {
-            Ok(ArchiveRollSummary {
-                roll_id: row.get(0)?,
-                status: row.get(1)?,
-                country_code: row.get(2)?,
-                created_at: row.get(3)?,
-                selected_frame_id: row.get(4)?,
-                alternate_take_frame_id: row.get(5)?,
-                preview_image_path: row.get(6)?,
-                favorite_count: row.get(7)?,
-            })
-        },
+                Ok(ArchiveRollSummary {
+                    roll_id: row.get(0)?,
+                    status: row.get(1)?,
+                    country_code: row.get(2)?,
+                    created_at: row.get(3)?,
+                    selected_frame_id: row.get(4)?,
+                    alternate_take_frame_id: row.get(5)?,
+                    preview_image_path: row.get(6)?,
+                    favorite_count: row.get(7)?,
+                })
+            },
         )
         .map_err(|source| AppError::Sqlite {
             context: "failed to query recent rolls".to_string(),
@@ -450,7 +474,13 @@ mod tests {
         connection
     }
 
-    fn insert_roll(connection: &Connection, id: i64, country_id: i64, status: &str, created_at: &str) {
+    fn insert_roll(
+        connection: &Connection,
+        id: i64,
+        country_id: i64,
+        status: &str,
+        created_at: &str,
+    ) {
         connection
             .execute(
                 "
@@ -466,7 +496,14 @@ mod tests {
             .expect("insert roll");
     }
 
-    fn insert_frame(connection: &Connection, id: i64, roll_id: i64, frame_index: i64, stage: &str, image_path: &str) {
+    fn insert_frame(
+        connection: &Connection,
+        id: i64,
+        roll_id: i64,
+        frame_index: i64,
+        stage: &str,
+        image_path: &str,
+    ) {
         connection
             .execute(
                 "
@@ -506,10 +543,37 @@ mod tests {
         let connection = setup_connection();
         insert_roll(&connection, 1, 1, "completed", "2026-07-01T10:00:00Z");
         insert_roll(&connection, 2, 2, "failed", "2026-07-02T10:00:00Z");
-        insert_roll(&connection, 3, 1, "contact_sheet_ready", "2026-07-03T10:00:00Z");
-        insert_frame(&connection, 11, 1, 0, "contact_sheet", "/images/jp-alley.png");
-        insert_frame(&connection, 21, 2, 0, "contact_sheet", "/images/us-train.png");
-        insert_frame(&connection, 31, 3, 0, "contact_sheet", "/images/jp-river.png");
+        insert_roll(
+            &connection,
+            3,
+            1,
+            "contact_sheet_ready",
+            "2026-07-03T10:00:00Z",
+        );
+        insert_frame(
+            &connection,
+            11,
+            1,
+            0,
+            "contact_sheet",
+            "/images/jp-alley.png",
+        );
+        insert_frame(
+            &connection,
+            21,
+            2,
+            0,
+            "contact_sheet",
+            "/images/us-train.png",
+        );
+        insert_frame(
+            &connection,
+            31,
+            3,
+            0,
+            "contact_sheet",
+            "/images/jp-river.png",
+        );
 
         let failed = list_recent_rolls(
             &connection,

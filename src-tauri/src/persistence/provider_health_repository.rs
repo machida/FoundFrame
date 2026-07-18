@@ -100,7 +100,10 @@ mod tests {
             .expect("fetch provider health")
             .expect("provider health exists");
         assert_eq!(first.status, "saved_unverified");
-        assert_eq!(first.last_check_message.as_deref(), Some("saved but unchecked"));
+        assert_eq!(
+            first.last_check_message.as_deref(),
+            Some("saved but unchecked")
+        );
         assert_eq!(first.last_check_at.as_deref(), Some("2026-07-01T10:00:00Z"));
 
         upsert_provider_health(
@@ -116,8 +119,14 @@ mod tests {
             .expect("fetch provider health")
             .expect("provider health exists");
         assert_eq!(second.status, "degraded");
-        assert_eq!(second.last_check_message.as_deref(), Some("provider_timeout"));
-        assert_eq!(second.last_check_at.as_deref(), Some("2026-07-01T11:00:00Z"));
+        assert_eq!(
+            second.last_check_message.as_deref(),
+            Some("provider_timeout")
+        );
+        assert_eq!(
+            second.last_check_at.as_deref(),
+            Some("2026-07-01T11:00:00Z")
+        );
 
         let count: i64 = connection
             .query_row(

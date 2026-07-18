@@ -5,7 +5,11 @@ use thiserror::Error;
 #[derive(Debug, Error)]
 pub enum AppError {
     #[error("{context}")]
-    Io { context: String, #[source] source: io::Error },
+    Io {
+        context: String,
+        #[source]
+        source: io::Error,
+    },
 
     #[error("{context}")]
     Sqlite {

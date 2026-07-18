@@ -51,7 +51,11 @@ pub fn mark_job_running(connection: &Connection, job_id: i64) -> Result<(), AppE
     Ok(())
 }
 
-pub fn mark_job_succeeded(connection: &Connection, job_id: i64, response_payload_json: &str) -> Result<(), AppError> {
+pub fn mark_job_succeeded(
+    connection: &Connection,
+    job_id: i64,
+    response_payload_json: &str,
+) -> Result<(), AppError> {
     connection
         .execute(
             "

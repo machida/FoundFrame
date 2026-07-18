@@ -26,11 +26,13 @@ fn to_json<T: serde::Serialize>(value: &Option<T>) -> Result<Option<String>, App
 }
 
 fn get_country_id(tx: &Transaction<'_>, code: &str) -> Result<i64, AppError> {
-    tx.query_row("SELECT id FROM countries WHERE code = ?1", [code], |row| row.get(0))
-        .map_err(|source| AppError::Sqlite {
-            context: format!("failed to fetch country id for code {code}"),
-            source,
-        })
+    tx.query_row("SELECT id FROM countries WHERE code = ?1", [code], |row| {
+        row.get(0)
+    })
+    .map_err(|source| AppError::Sqlite {
+        context: format!("failed to fetch country id for code {code}"),
+        source,
+    })
 }
 
 fn get_category_id(tx: &Transaction<'_>, key: &str) -> Result<i64, AppError> {
@@ -49,10 +51,12 @@ pub fn upsert_categories(
     connection: &mut Connection,
     categories: &DictionaryCategoriesFile,
 ) -> Result<(), AppError> {
-    let tx = connection.transaction().map_err(|source| AppError::Sqlite {
-        context: "failed to begin category transaction".to_string(),
-        source,
-    })?;
+    let tx = connection
+        .transaction()
+        .map_err(|source| AppError::Sqlite {
+            context: "failed to begin category transaction".to_string(),
+            source,
+        })?;
 
     for category in &categories.categories {
         tx.execute(
@@ -77,7 +81,10 @@ pub fn upsert_categories(
     })
 }
 
-pub fn upsert_bundle(connection: &Connection, bundle: &DictionaryBundleFile) -> Result<(), AppError> {
+pub fn upsert_bundle(
+    connection: &Connection,
+    bundle: &DictionaryBundleFile,
+) -> Result<(), AppError> {
     let country_scope_json =
         serde_json::to_string(&bundle.country_scope).map_err(|source| AppError::Json {
             context: "failed to serialize bundle country scope".to_string(),
@@ -114,7 +121,11 @@ fn upsert_country(tx: &Transaction<'_>, code: &str, is_default: bool) -> Result<
           is_featured = excluded.is_featured,
           status = excluded.status
         ",
-        params![code, country_display_name(code), if is_default { 1 } else { 0 }],
+        params![
+            code,
+            country_display_name(code),
+            if is_default { 1 } else { 0 }
+        ],
     )
     .map_err(|source| AppError::Sqlite {
         context: format!("failed to upsert country {code}"),
@@ -187,10 +198,12 @@ pub fn upsert_entries_file(
     connection: &mut Connection,
     entries_file: &DictionaryEntriesFile,
 ) -> Result<(), AppError> {
-    let tx = connection.transaction().map_err(|source| AppError::Sqlite {
-        context: "failed to begin dictionary entry transaction".to_string(),
-        source,
-    })?;
+    let tx = connection
+        .transaction()
+        .map_err(|source| AppError::Sqlite {
+            context: "failed to begin dictionary entry transaction".to_string(),
+            source,
+        })?;
 
     let is_default_country = entries_file.country == "jp";
     upsert_country(&tx, &entries_file.country, is_default_country)?;
@@ -221,7 +234,9 @@ pub fn count_countries(connection: &Connection) -> Result<i64, AppError> {
 
 pub fn count_entries(connection: &Connection) -> Result<i64, AppError> {
     connection
-        .query_row("SELECT COUNT(*) FROM dictionary_entries", [], |row| row.get(0))
+        .query_row("SELECT COUNT(*) FROM dictionary_entries", [], |row| {
+            row.get(0)
+        })
         .map_err(|source| AppError::Sqlite {
             context: "failed to count dictionary entries".to_string(),
             source,
@@ -281,7 +296,11 @@ pub fn default_country_code(connection: &Connection) -> Result<Option<String>, A
 
 pub fn country_id_by_code(connection: &Connection, code: &str) -> Result<Option<i64>, AppError> {
     connection
-        .query_row("SELECT id FROM countries WHERE code = ?1 LIMIT 1", [code], |row| row.get(0))
+        .query_row(
+            "SELECT id FROM countries WHERE code = ?1 LIMIT 1",
+            [code],
+            |row| row.get(0),
+        )
         .optional()
         .map_err(|source| AppError::Sqlite {
             context: format!("failed to query country id for code {code}"),
@@ -352,7 +371,8 @@ mod tests {
     use rusqlite::Connection;
 
     use crate::dto::dictionary::{
-        DictionaryCategoriesFile, DictionaryCategoryRecord, DictionaryEntriesFile, DictionaryEntryRecord,
+        DictionaryCategoriesFile, DictionaryCategoryRecord, DictionaryEntriesFile,
+        DictionaryEntryRecord,
     };
     use crate::persistence::migrations;
 
@@ -379,11 +399,7 @@ mod tests {
         }
     }
 
-    fn entry(
-        slug: &str,
-        label: &str,
-        category: &str,
-    ) -> DictionaryEntryRecord {
+    fn entry(slug: &str, label: &str, category: &str) -> DictionaryEntryRecord {
         DictionaryEntryRecord {
             slug: slug.to_string(),
             label: label.to_string(),
@@ -434,7 +450,10 @@ mod tests {
         upsert_entries_file(&mut connection, &us_entries).expect("upsert us entries");
 
         assert_eq!(count_countries(&connection).expect("count countries"), 1);
-        assert_eq!(default_country_code(&connection).expect("default country"), None);
+        assert_eq!(
+            default_country_code(&connection).expect("default country"),
+            None
+        );
 
         let countries = list_countries(&connection).expect("list countries");
         assert_eq!(

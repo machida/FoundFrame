@@ -33,18 +33,30 @@ pub fn write_placeholder_frame_svg(
 </svg>"##
     );
 
-    let thumb_svg = svg.replace("width=\"960\" height=\"960\"", "width=\"320\" height=\"320\"");
+    let thumb_svg = svg.replace(
+        "width=\"960\" height=\"960\"",
+        "width=\"320\" height=\"320\"",
+    );
 
     fs::write(&image_path, svg).map_err(|source| AppError::Io {
-        context: format!("failed to write placeholder frame svg at {}", image_path.display()),
+        context: format!(
+            "failed to write placeholder frame svg at {}",
+            image_path.display()
+        ),
         source,
     })?;
     fs::write(&thumb_path, thumb_svg).map_err(|source| AppError::Io {
-        context: format!("failed to write placeholder thumb svg at {}", thumb_path.display()),
+        context: format!(
+            "failed to write placeholder thumb svg at {}",
+            thumb_path.display()
+        ),
         source,
     })?;
 
-    Ok((image_path.display().to_string(), thumb_path.display().to_string()))
+    Ok((
+        image_path.display().to_string(),
+        thumb_path.display().to_string(),
+    ))
 }
 
 pub fn write_placeholder_alternate_take_svg(
@@ -72,16 +84,28 @@ pub fn write_placeholder_alternate_take_svg(
 </svg>"##
     );
 
-    let thumb_svg = svg.replace("width=\"960\" height=\"960\"", "width=\"320\" height=\"320\"");
+    let thumb_svg = svg.replace(
+        "width=\"960\" height=\"960\"",
+        "width=\"320\" height=\"320\"",
+    );
 
     fs::write(&image_path, svg).map_err(|source| AppError::Io {
-        context: format!("failed to write alternate take svg at {}", image_path.display()),
+        context: format!(
+            "failed to write alternate take svg at {}",
+            image_path.display()
+        ),
         source,
     })?;
     fs::write(&thumb_path, thumb_svg).map_err(|source| AppError::Io {
-        context: format!("failed to write alternate take thumb svg at {}", thumb_path.display()),
+        context: format!(
+            "failed to write alternate take thumb svg at {}",
+            thumb_path.display()
+        ),
         source,
     })?;
 
-    Ok((image_path.display().to_string(), thumb_path.display().to_string()))
+    Ok((
+        image_path.display().to_string(),
+        thumb_path.display().to_string(),
+    ))
 }

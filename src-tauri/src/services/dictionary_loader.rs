@@ -4,7 +4,9 @@ use std::path::{Path, PathBuf};
 
 use tauri::Wry;
 
-use crate::dto::dictionary::{DictionaryBundleFile, DictionaryCategoriesFile, DictionaryEntriesFile};
+use crate::dto::dictionary::{
+    DictionaryBundleFile, DictionaryCategoriesFile, DictionaryEntriesFile,
+};
 use crate::errors::AppError;
 
 fn repo_root(_app: &tauri::AppHandle<Wry>) -> Result<PathBuf, AppError> {
@@ -45,12 +47,18 @@ pub fn load_categories(app: &tauri::AppHandle<Wry>) -> Result<DictionaryCategori
     read_yaml(&path)
 }
 
-pub fn load_bundle(app: &tauri::AppHandle<Wry>, bundle_name: &str) -> Result<DictionaryBundleFile, AppError> {
+pub fn load_bundle(
+    app: &tauri::AppHandle<Wry>,
+    bundle_name: &str,
+) -> Result<DictionaryBundleFile, AppError> {
     let path = repo_root(app)?.join(format!("dictionaries/bundles/{bundle_name}.yaml"));
     read_yaml(&path)
 }
 
-pub fn load_entries_file(app: &tauri::AppHandle<Wry>, relative_path: &str) -> Result<DictionaryEntriesFile, AppError> {
+pub fn load_entries_file(
+    app: &tauri::AppHandle<Wry>,
+    relative_path: &str,
+) -> Result<DictionaryEntriesFile, AppError> {
     let path = repo_root(app)?.join("dictionaries").join(relative_path);
     read_yaml(&path)
 }

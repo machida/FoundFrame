@@ -24,6 +24,9 @@ The internal reference prompt is constraint-first and anti-beauty:
 - Local `_sample/` references showed that usable naturalness often comes from photographed surfaces and everyday public signs rather than from human subjects: shopfronts, signs, shelves, vending machines, chairs, walls, windows, road markings, tables, price boards, packaging, numbers, and plain empty space. Prompt changes should preserve this as an abstraction only; do not copy or commit the reference images.
 - Let some frames be place-led or object-led. Avoid forcing every frame to solve around a person, face, hand, or single central object.
 - Treat `Tiny Detail` as an optional clue, not a foreground prop contract. It may appear in one or two frames, move to an edge/background/surface trace, or be absent. Never repeat one cup, tumbler, bag, hand, tray, or bottle across every contact-sheet frame.
+- Contact-sheet generation now builds separate per-frame prompts instead of one shared `n: 8` prompt. Each frame receives a role, failure mode, tiny-detail behavior, and aspect/size so the roll includes place-led, surface-led, distant-people, movement, failed-keeper, edge-person, and quiet-trace exposures.
+- Some frames should be almost too plain or awkward. AI sameness is reduced by allowing boring records, empty areas, wrong focus targets, mild motion blur, weak flash falloff, accidental crop, and underexposed corners.
+- Generated PNGs are lightly softened after provider output before storage: weak blur, tiny deterministic noise, lifted blacks, and subtle edge falloff. Keep this treatment restrained; it is meant to reduce digital cleanliness, not create a visible film-filter effect.
 
 ## Review Implications
 

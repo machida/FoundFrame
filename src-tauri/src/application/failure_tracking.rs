@@ -2,9 +2,7 @@ use rusqlite::Connection;
 use serde_json::{json, Value};
 
 use crate::errors::AppError;
-use crate::persistence::{
-    generation_job_repository, provider_health_repository, roll_repository,
-};
+use crate::persistence::{generation_job_repository, provider_health_repository, roll_repository};
 
 pub fn persist_generation_failure(
     connection: &Connection,
@@ -119,9 +117,10 @@ mod tests {
         )
         .expect("persist provider failure");
 
-        let provider_health = provider_health_repository::fetch_provider_health(&connection, "openai")
-            .expect("fetch provider health")
-            .expect("provider health exists");
+        let provider_health =
+            provider_health_repository::fetch_provider_health(&connection, "openai")
+                .expect("fetch provider health")
+                .expect("provider health exists");
         assert_eq!(provider_health.status, "degraded");
         assert_eq!(
             provider_health.last_check_message.as_deref(),
@@ -129,12 +128,18 @@ mod tests {
         );
 
         let roll_status: String = connection
-            .query_row("SELECT status FROM rolls WHERE id = 1", [], |row| row.get(0))
+            .query_row("SELECT status FROM rolls WHERE id = 1", [], |row| {
+                row.get(0)
+            })
             .expect("query roll status");
         assert_eq!(roll_status, "failed");
 
         let job_status: String = connection
-            .query_row("SELECT status FROM generation_jobs WHERE id = 1", [], |row| row.get(0))
+            .query_row(
+                "SELECT status FROM generation_jobs WHERE id = 1",
+                [],
+                |row| row.get(0),
+            )
             .expect("query job status");
         assert_eq!(job_status, "failed");
 
@@ -146,7 +151,10 @@ mod tests {
             )
             .expect("query failure payload");
         let payload: Value = serde_json::from_str(&payload_json).expect("parse payload");
-        assert_eq!(payload.get("error_code").and_then(Value::as_str), Some("provider_timeout"));
+        assert_eq!(
+            payload.get("error_code").and_then(Value::as_str),
+            Some("provider_timeout")
+        );
     }
 
     #[test]
@@ -167,7 +175,8 @@ mod tests {
         .expect("persist config failure");
 
         let provider_health =
-            provider_health_repository::fetch_provider_health(&connection, "openai").expect("fetch provider health");
+            provider_health_repository::fetch_provider_health(&connection, "openai")
+                .expect("fetch provider health");
         assert!(provider_health.is_none());
 
         let payload_json: String = connection
@@ -178,6 +187,9 @@ mod tests {
             )
             .expect("query failure payload");
         let payload: Value = serde_json::from_str(&payload_json).expect("parse payload");
-        assert_eq!(payload.get("error_code").and_then(Value::as_str), Some("config_error"));
+        assert_eq!(
+            payload.get("error_code").and_then(Value::as_str),
+            Some("config_error")
+        );
     }
 }

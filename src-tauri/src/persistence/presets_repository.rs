@@ -18,11 +18,10 @@ pub fn save_preset(
         });
     }
 
-    let input_snapshot_json =
-        serde_json::to_string(request).map_err(|source| AppError::Json {
-            context: "failed to serialize preset input snapshot".to_string(),
-            source,
-        })?;
+    let input_snapshot_json = serde_json::to_string(request).map_err(|source| AppError::Json {
+        context: "failed to serialize preset input snapshot".to_string(),
+        source,
+    })?;
 
     let existing_id: Option<i64> = connection
         .query_row(
@@ -115,8 +114,8 @@ pub fn list_presets(connection: &Connection) -> Result<Vec<PresetSummary>, AppEr
     let rows = stmt
         .query_map([], |row| {
             let input_snapshot_json: String = row.get(3)?;
-            let input_snapshot =
-                serde_json::from_str::<CreateRollRequest>(&input_snapshot_json).map_err(|error| {
+            let input_snapshot = serde_json::from_str::<CreateRollRequest>(&input_snapshot_json)
+                .map_err(|error| {
                     rusqlite::Error::FromSqlConversionFailure(
                         3,
                         rusqlite::types::Type::Text,
@@ -251,8 +250,14 @@ mod tests {
     fn save_preset_overwrites_existing_name() {
         let connection = setup_connection();
 
-        let first_id = save_preset(&connection, "Night Walk", 1, &request("station platform"), false)
-            .expect("save first preset");
+        let first_id = save_preset(
+            &connection,
+            "Night Walk",
+            1,
+            &request("station platform"),
+            false,
+        )
+        .expect("save first preset");
         let second_id = save_preset(&connection, "Night Walk", 1, &request("quiet street"), true)
             .expect("overwrite preset");
 
@@ -275,8 +280,14 @@ mod tests {
     #[test]
     fn rename_preset_changes_name_without_creating_duplicate() {
         let connection = setup_connection();
-        let preset_id = save_preset(&connection, "Night Walk", 1, &request("station platform"), false)
-            .expect("save preset");
+        let preset_id = save_preset(
+            &connection,
+            "Night Walk",
+            1,
+            &request("station platform"),
+            false,
+        )
+        .expect("save preset");
 
         rename_preset(&connection, preset_id, "Night Train").expect("rename preset");
 

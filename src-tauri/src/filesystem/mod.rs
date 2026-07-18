@@ -12,7 +12,9 @@ pub fn ensure_roll_image_dir(
     app: &tauri::AppHandle<Wry>,
     roll_id: i64,
 ) -> Result<PathBuf, AppError> {
-    let dir = database::ensure_app_data_dir(app)?.join("images").join(format!("roll-{roll_id}"));
+    let dir = database::ensure_app_data_dir(app)?
+        .join("images")
+        .join(format!("roll-{roll_id}"));
 
     std::fs::create_dir_all(&dir).map_err(|source| AppError::Io {
         context: format!("failed to create roll image dir at {}", dir.display()),

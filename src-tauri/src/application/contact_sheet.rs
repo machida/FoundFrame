@@ -3,15 +3,10 @@ use tauri::Wry;
 use crate::application::failure_tracking;
 use crate::errors::AppError;
 use crate::filesystem;
+use crate::persistence::{database, frame_repository, generation_job_repository, roll_repository};
 use crate::providers::{self, ProviderExecution};
-use crate::persistence::{
-    database, frame_repository, generation_job_repository, roll_repository,
-};
 
-pub fn simulate_contact_sheet(
-    app: &tauri::AppHandle<Wry>,
-    roll_id: i64,
-) -> Result<(), AppError> {
+pub fn simulate_contact_sheet(app: &tauri::AppHandle<Wry>, roll_id: i64) -> Result<(), AppError> {
     let db_path = database::database_path(app)?;
     let connection = database::open_connection(&db_path)?;
     let detail = frame_repository::fetch_roll_detail(&connection, roll_id)?;
@@ -28,7 +23,8 @@ pub fn simulate_contact_sheet(
     roll_repository::update_roll_status(&connection, roll_id, "generating_contact_sheet")?;
 
     let result: Result<(), AppError> = (|| {
-        let generation_context = roll_repository::fetch_roll_generation_context(&connection, roll_id)?;
+        let generation_context =
+            roll_repository::fetch_roll_generation_context(&connection, roll_id)?;
         let execution = providers::generate_contact_sheet(app, &generation_context.roll_dna, 8)?;
 
         let response_payload_json = match execution {
@@ -74,6 +70,10 @@ pub fn simulate_contact_sheet(
                         &format!("frame-{frame_index}"),
                         &image.bytes,
                     )?;
+                    let frame_plan = image
+                        .frame_plan_json
+                        .as_deref()
+                        .and_then(|value| serde_json::from_str::<serde_json::Value>(value).ok());
 
                     frame_repository::insert_contact_sheet_frame(
                         &connection,
@@ -89,7 +89,8 @@ pub fn simulate_contact_sheet(
                             "provider_key": batch.provider_key,
                             "provider_model": batch.provider_model,
                             "prompt_engine_version": generation_context.prompt_engine_version,
-                            "hidden_prompt": batch.prompt,
+                            "hidden_prompt": image.prompt.as_deref().unwrap_or(&batch.prompt),
+                            "frame_plan": frame_plan,
                             "frame_index": frame_index
                         })
                         .to_string(),
@@ -100,7 +101,11 @@ pub fn simulate_contact_sheet(
             }
         };
 
-        generation_job_repository::mark_job_succeeded(&connection, job.job_id, &response_payload_json)?;
+        generation_job_repository::mark_job_succeeded(
+            &connection,
+            job.job_id,
+            &response_payload_json,
+        )?;
         roll_repository::update_roll_status(&connection, roll_id, "contact_sheet_ready")?;
 
         connection
@@ -120,7 +125,9 @@ pub fn simulate_contact_sheet(
                 ],
             )
             .map_err(|source| AppError::Sqlite {
-                context: format!("failed to insert contact sheet completed event for roll {roll_id}"),
+                context: format!(
+                    "failed to insert contact sheet completed event for roll {roll_id}"
+                ),
                 source,
             })?;
 

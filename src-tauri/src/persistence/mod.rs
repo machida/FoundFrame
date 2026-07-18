@@ -1,5 +1,5 @@
-pub mod dictionary_repository;
 pub mod database;
+pub mod dictionary_repository;
 pub mod favorites_repository;
 pub mod frame_repository;
 pub mod generation_job_repository;

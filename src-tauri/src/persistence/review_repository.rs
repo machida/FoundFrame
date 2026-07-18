@@ -30,17 +30,26 @@ fn decode_review_summary(
         review_engine_version,
         evaluator_type,
         overall_score: scores.get("overall").and_then(Value::as_f64).unwrap_or(0.0),
-        ai_feeling: scores.get("ai_feeling").and_then(Value::as_f64).unwrap_or(0.0),
+        ai_feeling: scores
+            .get("ai_feeling")
+            .and_then(Value::as_f64)
+            .unwrap_or(0.0),
         accidental_feeling: scores
             .get("accidental_feeling")
             .and_then(Value::as_f64)
             .unwrap_or(0.0),
-        everyday_life: scores.get("everyday_life").and_then(Value::as_f64).unwrap_or(0.0),
+        everyday_life: scores
+            .get("everyday_life")
+            .and_then(Value::as_f64)
+            .unwrap_or(0.0),
         memory_quality: scores
             .get("memory_quality")
             .and_then(Value::as_f64)
             .unwrap_or(0.0),
-        imperfection: scores.get("imperfection").and_then(Value::as_f64).unwrap_or(0.0),
+        imperfection: scores
+            .get("imperfection")
+            .and_then(Value::as_f64)
+            .unwrap_or(0.0),
         composition_balance: scores
             .get("composition_balance")
             .and_then(Value::as_f64)
@@ -53,22 +62,26 @@ fn decode_review_summary(
     })
 }
 
-pub fn insert_review_result(connection: &Connection, frame_id: i64) -> Result<ReviewSummary, AppError> {
-    let (input_snapshot_json, stage, storage_kind, image_path): (String, String, String, String) = connection
-        .query_row(
-            "
+pub fn insert_review_result(
+    connection: &Connection,
+    frame_id: i64,
+) -> Result<ReviewSummary, AppError> {
+    let (input_snapshot_json, stage, storage_kind, image_path): (String, String, String, String) =
+        connection
+            .query_row(
+                "
             SELECT rolls.input_snapshot_json, frames.stage, frames.storage_kind, frames.image_path
             FROM frames
             INNER JOIN rolls ON rolls.id = frames.roll_id
             WHERE frames.id = ?1
             ",
-            [frame_id],
-            |row| Ok((row.get(0)?, row.get(1)?, row.get(2)?, row.get(3)?)),
-        )
-        .map_err(|source| AppError::Sqlite {
-            context: format!("failed to load review context for frame {frame_id}"),
-            source,
-        })?;
+                [frame_id],
+                |row| Ok((row.get(0)?, row.get(1)?, row.get(2)?, row.get(3)?)),
+            )
+            .map_err(|source| AppError::Sqlite {
+                context: format!("failed to load review context for frame {frame_id}"),
+                source,
+            })?;
 
     let input_snapshot: CreateRollRequest =
         serde_json::from_str(&input_snapshot_json).map_err(|source| AppError::Json {
@@ -127,7 +140,10 @@ pub fn insert_review_result(connection: &Connection, frame_id: i64) -> Result<Re
     })
 }
 
-pub fn latest_review_for_roll(connection: &Connection, roll_id: i64) -> Result<Option<ReviewSummary>, AppError> {
+pub fn latest_review_for_roll(
+    connection: &Connection,
+    roll_id: i64,
+) -> Result<Option<ReviewSummary>, AppError> {
     let row = connection
         .query_row(
             "

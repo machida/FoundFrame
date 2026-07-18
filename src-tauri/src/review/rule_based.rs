@@ -15,7 +15,12 @@ fn field_has_manual_value(field: &SetupInputField) -> bool {
     matches!(field.mode, InputMode::Manual) && field.value.is_some()
 }
 
-pub fn evaluate(input: &CreateRollRequest, stage: &str, storage_kind: &str, image_path: &str) -> ReviewComputation {
+pub fn evaluate(
+    input: &CreateRollRequest,
+    stage: &str,
+    storage_kind: &str,
+    image_path: &str,
+) -> ReviewComputation {
     // v1 keeps review local and rule-based so workflow iteration does not depend on a vision model yet.
     let manual_count = [
         &input.country,
@@ -37,9 +42,11 @@ pub fn evaluate(input: &CreateRollRequest, stage: &str, storage_kind: &str, imag
 
     let ai_feeling = if is_placeholder { 0.62 } else { 0.28 };
     let everyday_life = (0.58 + random_bonus * 0.34).min(0.96);
-    let accidental_feeling = (0.44 + random_bonus * 0.28 + if is_alternate_take { 0.08 } else { 0.0 }).min(0.94);
+    let accidental_feeling =
+        (0.44 + random_bonus * 0.28 + if is_alternate_take { 0.08 } else { 0.0 }).min(0.94);
     let memory_quality = (0.49 + random_bonus * 0.18 + if has_png { 0.06 } else { 0.0 }).min(0.9);
-    let imperfection = (0.52 + random_bonus * 0.24 + if is_placeholder { 0.08 } else { 0.0 }).min(0.95);
+    let imperfection =
+        (0.52 + random_bonus * 0.24 + if is_placeholder { 0.08 } else { 0.0 }).min(0.95);
     let composition_balance = (0.36 + manual_count * 0.04).min(0.68);
     let overall = ((1.0 - ai_feeling) * 0.24
         + accidental_feeling * 0.24
@@ -106,8 +113,18 @@ mod tests {
 
     #[test]
     fn random_inputs_score_as_more_accidental_than_manual_inputs() {
-        let random_review = evaluate(&random_request(), "contact_sheet", "app_managed", "frame.png");
-        let manual_review = evaluate(&manual_request(), "contact_sheet", "app_managed", "frame.png");
+        let random_review = evaluate(
+            &random_request(),
+            "contact_sheet",
+            "app_managed",
+            "frame.png",
+        );
+        let manual_review = evaluate(
+            &manual_request(),
+            "contact_sheet",
+            "app_managed",
+            "frame.png",
+        );
 
         assert!(random_review.accidental_feeling > manual_review.accidental_feeling);
         assert!(random_review.everyday_life > manual_review.everyday_life);

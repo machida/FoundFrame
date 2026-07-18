@@ -1,3 +1,4 @@
+use serde::Serialize;
 use serde_json::Value;
 
 const PROMPT_ENGINE_VERSION: &str = "universal-snapshot-v25";
@@ -190,12 +191,128 @@ pub fn prompt_engine_version() -> &'static str {
     PROMPT_ENGINE_VERSION
 }
 
-pub fn build_contact_sheet_prompt(roll_dna: &Value, frame_count: usize) -> String {
+#[derive(Clone, Debug, Serialize)]
+pub struct FramePlan {
+    pub frame_index: usize,
+    pub role: &'static str,
+    pub fault: &'static str,
+    pub tiny_detail_use: &'static str,
+    pub aspect: &'static str,
+    pub size: &'static str,
+}
+
+pub struct FramePrompt {
+    pub plan: FramePlan,
+    pub prompt: String,
+    pub size: String,
+}
+
+fn frame_plans(frame_count: usize) -> Vec<FramePlan> {
+    let templates = [
+        FramePlan {
+            frame_index: 0,
+            role: "place-led frame with no necessary person; ordinary surface, storefront, wall, pavement, or signage may carry the image",
+            fault: "almost too plain; too much empty pavement, wall, counter, sky, or road",
+            tiny_detail_use: "absent or only a distant trace",
+            aspect: "landscape",
+            size: "1536x1024",
+        },
+        FramePlan {
+            frame_index: 1,
+            role: "people-at-a-distance frame; people are small and incidental within the location",
+            fault: "slightly late timing; people overlap or are partly cut by the edge",
+            tiny_detail_use: "not visible",
+            aspect: "landscape",
+            size: "1536x1024",
+        },
+        FramePlan {
+            frame_index: 2,
+            role: "sign, label, shelf, vending machine, menu, poster, number, or window-led frame",
+            fault: "sign or surface is sharper than people; framing is a little too close or too loose",
+            tiny_detail_use: "may become a surface trace, label, mark, condensation, paper, or edge detail",
+            aspect: "portrait",
+            size: "1024x1536",
+        },
+        FramePlan {
+            frame_index: 3,
+            role: "object-led but not product-like; ordinary table, chair, bagging area, counter, shelf, car interior, or doorway",
+            fault: "focus lands on background or surface instead of the apparent object",
+            tiny_detail_use: "may appear once, off-center and not as the largest shape",
+            aspect: "square",
+            size: "1024x1024",
+        },
+        FramePlan {
+            frame_index: 4,
+            role: "movement frame; walking, passing traffic, crossing, entering, leaving, or weather movement",
+            fault: "mild motion blur from walking or a rushed shutter",
+            tiny_detail_use: "blurred, partly hidden, or absent",
+            aspect: "landscape",
+            size: "1536x1024",
+        },
+        FramePlan {
+            frame_index: 5,
+            role: "failed keeper frame; a boring or awkward record that still belongs to the roll",
+            fault: "underexposed corner, weak flash falloff, or exposure chosen for the wrong surface",
+            tiny_detail_use: "not visible or only at an edge",
+            aspect: "square",
+            size: "1024x1024",
+        },
+        FramePlan {
+            frame_index: 6,
+            role: "edge-person frame; one person may be front-facing, profile, or looking down but remains small/off-center",
+            fault: "accidental crop; too much background, ceiling, road, grass, or wall",
+            tiny_detail_use: "do not use as a foreground prop",
+            aspect: "portrait",
+            size: "1024x1536",
+        },
+        FramePlan {
+            frame_index: 7,
+            role: "quiet trace frame; after-action evidence, empty chair, receipt, wet mark, shelf gap, sign, road marking, or light patch",
+            fault: "nearly no subject; the frame feels like a leftover exposure",
+            tiny_detail_use: "may be implied rather than shown",
+            aspect: "landscape",
+            size: "1536x1024",
+        },
+    ];
+
+    templates
+        .iter()
+        .take(frame_count)
+        .enumerate()
+        .map(|(index, plan)| {
+            let mut plan = plan.clone();
+            plan.frame_index = index;
+            plan
+        })
+        .collect()
+}
+
+fn build_contact_sheet_prompt_with_plan(
+    roll_dna: &Value,
+    frame_count: usize,
+    plan: &FramePlan,
+) -> String {
     format!(
-        "{UNIVERSAL_SNAPSHOT_PROMPT}\n\nUser Variables\n{}\n\nGenerate {} square frames from the same roll of film. The situation, country, camera behavior, and ordinary world are shared across the roll. Each frame should differ naturally through timing drift, overlapping people, small focus mistakes, edge interruptions, partial blocked sight lines, distance, empty areas, and accidental composition changes. Do not make the frames feel like curated variations, portraits, fashion images, travel images, product photography, street-photography trophies, or cinematic storyboards. If people appear, keep them incidental, off-center, small, partially hidden, or visually interrupted, but do not make them all turn their backs to the camera. Do not solve person-centered composition by replacing the person with a centered hand, bag, sleeve, cup, tumbler, bottle, tray, or other foreground object. Do not repeat the same tiny detail as a foreground prop across the roll. Several frames may be mostly place, signs, shopfronts, shelves, chairs, vending machines, walls, roads, tables, objects, weather, light, or traces of activity rather than people. They are separate survivals from one mundane roll.",
+        "{UNIVERSAL_SNAPSHOT_PROMPT}\n\nUser Variables\n{}\n\nContact Sheet Policy\nGenerate frame {} of {} from the same roll of film. The situation, country, camera behavior, and ordinary world are shared across the roll, but this individual frame has its own role and failure pattern.\n\nFrame Role: {}\nFrame Fault: {}\nTiny Detail Use: {}\nAspect: {}\n\nThe frame should feel like one exposure from a roll, not a complete set by itself. Let some frames be almost too plain. Do not make a memorable subject mandatory. Do not make this a curated variation, portrait, fashion image, travel image, product photograph, street-photography trophy, street-photography trophies, or cinematic storyboard. If people appear, keep them incidental, off-center, small, partially hidden, or visually interrupted, but do not make everyone face away from the camera and do not make them all turn their backs to the camera. Do not solve person-centered composition by replacing the person with a centered hand, bag, sleeve, cup, tumbler, bottle, tray, or other foreground object. Do not repeat the same tiny detail as a foreground prop across the roll. This frame may be mostly place, signs, shopfronts, shelves, chairs, vending machines, walls, roads, tables, objects, weather, light, empty space, or traces of activity rather than people.",
         base_situation_block(roll_dna),
-        frame_count
+        plan.frame_index + 1,
+        frame_count,
+        plan.role,
+        plan.fault,
+        plan.tiny_detail_use,
+        plan.aspect,
     )
+}
+
+pub fn build_contact_sheet_frame_prompts(roll_dna: &Value, frame_count: usize) -> Vec<FramePrompt> {
+    frame_plans(frame_count)
+        .into_iter()
+        .map(|plan| FramePrompt {
+            prompt: build_contact_sheet_prompt_with_plan(roll_dna, frame_count, &plan),
+            size: plan.size.to_string(),
+            plan,
+        })
+        .collect()
 }
 
 pub fn build_alternate_take_prompt(roll_dna: &Value) -> String {
@@ -207,28 +324,37 @@ pub fn build_alternate_take_prompt(roll_dna: &Value) -> String {
 
 #[cfg(test)]
 mod tests {
-    use super::{build_alternate_take_prompt, build_contact_sheet_prompt};
+    use super::{build_alternate_take_prompt, build_contact_sheet_frame_prompts};
+
+    fn contact_sheet_prompt_text(roll_dna: &serde_json::Value) -> String {
+        build_contact_sheet_frame_prompts(roll_dna, 8)
+            .into_iter()
+            .map(|frame_prompt| frame_prompt.prompt)
+            .collect::<Vec<_>>()
+            .join("\n")
+    }
 
     #[test]
     fn contact_sheet_prompt_discourages_portrait_like_people() {
         let roll_dna = serde_json::json!({});
-        let prompt = build_contact_sheet_prompt(&roll_dna, 8);
+        let prompt = contact_sheet_prompt_text(&roll_dna);
 
         assert!(prompt.contains("centered people"));
         assert!(prompt.contains("centered foreground obstructions"));
         assert!(prompt.contains("portrait-like images"));
         assert!(prompt.contains("If people appear, keep them incidental"));
-        assert!(prompt.contains("Several frames may be mostly place, signs, shopfronts"));
+        assert!(prompt.contains("This frame may be mostly place, signs, shopfronts"));
     }
 
     #[test]
     fn prompts_discourage_centered_foreground_gimmicks() {
         let roll_dna = serde_json::json!({});
-        let contact_sheet_prompt = build_contact_sheet_prompt(&roll_dna, 8);
+        let contact_sheet_prompt = contact_sheet_prompt_text(&roll_dna);
         let alternate_take_prompt = build_alternate_take_prompt(&roll_dna);
 
         assert!(contact_sheet_prompt.contains("without becoming the subject"));
-        assert!(contact_sheet_prompt.contains("do not place a hand, plastic bag, or other meaningless object"));
+        assert!(contact_sheet_prompt
+            .contains("do not place a hand, plastic bag, or other meaningless object"));
         assert!(contact_sheet_prompt.contains("Do not solve person-centered composition"));
         assert!(alternate_take_prompt.contains("more foreground-obstructed"));
     }
@@ -236,7 +362,7 @@ mod tests {
     #[test]
     fn prompts_discourage_generated_color_and_texture_tells() {
         let roll_dna = serde_json::json!({});
-        let contact_sheet_prompt = build_contact_sheet_prompt(&roll_dna, 8);
+        let contact_sheet_prompt = contact_sheet_prompt_text(&roll_dna);
         let alternate_take_prompt = build_alternate_take_prompt(&roll_dna);
 
         assert!(contact_sheet_prompt.contains("cinematic color grading"));
@@ -256,7 +382,7 @@ mod tests {
                 "flash_behavior": "small_direct_flash_when_light_is_low"
             }
         });
-        let prompt = build_contact_sheet_prompt(&roll_dna, 8);
+        let prompt = contact_sheet_prompt_text(&roll_dna);
 
         assert!(prompt.contains("Camera Behavior: cheap plastic lens 35mm"));
         assert!(prompt.contains("Lens Behavior: soft edges low microcontrast"));
@@ -267,7 +393,7 @@ mod tests {
     #[test]
     fn prompts_discourage_everyone_facing_away() {
         let roll_dna = serde_json::json!({});
-        let prompt = build_contact_sheet_prompt(&roll_dna, 8);
+        let prompt = contact_sheet_prompt_text(&roll_dna);
 
         assert!(prompt.contains("do not make everyone face away"));
         assert!(prompt.contains("do not make them all turn their backs"));
@@ -277,7 +403,7 @@ mod tests {
     #[test]
     fn prompts_allow_place_and_surface_led_frames() {
         let roll_dna = serde_json::json!({});
-        let prompt = build_contact_sheet_prompt(&roll_dna, 8);
+        let prompt = contact_sheet_prompt_text(&roll_dna);
 
         assert!(prompt.contains("Everyday surface policy"));
         assert!(prompt.contains("shopfronts, signs, shelves, vending machines"));
@@ -288,11 +414,35 @@ mod tests {
     #[test]
     fn prompts_prevent_repeated_tiny_detail_foreground_props() {
         let roll_dna = serde_json::json!({});
-        let prompt = build_contact_sheet_prompt(&roll_dna, 8);
+        let prompt = contact_sheet_prompt_text(&roll_dna);
 
         assert!(prompt.contains("Tiny detail policy"));
         assert!(prompt.contains("do not repeat the same cup, bag, hand, tray, bottle, or object"));
         assert!(prompt.contains("Do not repeat the same tiny detail as a foreground prop"));
         assert!(prompt.contains("cup, tumbler, bottle, tray"));
+    }
+
+    #[test]
+    fn contact_sheet_uses_distinct_frame_roles_faults_and_aspects() {
+        let roll_dna = serde_json::json!({});
+        let frame_prompts = build_contact_sheet_frame_prompts(&roll_dna, 8);
+        let sizes = frame_prompts
+            .iter()
+            .map(|frame_prompt| frame_prompt.size.as_str())
+            .collect::<std::collections::HashSet<_>>();
+
+        assert_eq!(frame_prompts.len(), 8);
+        assert!(sizes.contains("1536x1024"));
+        assert!(sizes.contains("1024x1536"));
+        assert!(sizes.contains("1024x1024"));
+        assert!(frame_prompts
+            .iter()
+            .any(|frame_prompt| frame_prompt.plan.role.contains("failed keeper")));
+        assert!(frame_prompts
+            .iter()
+            .any(|frame_prompt| frame_prompt.plan.fault.contains("motion blur")));
+        assert!(frame_prompts
+            .iter()
+            .any(|frame_prompt| frame_prompt.plan.tiny_detail_use.contains("absent")));
     }
 }
